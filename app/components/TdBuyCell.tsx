@@ -10,7 +10,7 @@ interface TdBuyCellProps {
 
 export default function TdBuyCell({ army, nationId }: TdBuyCellProps) {
   async function handleBuyArmy() {
-    const path = `${API_ENDPOINT}/nation/${nationId}/army/${army.id}`;
+    const path = `${API_ENDPOINT}/kingdom/${nationId}/army/${army.id}`;
 
     const response = await fetch(path, { method: 'POST' });
     await response.json();
