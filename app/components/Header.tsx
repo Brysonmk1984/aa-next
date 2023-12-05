@@ -12,6 +12,7 @@ export default function Header() {
         <a href="/kingdom">Kingdom</a>
         <a href="/nations">Nations</a>
         <a href="/buy">Buy</a>
+        <a href="/campaign">Campaign</a>
         <ProfileClient />
       </nav>
     </header>
