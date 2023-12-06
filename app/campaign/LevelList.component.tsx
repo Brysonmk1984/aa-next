@@ -2,6 +2,7 @@
 import { getCampaignLevelDetails } from '@/services/nation';
 import { CampaignLevel } from '@/types/campaign.type';
 import { ComponentType, useState } from 'react';
+import { LevelAccordion } from './LevelAccordion.component';
 
 interface LevelListProps {
   levels: Array<CampaignLevel>;
@@ -24,17 +25,9 @@ export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel 
   return (
     <>
       {levels.length && (
-        <ul>
-          {levels.map(({ level, id, nation_name }) => {
-            if (level <= highestLevel) {
-              return (
-                <li key={id} onClick={() => handleGetLevel(level)}>
-                  {nation_name}
-                </li>
-              );
-            }
-          })}
-        </ul>
+        <div className="flex flex-col w-full mt-16">
+          <LevelAccordion levels={levels} activeLevel={activeLevel} highestLevel={highestLevel} />
+        </div>
       )}
     </>
   );

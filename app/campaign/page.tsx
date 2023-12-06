@@ -24,9 +24,9 @@ export default withPageAuthRequired(
     }
 
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div>Campaign Page</div>
-        <section>
+      <main className="flex min-h-screen flex-col items-center p-24">
+        <h1>Campaign</h1>
+        <section className="w-full">
           <LevelList levels={campaignLevels} highestLevel={highestLevel} />
         </section>
       </main>
