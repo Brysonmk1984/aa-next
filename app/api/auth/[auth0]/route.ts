@@ -6,8 +6,6 @@ export const GET = handleAuth({
     try {
       const handleLoginResponse = await handleLogin(req, res, { authorizationParams: { customParam: 'foo' } });
 
-      //console.log('CAKE', res);
-
       return handleLoginResponse;
     } catch (error) {
       res.status(error.status || 500).end();

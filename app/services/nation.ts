@@ -3,8 +3,6 @@ import { CampaignLevel } from '@/types/campaign.type';
 import { CampaignNation, NationWithArmy } from '@/types/nation.type';
 
 export const getNationAndArmies = async (userId: number) => {
-  console.log({ userId });
-
   const route = `${API_ENDPOINT}/kingdom/${userId}`;
   const response = await fetch(route);
   const [nation, _armies] = await response.json();

@@ -22,8 +22,6 @@ const findOrCreateUser = async ({
   }
 };
 export async function handleUserUpdateCheck({ email, email_verified: emailVerified, sub }: User) {
-  console.log('IN', { email, email_verified: emailVerified, sub });
-
   try {
     let resolvedUser = await findOrCreateUser({ email, email_verified: emailVerified, sub });
     return {
