@@ -19,6 +19,7 @@ export default withPageAuthRequired(
     let highestLevel: number = 1;
     try {
       campaignLevels = await getCampaignLevels();
+      console.log(campaignLevels);
     } catch (error) {
       throw error;
     }

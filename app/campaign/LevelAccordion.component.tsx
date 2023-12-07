@@ -1,13 +1,16 @@
 'use-client';
 
+import { getCampaignLevelDetails } from '@/services/nation';
 import { CampaignLevel } from '@/types/campaign.type';
-import { ComponentType } from 'react';
+import { CampaignNation, NationWithArmy } from '@/types/nation.type';
+import { ComponentType, useState } from 'react';
 import {
   Accordion,
   AccordionItem,
   AccordionItemHeading,
   AccordionItemButton,
   AccordionItemPanel,
+  AccordionItemState,
 } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
@@ -15,15 +18,25 @@ interface LevelAccordion {
   levels: Array<CampaignLevel>;
   activeLevel: number;
   highestLevel: number;
+  selectedNation: NationWithArmy | undefined;
+  onChange: (expandedItems: Array<number>) => void;
 }
 
-export const LevelAccordion: ComponentType<LevelAccordion> = ({ levels, activeLevel, highestLevel }) => {
+export const LevelAccordion: ComponentType<LevelAccordion> = ({
+  levels,
+  activeLevel,
+  highestLevel,
+  selectedNation,
+  onChange,
+}) => {
   return (
-    <Accordion allowZeroExpanded={true} preExpanded={[activeLevel]}>
+    <Accordion allowZeroExpanded={true} preExpanded={[activeLevel]} onChange={onChange}>
       {levels.map((l) => {
-        if (l.level <= highestLevel) {
+        if (l.level <= highestLevel + 1) {
+          console.log(selectedNation);
+
           return (
-            <AccordionItem key={l.id} uuid={l.id}>
+            <AccordionItem key={l.id} uuid={l.level}>
               <AccordionItemHeading>
                 <AccordionItemButton>
                   <h2 className="inline">
@@ -32,10 +45,17 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({ levels, activeLe
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <p>
-                  Exercitation in fugiat est ut ad ea cupidatat ut in cupidatat occaecat ut occaecat consequat est minim
-                  minim esse tempor laborum consequat esse adipisicing eu reprehenderit enim.
-                </p>
+                {l.nation_id && selectedNation && (
+                  <>
+                    <ul>
+                      {selectedNation.armies.map((army) => (
+                        <li>
+                          {army.count} {army.army_name}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </AccordionItemPanel>
             </AccordionItem>
           );
