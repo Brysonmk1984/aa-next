@@ -3,4 +3,5 @@ export interface CampaignLevel {
   nation_id: number;
   nation_name: string;
   level: number;
+  lore: string;
 }

@@ -2,7 +2,7 @@
 
 import { getCampaignLevelDetails } from '@/services/nation';
 import { CampaignLevel } from '@/types/campaign.type';
-import { CampaignNation, NationWithArmy } from '@/types/nation.type';
+import { CampaignNation, CampaignNationProfile } from '@/types/nation.type';
 import { ComponentType, useState } from 'react';
 import {
   Accordion,
@@ -18,7 +18,7 @@ interface LevelAccordion {
   levels: Array<CampaignLevel>;
   activeLevel: number;
   highestLevel: number;
-  selectedNation: NationWithArmy | undefined;
+  selectedNation: CampaignNationProfile | undefined;
   onChange: (expandedItems: Array<number>) => void;
 }
 
@@ -33,8 +33,6 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
     <Accordion allowZeroExpanded={true} preExpanded={[activeLevel]} onChange={onChange}>
       {levels.map((l) => {
         if (l.level <= highestLevel + 1) {
-          console.log(selectedNation);
-
           return (
             <AccordionItem key={l.id} uuid={l.level}>
               <AccordionItemHeading>
@@ -47,10 +45,12 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
               <AccordionItemPanel>
                 {l.nation_id && selectedNation && (
                   <>
+                    <p>{l.lore}</p>
                     <ul>
-                      {selectedNation.armies.map((army) => (
-                        <li>
+                      {selectedNation.all_armies.map((army) => (
+                        <li key={army.id}>
                           {army.count} {army.army_name}
+                          <p>{army.lore}</p>
                         </li>
                       ))}
                     </ul>

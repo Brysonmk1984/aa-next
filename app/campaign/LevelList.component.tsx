@@ -3,7 +3,7 @@ import { getCampaignLevelDetails } from '@/services/nation';
 import { CampaignLevel } from '@/types/campaign.type';
 import { ComponentType, useState } from 'react';
 import { LevelAccordion } from './LevelAccordion.component';
-import { NationWithArmy } from '@/types/nation.type';
+import { CampaignNationProfile } from '@/types/nation.type';
 
 interface LevelListProps {
   levels: Array<CampaignLevel>;
@@ -12,7 +12,7 @@ interface LevelListProps {
 
 export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel }) => {
   const [activeLevel, setActiveLevel] = useState(0);
-  const [selectedNation, setSelectedNation] = useState<NationWithArmy>();
+  const [selectedNation, setSelectedNation] = useState<CampaignNationProfile>();
 
   const handleAccordionChange = async ([level]: Array<number>) => {
     if (typeof level === 'undefined') {
@@ -21,14 +21,10 @@ export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel 
 
     try {
       const response = await getCampaignLevelDetails(level);
-      const nationDetails = {
-        ...response[0],
-        armies: response[1],
-      };
+      console.log(response);
 
-      setSelectedNation(nationDetails);
+      setSelectedNation(response);
       setActiveLevel(level);
-      //console.log(nationDetails);
     } catch (e) {
       console.error(e);
     }

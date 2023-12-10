@@ -11,8 +11,10 @@ export interface Nation {
 export interface CampaignNation extends Nation {
   user_id: null;
   is_npc: true;
+  lore: string | null;
 }
 
-export interface NationWithArmy extends Nation {
-  armies: Array<Army>;
+export interface CampaignNationProfile {
+  nation_details: CampaignNation;
+  all_armies: Array<Army>;
 }

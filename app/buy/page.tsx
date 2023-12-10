@@ -34,7 +34,7 @@ export default withPageAuthRequired(
             {armies.map((army) => (
               <tr key={army.id}>
                 <td className="army-count">{army.count}</td>
-                <td className="army-name">{army.name}</td>
+                <td className="army-name">{army.army_name}</td>
                 <td className="army-cost">ㆆ&nbsp;20,000</td>
                 <TdBuyCell army={army} nationId={nationId} />
               </tr>

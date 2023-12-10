@@ -3,7 +3,7 @@ type ArmorType = 'chain' | 'plate' | 'unarmored' | 'leather';
 
 export type Army = {
   id: number;
-  name: string;
+  army_name: string;
   count: number;
   shield_rating: string;
   flying: false;

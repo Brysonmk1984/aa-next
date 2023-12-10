@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '@/configs/environment.config';
 import { CampaignLevel } from '@/types/campaign.type';
-import { CampaignNation, NationWithArmy } from '@/types/nation.type';
+import { CampaignNationProfile } from '@/types/nation.type';
 
 export const getNationAndArmies = async (userId: number) => {
   const route = `${API_ENDPOINT}/kingdom/${userId}`;
@@ -13,6 +13,7 @@ export const getNationAndArmies = async (userId: number) => {
 export const getCampaignLevels = async () => {
   const route = `${API_ENDPOINT}/campaign/levels`;
   const response = await fetch(route);
+
   const result: Array<CampaignLevel> = await response.json();
 
   return result;
@@ -21,7 +22,7 @@ export const getCampaignLevels = async () => {
 export const getCampaignLevelDetails = async (level: number) => {
   const route = `${API_ENDPOINT}/campaign/levels/${level}/nation`;
   const response = await fetch(route);
-  const result: NationWithArmy = await response.json();
+  const result: CampaignNationProfile = await response.json();
 
   return result;
 };

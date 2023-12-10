@@ -4,7 +4,6 @@ import { getNationAndArmies, getCampaignLevels, getCampaignLevelDetails } from '
 import { handleUserUpdateCheck } from '@/services/user';
 import { ResolvedUser, User } from '@/types';
 import { CampaignLevel } from '@/types/campaign.type';
-import { CampaignNation } from '@/types/nation.type';
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { useState } from 'react';
 import { LevelList } from './LevelList.component';
@@ -19,7 +18,6 @@ export default withPageAuthRequired(
     let highestLevel: number = 1;
     try {
       campaignLevels = await getCampaignLevels();
-      console.log(campaignLevels);
     } catch (error) {
       throw error;
     }
