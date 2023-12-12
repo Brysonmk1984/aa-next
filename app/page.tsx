@@ -14,7 +14,6 @@ export default async function Home() {
   }
 
   const armies = await getArmies();
-  console.log(armies);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

@@ -5,6 +5,7 @@ export const GET = handleAuth({
   async login(req, res) {
     try {
       const handleLoginResponse = await handleLogin(req, res, { authorizationParams: { customParam: 'foo' } });
+      console.log({ handleLoginResponse });
 
       return handleLoginResponse;
     } catch (error) {

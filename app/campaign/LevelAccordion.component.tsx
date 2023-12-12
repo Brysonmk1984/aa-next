@@ -1,8 +1,10 @@
 'use-client';
 
+import { runCampaignBattle } from '@/services/campaign';
 import { getCampaignLevelDetails } from '@/services/nation';
 import { CampaignLevel } from '@/types/campaign.type';
 import { CampaignNation, CampaignNationProfile } from '@/types/nation.type';
+import { numberFormat } from '@/utils/numberFormat';
 import { ComponentType, useState } from 'react';
 import {
   Accordion,
@@ -29,6 +31,15 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   selectedNation,
   onChange,
 }) => {
+  const handleBattleClick = async (level: CampaignLevel) => {
+    try {
+      const result = await runCampaignBattle(level);
+      console.log({ result });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <Accordion allowZeroExpanded={true} preExpanded={[activeLevel]} onChange={onChange}>
       {levels.map((l) => {
@@ -44,17 +55,27 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
               </AccordionItemHeading>
               <AccordionItemPanel>
                 {l.nation_id && selectedNation && (
-                  <>
-                    <p>{l.lore}</p>
-                    <ul>
-                      {selectedNation.all_armies.map((army) => (
-                        <li key={army.id}>
-                          {army.count} {army.army_name}
-                          <p>{army.lore}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
+                  <div className="flex">
+                    <div className="flex-initial">
+                      <p>{l.lore}</p>
+                      <ul>
+                        {selectedNation.all_armies.map((army) => (
+                          <li key={army.id}>
+                            {numberFormat(army.count)} {army.army_name}
+                            <p>{army.lore}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="w-64 flex-initial text-center">
+                      <button
+                        className="px-3 py-1 border border-r-ivory bg-red  hover:bg-gray-dark"
+                        onClick={() => handleBattleClick(l)}
+                      >
+                        Battle
+                      </button>
+                    </div>
+                  </div>
                 )}
               </AccordionItemPanel>
             </AccordionItem>
