@@ -35,5 +35,5 @@ async function setCookieMiddleware(req: NextRequest) {
 export default withMiddlewareAuthRequired(setCookieMiddleware);
 
 export const config = {
-  matcher: ['/buy/:path*', '/campaign/:path*', '/kingdom/:path*', '/api/proxy/{armies}/:path*'],
+  matcher: ['/buy/:path*', '/campaign/:path*', '/kingdom/:path*', '/api/proxy/(buy|campaign|kingdom|armies)/:path*'],
 };
