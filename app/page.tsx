@@ -5,12 +5,13 @@ import { getSession } from '@auth0/nextjs-auth0';
 import { ResolvedUser, User } from './types';
 import { getArmies } from './services/army';
 import { handleUserUpdateCheck } from './services/user';
+import { Session } from 'inspector';
 
 export default async function Home() {
-  const userSession = (await getSession()) as { user: User };
+  const userSession = await getSession();
 
   if (!!userSession?.user) {
-    await handleUserUpdateCheck(userSession.user);
+    await handleUserUpdateCheck(userSession.user as User);
   }
 
   const armies = await getArmies();

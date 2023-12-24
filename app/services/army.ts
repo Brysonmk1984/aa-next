@@ -2,7 +2,10 @@ import { API_ENDPOINT } from '@/configs/environment.config';
 import { Army } from '@/types';
 
 export async function getArmies() {
+  console.log('asdasd', `${API_ENDPOINT}/armies`);
+
   const res = await fetch(`${API_ENDPOINT}/armies`);
+  console.log({ res });
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary

@@ -1,7 +1,7 @@
 'use-client';
 
 import { runCampaignBattle } from '@/services/campaign';
-import { getCampaignLevelDetails } from '@/services/nation';
+
 import { CampaignLevel } from '@/types/campaign.type';
 import { CampaignNation, CampaignNationProfile } from '@/types/nation.type';
 import { numberFormat } from '@/utils/numberFormat';

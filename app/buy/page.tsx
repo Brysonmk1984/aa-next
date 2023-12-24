@@ -1,6 +1,6 @@
 import TdBuyCell from '@/components/TdBuyCell';
 import { getArmies } from '@/services/army';
-import { getNationAndArmies } from '@/services/nation';
+import { getNationAndArmies } from '@/services/kingdom';
 import { handleUserUpdateCheck } from '@/services/user';
 import { ResolvedUser, User } from '@/types';
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';

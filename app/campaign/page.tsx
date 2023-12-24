@@ -1,22 +1,21 @@
-import TdBuyCell from '@/components/TdBuyCell';
-import { getArmies } from '@/services/army';
-import { getNationAndArmies, getCampaignLevels, getCampaignLevelDetails } from '@/services/nation';
 import { handleUserUpdateCheck } from '@/services/user';
 import { ResolvedUser, User } from '@/types';
 import { CampaignLevel } from '@/types/campaign.type';
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { useState } from 'react';
 import { LevelList } from './LevelList.component';
+import { getCampaignLevels } from '@/services/campaign';
+import { cookies } from 'next/headers';
 
 export default async function Campaign() {
   const { user } = (await getSession()) as { user: User };
-  const {
-    resolvedUser: { id: userId },
-  } = (await handleUserUpdateCheck(user)) as { resolvedUser: ResolvedUser };
+
+  await handleUserUpdateCheck(user);
+
   let campaignLevels: Array<CampaignLevel>;
   let highestLevel: number = 1;
   try {
     campaignLevels = await getCampaignLevels();
+    console.log('ASDASDASDDASASDAS', campaignLevels.length);
   } catch (error) {
     throw error;
   }

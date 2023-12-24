@@ -2,12 +2,14 @@
 
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 export default function ProfileClient() {
-  const { user, error, isLoading } = useUser();
+  const something = useUser();
+  const { user, error, isLoading } = something;
+  console.log('IN PC', { user }, error);
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
   if (!user) return <a href="/api/auth/login">Login</a>;
 
   return (
