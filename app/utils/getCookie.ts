@@ -1,5 +1,10 @@
-export const getCookie = (name: string) => {
-  const value = `; ${document.cookie}`;
+export const getCookie = (name: string, cookieString?: string) => {
+  if (!cookieString && typeof document === 'undefined') {
+    throw new Error('no cookie string provided and used on the server');
+  }
+
+  let value = `; ${cookieString ?? document.cookie}`;
+
   const parts = value.split(`; ${name}=`);
 
   if (parts.length === 2) {

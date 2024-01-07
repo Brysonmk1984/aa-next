@@ -34,7 +34,7 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   const handleBattleClick = async (level: CampaignLevel) => {
     try {
       const result = await runCampaignBattle(level);
-      console.log({ result });
+      console.log({ runCampaignBattleResult: result });
     } catch (e) {
       console.error(e);
     }

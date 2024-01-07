@@ -1,39 +1,54 @@
-// middleware.js
-import { ENVIRONMENT } from '@/configs/environment.config';
-import { withMiddlewareAuthRequired, getSession } from '@auth0/nextjs-auth0/edge';
 import { NextRequest, NextResponse } from 'next/server';
+import {
+  MiddlewareConfig,
+  MiddlewareFactory,
+  MiddlewareFunc,
+  stackMiddlewares,
+} from './middlewares/stack-middlewares.util';
+import { withMiddlewareAuthRequired, getSession, withApiAuthRequired } from '@auth0/nextjs-auth0/edge';
+import { withRequireAuthToken } from './middlewares/require-auth-token.middleware';
+
+const apiMatcher = '^/api';
+const nonApiMatcher = '^/(?!api)';
 
 /**
+ * Middleware in this file is run for all requests to the Next.js server. These requests can be for static assets, pages, or API endpoints.
+ * With that in mind, it's important to specify a matcher with your specific middleware if it should only run for specific requests.
  *
- * @param req setCookieMiddleware - If I need to set cookies from the next server, I can do it here
- * But generally I'll be doing standard token practice:
- * 1. Just passing the access token to the client via a cookie httpOnly=true
- * 2. Not doing any reading of the token client-side (I can't because httpOnly=true)
- * 3. Make proxy request to the Next api which can extract the token in the cookie, and forward the request to rust server with Authorization header
- * 4. Rust server will read the Authorization header and decrypt the access token and verify identity
+ * In general, you should only specify middleware here if it is to run on pages or is "general" enough to live here. If you want to apply
+ * specific middleware to an API route (e.g. require specific fields in body or only allow specific HTTP methods), you should use the
+ * appropriate middleware in that endpoint rather than specifying it here. This is not to scare you from using middleware here for API endpoints,
+ * but just be thoughtful about whether it is something that would be better off on an individual endpoint rather than a group.
+ *
+ * Instead of the normal Next.js middleware configuration which exports a single middleware function for all requests that work with the specified
+ * matcher (`export const config = { matcher: '...' }`), we have created a pattern for breaking up the logic to different middleware functions
+ * that can be used along with or without a specified matcher for that specific logic. This makes it easier to create bite-sized middleware functions
+ * that can be applied to specific requests.
+ *
+ * `middlewareFuncs` is an array that can contain `MiddlewareFactory` types (a function) or `MiddlewareConfig` types. `MiddlewareConfig` has a `MiddlewareFactory`
+ * and a `matcher` which is an array of regular expressions that will apply the middleware to request pathnames that match with one of the specified
+ * expressions. If a `MiddlewareFactory` is used directly, then it will run on all requests (except for some static files)
  */
-async function setCookieMiddleware(req: NextRequest) {
-  const res = NextResponse.next();
-  const session = await getSession(req, res);
+const middlewareFuncs: (MiddlewareFactory | MiddlewareConfig)[] = [
+  // { middleware: withRequireAuthToken, matcher: [apiMatcher] },
+];
 
-  // If API proxy request, add Authentication header
-  // const authentication = undefined;
-  // console.log('PATHHH', req.nextUrl.pathname);
+/**
+ * Using `stackMiddlewares` will automatically avoid applying the given middleware functions to requests for static assets.
+ * The filtering for these requests is somewhat hard-coded, so if a new directory or file is added at the root-level of the
+ * public/ directory, stackMiddlewares will need to be updated to avoid applying middleware to it.
+ */
+export default //withMiddlewareAuthRequire(
+stackMiddlewares(middlewareFuncs);
+//);
 
-  if (session && session.accessToken) {
-    const { accessToken } = session;
-    res.cookies.set('access_token', accessToken, {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: ENVIRONMENT !== 'development' ? false : true,
-    });
-  }
-
-  return res;
-}
-
-export default withMiddlewareAuthRequired(setCookieMiddleware);
-
+// Primary matcher for all middleware
 export const config = {
-  matcher: ['/buy/:path*', '/campaign/:path*', '/kingdom/:path*', '/api/proxy/(buy|campaign|kingdom|armies)/:path*'],
+  matcher: [
+    '/buy/:path*',
+    '/campaign/:path*',
+    '/kingdom/:path*',
+    // This matcher works, but my auth middleware is failing
+    //'/api/proxy/(buy|campaign|kingdom)/:path*',
+  ],
 };
