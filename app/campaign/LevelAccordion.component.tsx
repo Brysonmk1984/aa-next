@@ -22,6 +22,7 @@ interface LevelAccordion {
   highestLevel: number;
   selectedNation: CampaignNationProfile | undefined;
   onChange: (expandedItems: Array<number>) => void;
+  session: Record<PropertyKey, string>;
 }
 
 export const LevelAccordion: ComponentType<LevelAccordion> = ({
@@ -30,15 +31,24 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   highestLevel,
   selectedNation,
   onChange,
+  session,
 }) => {
-  const handleBattleClick = async (level: CampaignLevel) => {
+  const handleBattleClick = async (l: CampaignLevel) => {
     try {
-      const result = await runCampaignBattle(level);
+      const result = await runCampaignBattle({
+        level: l.level,
+        accessToken: session.accessToken,
+        contenders: [5, l.nation_id],
+      });
       console.log({ runCampaignBattleResult: result });
     } catch (e) {
       console.error(e);
     }
   };
+
+  if (!session.accessToken) {
+    throw new Error('Cannot battle without an access token!');
+  }
 
   return (
     <Accordion allowZeroExpanded={true} preExpanded={[activeLevel]} onChange={onChange}>

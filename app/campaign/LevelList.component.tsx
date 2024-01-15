@@ -9,9 +9,10 @@ import { getCampaignLevelDetails } from '@/services/campaign';
 interface LevelListProps {
   levels: Array<CampaignLevel>;
   highestLevel: number;
+  session: Record<PropertyKey, any>;
 }
 
-export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel }) => {
+export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel, session }) => {
   const [activeLevel, setActiveLevel] = useState(0);
   const [selectedNation, setSelectedNation] = useState<CampaignNationProfile>();
 
@@ -41,6 +42,7 @@ export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel 
             highestLevel={highestLevel}
             selectedNation={selectedNation}
             onChange={handleAccordionChange}
+            session={session}
           />
         </div>
       )}

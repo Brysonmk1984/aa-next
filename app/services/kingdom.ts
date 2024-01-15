@@ -1,5 +1,5 @@
+import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT } from '@/configs/environment.config';
-import { fetchWithAuth } from '@/utils/fetchWithAuth.util';
 
 export const getNationAndArmies = async (userId: number) => {
   const route = `${API_ENDPOINT}/kingdom/${userId}`;

@@ -1,8 +1,8 @@
 'use client';
 
+import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT } from '@/configs/environment.config';
 import { Army } from '@/types';
-import { fetchWithAuth } from '@/utils/fetchWithAuth.util';
 
 interface TdBuyCellProps {
   army: Army;
