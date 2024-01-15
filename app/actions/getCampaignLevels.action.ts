@@ -8,11 +8,7 @@ export async function getCampaignLevels(accessToken: string | undefined) {
 
   const route = `${API_ENDPOINT}/campaign/levels`;
 
-  const response = await fetch(route, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const response = await fetch(route);
   const result: Array<CampaignLevel> = await response.json();
 
   return result;

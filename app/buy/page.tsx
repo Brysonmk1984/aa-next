@@ -1,16 +1,20 @@
+import { getAuth0Session } from '@/actions/getAuth0Session.action';
 import TdBuyCell from '@/components/TdBuyCell';
 import { getArmies } from '@/services/army';
 import { getNationAndArmies } from '@/services/kingdom';
 import { handleUserUpdateCheck } from '@/services/user';
 import { ResolvedUser, User } from '@/types';
-import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 export default async function Buy() {
-  const { user } = (await getSession()) as { user: User };
+  const { user, accessToken } = await getAuth0Session();
+  console.log('asd', user, accessToken);
+
+  const cake = (await handleUserUpdateCheck(user)) as { resolvedUser: ResolvedUser };
+  console.log({ cake });
 
   const {
     resolvedUser: { id: userId },
-  } = (await handleUserUpdateCheck(user)) as { resolvedUser: ResolvedUser };
+  } = cake;
 
   const armies = await getArmies();
   const { id: nationId } = await getNationAndArmies(userId);
@@ -35,7 +39,7 @@ export default async function Buy() {
               <td className="army-count">{army.count}</td>
               <td className="army-name">{army.army_name}</td>
               <td className="army-cost">ㆆ&nbsp;20,000</td>
-              <TdBuyCell army={army} nationId={nationId} />
+              {accessToken && <TdBuyCell army={army} nationId={nationId} accessToken={accessToken} />}
             </tr>
           ))}
         </tbody>

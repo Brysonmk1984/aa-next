@@ -2,18 +2,19 @@
 
 import { API_ENDPOINT } from '@/configs/environment.config';
 import { Army } from '@/types';
+import { fetchWithAuth } from '@/utils/fetchWithAuth.util';
 
 interface TdBuyCellProps {
   army: Army;
   nationId: number;
+  accessToken: string | undefined;
 }
 
-export default function TdBuyCell({ army, nationId }: TdBuyCellProps) {
+export default function TdBuyCell({ army, nationId, accessToken }: TdBuyCellProps) {
   async function handleBuyArmy() {
     const path = `${API_ENDPOINT}/kingdom/${nationId}/army/${army.id}`;
 
-    const response = await fetch(path, { method: 'POST' });
-    await response.json();
+    await fetchWithAuth(path);
   }
 
   return (

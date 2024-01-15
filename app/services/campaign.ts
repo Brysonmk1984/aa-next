@@ -14,18 +14,6 @@ export async function runCampaignBattle({ level, nation_id }: CampaignLevel) {
   return result;
 }
 
-export const getCampaignLevels = async () => {
-  const route = `${API_ENDPOINT}/campaign/levels`;
-  console.log({ route });
-
-  const response = await fetch(route);
-
-  const result: Array<CampaignLevel> = await response.json();
-  console.log('getCampaignLevels result', result);
-
-  return result;
-};
-
 export const getCampaignLevelDetails = async (level: number) => {
   const route = `${API_ENDPOINT}/campaign/levels/${level}/nation`;
   const response = await fetch(route);

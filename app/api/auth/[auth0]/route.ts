@@ -6,7 +6,10 @@ import { NextApiRequest, NextApiResponse } from 'next/types';
 export const GET = handleAuth({
   async login(req: NextApiRequest, res: NextApiResponse) {
     try {
-      const handleLoginResponse = await handleLogin(req, res, { authorizationParams: { customParam: 'foo' } });
+      console.log(1234, req);
+      const handleLoginResponse = await handleLogin(req, res, {
+        authorizationParams: { audience: 'http://127.0.0.1:8111' },
+      });
       console.log({ handleLoginResponse });
 
       return handleLoginResponse;
