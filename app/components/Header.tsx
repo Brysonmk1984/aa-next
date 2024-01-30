@@ -14,9 +14,9 @@ export default function Header() {
         <p>Battle for territory and control the Avalore! </p>
       </div>
       <nav className="flex gap-3 justify-end">
+        <a href="/armies">Armies</a>
         <a href="/campaign">Campaign</a>
         <a href="/nations">Nations</a>
-
         {user && (
           <>
             <a href="/kingdom">Kingdom</a>

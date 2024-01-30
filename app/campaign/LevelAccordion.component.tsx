@@ -33,6 +33,9 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   onChange,
   session,
 }) => {
+  const isAuthed = session?.accessToken;
+  const [visibleLevels, setVisibleLevels] = useState(!isAuthed ? 30 : highestLevel + 1);
+
   const handleBattleClick = async (l: CampaignLevel) => {
     try {
       const result = await runCampaignBattle({
@@ -46,14 +49,10 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
     }
   };
 
-  if (!session.accessToken) {
-    throw new Error('Cannot battle without an access token!');
-  }
-
   return (
     <Accordion allowZeroExpanded={true} preExpanded={[activeLevel]} onChange={onChange}>
       {levels.map((l) => {
-        if (l.level <= highestLevel + 1) {
+        if (l.level <= visibleLevels) {
           return (
             <AccordionItem key={l.id} uuid={l.level}>
               <AccordionItemHeading>
@@ -78,12 +77,14 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
                       </ul>
                     </div>
                     <div className="w-64 flex-initial text-center">
-                      <button
-                        className="px-3 py-1 border border-r-ivory bg-red  hover:bg-gray-dark"
-                        onClick={() => handleBattleClick(l)}
-                      >
-                        Battle
-                      </button>
+                      {isAuthed && (
+                        <button
+                          className="px-3 py-1 border border-r-ivory bg-red  hover:bg-gray-dark"
+                          onClick={() => handleBattleClick(l)}
+                        >
+                          Battle
+                        </button>
+                      )}
                     </div>
                   </div>
                 )}
