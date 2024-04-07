@@ -11,6 +11,7 @@ export default async function Army() {
 
   let armies;
   let nationAndArmies;
+
   if (session) {
     const { id: userId } = await handleUserUpdateCheck(session.user);
 
@@ -38,7 +39,7 @@ export default async function Army() {
               {armies.map((army) => (
                 <tr key={army.id}>
                   <td className="army-count">{army.count}</td>
-                  <td className="army-name">{army.army_name}</td>
+                  <td className="army-name">{army.name}</td>
                   <td className="army-cost">ㆆ&nbsp;20,000</td>
                   {session && <TdBuyCell army={army} nationId={nationAndArmies.id} accessToken={session.accessToken} />}
                 </tr>

@@ -2,7 +2,7 @@
 
 import { runCampaignBattle } from '@/services/campaign';
 
-import { CampaignLevel } from '@/types/campaign.type';
+import { CampaignLevel, CampaignLevelWithReward } from '@/types/campaign.type';
 import { CampaignNation, CampaignNationProfile } from '@/types/nation.type';
 import { numberFormat } from '@/utils/numberFormat';
 import { ComponentType, useState } from 'react';
@@ -17,7 +17,7 @@ import {
 import 'react-accessible-accordion/dist/fancy-example.css';
 
 interface LevelAccordion {
-  levels: Array<CampaignLevel>;
+  levels: Array<CampaignLevelWithReward>;
   activeLevel: number;
   highestLevel: number;
   selectedNation: CampaignNationProfile | undefined;
@@ -34,8 +34,7 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   session,
 }) => {
   const isAuthed = session?.accessToken;
-  const [visibleLevels, setVisibleLevels] = useState(!isAuthed ? 30 : highestLevel + 1);
-
+  const [visibleLevels, setVisibleLevels] = useState(!isAuthed ? 30 : highestLevel + 3);
   const handleBattleClick = async (l: CampaignLevel) => {
     try {
       const result = await runCampaignBattle({
@@ -43,7 +42,6 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
         accessToken: session.accessToken,
         contenders: [5, l.nation_id],
       });
-      console.log({ runCampaignBattleResult: result });
     } catch (e) {
       console.error(e);
     }
@@ -52,6 +50,8 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   return (
     <Accordion allowZeroExpanded={true} preExpanded={[activeLevel]} onChange={onChange}>
       {levels.map((l) => {
+        let [rewardAmount, reward] = l.reward;
+
         if (l.level <= visibleLevels) {
           return (
             <AccordionItem key={l.id} uuid={l.level}>
@@ -75,6 +75,12 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
                           </li>
                         ))}
                       </ul>
+                      <p>
+                        <strong>Reward:</strong>
+                        <br />
+                        <strong>{rewardAmount}</strong>&nbsp;
+                        {typeof reward === 'string' ? reward : `${reward.Enlist}`}
+                      </p>
                     </div>
                     <div className="w-64 flex-initial text-center">
                       {isAuthed && (

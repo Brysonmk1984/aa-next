@@ -45,9 +45,9 @@ stackMiddlewares(middlewareFuncs);
 // Primary matcher for all middleware
 export const config = {
   matcher: [
-    '/buy/:path*',
-    '/campaign/:path*',
-    '/kingdom/:path*',
+    // '/buy/:path*',
+    // '/campaign/:path*',
+    // '/kingdom/:path*',
     // This matcher works, but my auth middleware is failing
     //'/api/proxy/(buy|campaign|kingdom)/:path*',
   ],

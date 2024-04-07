@@ -4,4 +4,34 @@ export interface CampaignLevel {
   nation_name: string;
   level: number;
   lore: string;
+  reward: CampaignLevelReward;
 }
+
+export type CampaignLevelReward = [number, RewardType];
+
+type RewardType =
+  | {
+      Enlist: ArmyName;
+    }
+  | 'Gold';
+
+export enum ArmyName {
+  AmazonianHuntresses = 'Amazonian Huntresses',
+  AvianCliffDwellers = 'Avian Cliff Dwellers',
+  HighbornCavalry = 'Highborn Cavalry',
+  ImperialLegionnaires = 'Imperial Legionnaires',
+  MagiEnforcers = 'Magi Enforcers',
+  NorthWatchLongbowmen = 'North Watch Longbowmen',
+  PeacekeeperMonks = 'Peacekeeper Monks',
+  RoninImmortals = 'Rōnin Immortals',
+  ShinobiMartialArtists = 'Shinobi Martial Artists',
+  SkullClanDeathCultists = 'Skull Clan Death Cultists',
+  BarbariansOfTheOuterSteppe = 'Barbarians of the Outer Steppe',
+  OathSwornKnights = 'Oath-Sworn Knights',
+  MinuteMenMilitia = 'Minute Men Militia',
+  DeathDealerAssassins = 'Death Dealer Assassins',
+  ElvenArchers = 'Elven Archers',
+  CastlegateCrossbowmen = 'Castlegate Crossbowmen',
+}
+
+export type CampaignLevelWithReward = CampaignLevel & { reward: CampaignLevelReward };
