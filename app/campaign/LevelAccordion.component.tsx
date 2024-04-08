@@ -3,7 +3,7 @@
 import { runCampaignBattle } from '@/services/campaign';
 
 import { CampaignLevel, CampaignLevelWithReward } from '@/types/campaign.type';
-import { CampaignNation, CampaignNationProfile } from '@/types/nation.type';
+import { CampaignNationProfile } from '@/types/nation.type';
 import { numberFormat } from '@/utils/numberFormat';
 import { ComponentType, useState } from 'react';
 import {
@@ -79,7 +79,7 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
                         <strong>Reward:</strong>
                         <br />
                         <strong>{rewardAmount}</strong>&nbsp;
-                        {typeof reward === 'string' ? reward : `${reward.Enlist}`}
+                        {reward && (typeof reward === 'string' ? reward : `${reward.Enlist}`)}
                       </p>
                     </div>
                     <div className="w-64 flex-initial text-center">

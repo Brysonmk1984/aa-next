@@ -10,6 +10,5 @@ export const configureFetchOptions = (options: RequestInit = {}) => {
   const authorizationToken = getCookie('access_token');
 
   const Authorization = authorizationToken ? `Bearer ${authorizationToken}` : null;
-  console.log('THE THING', { ...options, Authorization });
   return { ...options, Authorization };
 };

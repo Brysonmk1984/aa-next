@@ -1,9 +1,6 @@
-import { handleUserUpdateCheck } from '@/services/user';
-import { ResolvedUser, User } from '@/types';
 import { CampaignLevelWithReward } from '@/types/campaign.type';
 import { getSession, getAccessToken, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { LevelList } from './LevelList.component';
-import { cookies } from 'next/headers';
 import { getCampaignLevels } from '@/actions/getCampaignLevels.action';
 
 export default async function Campaign() {
@@ -14,6 +11,7 @@ export default async function Campaign() {
   try {
     const [campaignLevels, rewards] = await getCampaignLevels();
     campaignLevelsWithRewards = campaignLevels.map((campaignLevel) => {
+      let l = campaignLevel.level;
       return {
         reward: rewards[campaignLevel.level] ?? [null, null],
         ...campaignLevel,

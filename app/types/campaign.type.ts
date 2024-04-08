@@ -7,13 +7,13 @@ export interface CampaignLevel {
   reward: CampaignLevelReward;
 }
 
-export type CampaignLevelReward = [number, RewardType];
+export type CampaignLevelReward = [number, Reward];
 
-type RewardType =
-  | {
-      Enlist: ArmyName;
-    }
-  | 'Gold';
+type ArmyReward = {
+  Enlist: ArmyName;
+};
+
+type Reward = ArmyReward | 'Gold' | null;
 
 export enum ArmyName {
   AmazonianHuntresses = 'Amazonian Huntresses',
@@ -35,3 +35,37 @@ export enum ArmyName {
 }
 
 export type CampaignLevelWithReward = CampaignLevel & { reward: CampaignLevelReward };
+
+export type GetCampaignLevels = [Array<Omit<CampaignLevel, 'reward'>>, Record<string, CampaignLevelReward>];
+
+// type CampaignLevelNumberAsString =
+//   | '1'
+//   | '2'
+//   | '3'
+//   | '4'
+//   | '5'
+//   | '6'
+//   | '7'
+//   | '8'
+//   | '9'
+//   | '10'
+//   | '11'
+//   | '12'
+//   | '13'
+//   | '14'
+//   | '15'
+//   | '16'
+//   | '17'
+//   | '18'
+//   | '19'
+//   | '20'
+//   | '21'
+//   | '22'
+//   | '23'
+//   | '24'
+//   | '25'
+//   | '26'
+//   | '27'
+//   | '28'
+//   | '29'
+//   | '30';
