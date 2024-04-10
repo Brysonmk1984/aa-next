@@ -43,7 +43,7 @@ stackMiddlewares(middlewareFuncs);
 //);
 
 // Primary matcher for all middleware
-export const config = {
+export const config: { matcher: Array<string> } = {
   matcher: [
     // '/buy/:path*',
     // '/campaign/:path*',

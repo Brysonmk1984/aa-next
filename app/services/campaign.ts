@@ -39,6 +39,7 @@ export const getCampaignLevelDetails = async (level: number) => {
   const route = `${API_ENDPOINT}/campaign/levels/${level}/nation`;
   const response = await fetch(route);
   const result: CampaignNationProfile = await response.json();
+  console.log('ALL_ARMIES', result.all_armies);
 
   return result;
 };

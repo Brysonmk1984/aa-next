@@ -12,7 +12,6 @@ import {
   AccordionItemHeading,
   AccordionItemButton,
   AccordionItemPanel,
-  AccordionItemState,
 } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
@@ -71,7 +70,6 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
                         {selectedNation.all_armies.map((army) => (
                           <li key={army.id}>
                             {numberFormat(army.count)} {army.army_name}
-                            <p>{army.lore}</p>
                           </li>
                         ))}
                       </ul>

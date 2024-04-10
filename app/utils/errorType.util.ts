@@ -2,12 +2,12 @@
  * NonErrorException class is a utility class that's used to convert non-errors being thrown into errors for clear messaging in Sentry
  */
 class NonErrorException extends Error {
-  private setError = (message: string | boolean | number | object | undefined | null) => {
+  private setError = (message: unknown) => {
     this.name = `NonErrorException - type: ${typeof message}`;
     this.message = message?.toString() ?? 'No Error Message Provided';
   };
 
-  constructor(message: string | boolean | number | object | undefined | null) {
+  constructor(message: unknown) {
     super();
 
     this.setError(message);

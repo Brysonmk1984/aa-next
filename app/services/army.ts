@@ -9,7 +9,7 @@ export async function getArmies() {
     throw new Error('Failed to fetch data');
   }
 
-  const armies = (await res.json()) as Promise<Array<Army>>;
+  const armies: Array<Army> = await res.json();
 
   return armies;
 }

@@ -1,4 +1,4 @@
-import { Army } from '.';
+import { NationArmy } from '.';
 
 export interface Nation {
   id: number;
@@ -6,6 +6,8 @@ export interface Nation {
   name: string;
   gold: number;
   is_npc: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CampaignNation extends Nation {
@@ -16,5 +18,5 @@ export interface CampaignNation extends Nation {
 
 export interface CampaignNationProfile {
   nation_details: CampaignNation;
-  all_armies: Array<Army>;
+  all_armies: Array<NationArmy>;
 }
