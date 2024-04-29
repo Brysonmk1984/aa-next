@@ -2,6 +2,8 @@ import { API_ENDPOINT } from '@/configs/environment.config';
 import { Army } from '@/types';
 
 export async function getArmies() {
+  console.log(`${API_ENDPOINT}/armies`);
+
   const res = await fetch(`${API_ENDPOINT}/armies`);
 
   if (!res.ok) {

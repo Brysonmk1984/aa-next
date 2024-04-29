@@ -23,7 +23,6 @@ export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel,
 
     try {
       const response = await getCampaignLevelDetails(level);
-      console.log(response);
 
       setSelectedNation(response);
       setActiveLevel(level);

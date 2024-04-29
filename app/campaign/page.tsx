@@ -27,7 +27,11 @@ export default async function Campaign() {
     <main className="flex min-h-screen flex-col items-center p-24">
       <h1>Campaign</h1>
       <section className="w-full">
-        <LevelList levels={campaignLevelsWithRewards} highestLevel={highestLevel} session={session} />
+        <LevelList
+          levels={campaignLevelsWithRewards}
+          highestLevel={highestLevel}
+          session={JSON.parse(JSON.stringify(session))}
+        />
       </section>
     </main>
   );

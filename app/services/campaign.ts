@@ -14,8 +14,6 @@ export async function runCampaignBattle({
   contenders: [number, number];
 }) {
   try {
-    console.log('here we go', level, accessToken);
-
     const response = await fetchWithAuthClientSide(`${API_ENDPOINT}/battles/campaign/levels/${level}`, {
       method: 'POST',
       headers: {
