@@ -1,4 +1,5 @@
 // app/api/auth/[auth0]/route.js
+import { AUTH_AUD } from '@/configs/environment.config';
 import { errorType } from '@/utils/errorType.util';
 import { handleAuth, handleLogin } from '@auth0/nextjs-auth0';
 import { NextApiRequest, NextApiResponse } from 'next/types';
@@ -8,7 +9,7 @@ export const GET = handleAuth({
     try {
       console.log(1234, req);
       const handleLoginResponse = await handleLogin(req, res, {
-        authorizationParams: { audience: 'http://127.0.0.1:8111' },
+        authorizationParams: { audience: AUTH_AUD },
       });
       console.log({ handleLoginResponse });
 

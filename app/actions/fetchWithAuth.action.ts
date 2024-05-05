@@ -7,7 +7,7 @@ export async function fetchWithAuth(route: string, options: RequestInit = {}) {
   //console.log('The route on server', route);
 
   const { accessToken } = (await getSession()) as { user: User; accessToken?: string | undefined };
-  //console.log({ accessToken });
+  console.log({ accessToken });
 
   if (accessToken) {
     options.headers = {
