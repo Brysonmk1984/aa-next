@@ -65,7 +65,9 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
                 {l.nation_id && selectedNation && (
                   <div className="flex">
                     <div className="flex-initial">
-                      <p>{l.lore}</p>
+                      <p>{selectedNation.nation_details.lore}</p>
+                      <br />
+                      <strong>Standing Army:</strong>
                       <ul>
                         {selectedNation.all_armies.map((army) => (
                           <li key={army.id}>
@@ -73,6 +75,7 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
                           </li>
                         ))}
                       </ul>
+                      <br />
                       <p>
                         <strong>Reward:</strong>
                         <br />

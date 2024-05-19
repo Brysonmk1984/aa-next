@@ -12,3 +12,13 @@ export const configureFetchOptions = (options: RequestInit = {}) => {
   const Authorization = authorizationToken ? `Bearer ${authorizationToken}` : null;
   return { ...options, Authorization };
 };
+
+export const fetchWrapper = async (url: string, options?: RequestInit) => {
+  const response = await fetch(url, options);
+
+  if (!response.ok) {
+    throw new Error(`FetchError: Request failed with status code ${response.status} (${response.statusText})`);
+  }
+
+  return response.json();
+};

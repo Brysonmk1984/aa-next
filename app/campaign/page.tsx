@@ -17,8 +17,6 @@ export default async function Campaign() {
         ...campaignLevel,
       };
     });
-
-    //console.log(campaignLevelsWithRewards);
   } catch (error) {
     throw error;
   }

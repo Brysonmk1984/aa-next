@@ -6,6 +6,7 @@ export interface Nation {
   name: string;
   gold: number;
   is_npc: boolean;
+  lore: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -13,7 +14,6 @@ export interface Nation {
 export interface CampaignNation extends Nation {
   user_id: null;
   is_npc: true;
-  lore: string | null;
 }
 
 export interface CampaignNationProfile {

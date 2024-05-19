@@ -1,8 +1,6 @@
 import { API_ENDPOINT } from '@/configs/environment.config';
-import { User } from '@/types';
-import { CampaignLevel } from '@/types/campaign.type';
 import { CampaignNationProfile } from '@/types/nation.type';
-import { fetchWithAuthClientSide } from '@/utils/fetchWithAuthClientSide.util';
+import { fetchWrapper } from '@/utils/fetch.util';
 
 export async function runCampaignBattle({
   level,
@@ -14,7 +12,7 @@ export async function runCampaignBattle({
   contenders: [number, number];
 }) {
   try {
-    const response = await fetchWithAuthClientSide(`${API_ENDPOINT}/battles/campaign/levels/${level}`, {
+    const response = await fetchWrapper(`${API_ENDPOINT}/battles/campaign/levels/${level}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -25,7 +23,6 @@ export async function runCampaignBattle({
         west_competitor: contenders[1],
       }),
     });
-    console.log({ response });
 
     return response;
   } catch (e) {
@@ -35,9 +32,7 @@ export async function runCampaignBattle({
 
 export const getCampaignLevelDetails = async (level: number) => {
   const route = `${API_ENDPOINT}/campaign/levels/${level}/nation`;
-  const response = await fetch(route);
-  const result: CampaignNationProfile = await response.json();
-  console.log('ALL_ARMIES', result.all_armies);
+  const result: CampaignNationProfile = await fetchWrapper(route);
 
   return result;
 };

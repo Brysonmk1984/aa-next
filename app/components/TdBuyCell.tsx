@@ -1,9 +1,8 @@
 'use client';
 
-import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT } from '@/configs/environment.config';
 import { Army } from '@/types';
-import { fetchWithAuthClientSide } from '@/utils/fetchWithAuthClientSide.util';
+import { fetchWrapper } from '@/utils/fetch.util';
 
 interface TdBuyCellProps {
   army: Army;
@@ -14,10 +13,9 @@ interface TdBuyCellProps {
 export default function TdBuyCell({ army, nationId, accessToken }: TdBuyCellProps) {
   async function handleBuyArmy() {
     const path = `${API_ENDPOINT}/kingdom/${nationId}/army/${army.id}`;
-    //console.log('the route on client', { path }, accessToken);
-    //const fetchWithAuthPassingPath = fetchWithAuth.bind(null, path);
+
     // why would this fail?
-    await fetchWithAuthClientSide(path, {
+    await fetchWrapper(path, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
