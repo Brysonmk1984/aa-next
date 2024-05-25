@@ -15,6 +15,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   color: #252222;
+  min-height: 100vh;
 }
 header {
   @apply text-ivory;
@@ -25,7 +26,7 @@ footer {
   @apply text-ivory;
   color: text-ivory;
   background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.75)), url('/images/spiked_wood.jpg');
-  background-repeat: repeat-x;
+  background-repeat: repeat;
   background-size: contain;
 }
 
@@ -63,4 +64,11 @@ div {
   font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
+}
+.page-content {
+  background-image: url('/images/parchment.webp');
+  background-repeat: no-repeat;
+  background-size: stretch 100%;
+  background-position: center;
+  min-height: 700px;
 }

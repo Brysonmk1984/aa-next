@@ -22,9 +22,9 @@ export default async function Campaign() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex   min-h-[800px]  flex-col items-center p-24">
       <h1>Campaign</h1>
-      <section className="w-full">
+      <section className="page-content w-full  mx-auto ">
         <LevelList
           levels={campaignLevelsWithRewards}
           highestLevel={highestLevel}

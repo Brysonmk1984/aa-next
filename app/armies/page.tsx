@@ -24,10 +24,8 @@ export default async function Army() {
   }
 
   return (
-    <main className="flex  flex-col items-center justify-between p-24">
-      <h1>Armies for Hire</h1>
-
-      <>
+    <main className="flex  min-h-[800px]  flex-col items-center justify-between p-24">
+      <section className="page-content w-full  mx-auto ">
         <table className="army-list">
           <thead>
             <tr>
@@ -49,7 +47,7 @@ export default async function Army() {
             ))}
           </tbody>
         </table>
-      </>
+      </section>
     </main>
   );
 }
