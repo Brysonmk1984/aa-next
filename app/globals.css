@@ -1,26 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Gelasio:wght@400&family=Germania+One&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --foreground-rgb: 255, 255, 255;
+  --background-rgba: rgb(27, 17, 17);
 }
 
 body {
   @apply text-ivory;
   @apply font-serif;
-  /* color: rgb(var(--foreground-rgb)); */
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.95)), url('../public/images/background_texture.jpg');
+  color: #252222;
+}
+header {
+  @apply text-ivory;
+  color: text-ivory;
 }
 
 h1 {
@@ -36,9 +32,25 @@ h3 {
   @apply font-serif;
 }
 
+#logo {
+  filter: sepia(100%);
+}
 p,
 li,
 span,
 div {
   @apply font-serif;
+}
+
+.germania {
+  font-family: 'Germania One', system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.gelasio {
+  font-family: 'Gelasio', serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }

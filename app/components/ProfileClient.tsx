@@ -14,11 +14,6 @@ export default function ProfileClient({ user, isLoading }: IProfileClient) {
     user && (
       <div>
         <a href="/api/auth/logout">Logout</a>
-        {user?.picture ? (
-          <Image src={user.picture} width={50} height={50} alt={user?.name || ''} />
-        ) : (
-          <h3>{user?.nickname ?? user?.name ?? user.email}</h3>
-        )}
       </div>
     )
   );

@@ -1,5 +1,6 @@
 'use-client';
 
+import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { runCampaignBattle } from '@/services/campaign';
 
 import { CampaignLevel, CampaignLevelWithReward } from '@/types/campaign.type';

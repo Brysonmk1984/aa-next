@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     colors: {
-      red: '#8B0000',
+      red: '#62150D',
       blue: '#1fb6ff',
       purple: '#7e5bef',
       pink: '#ff49db',
@@ -19,6 +19,10 @@ const config: Config = {
       'gray-dark': '#273444',
       gray: '#8492a6',
       'gray-light': '#d3dce6',
+    },
+    fontFamily: {
+      sans: ['Germania One', 'helvetica', 'arial'],
+      serif: ['Gelasio', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
     },
     extend: {
       backgroundImage: {

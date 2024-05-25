@@ -8,9 +8,12 @@ export const GET = handleAuth({
   async login(req: NextApiRequest, res: NextApiResponse) {
     try {
       console.log(1234, req);
+
+      // Don't need to override the audience, it's already being passed from Auth0 server based on tenant
       const handleLoginResponse = await handleLogin(req, res, {
         authorizationParams: { audience: AUTH_AUD },
       });
+
       console.log({ handleLoginResponse });
 
       return handleLoginResponse;
