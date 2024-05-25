@@ -11,12 +11,22 @@
 body {
   @apply text-ivory;
   @apply font-serif;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.95)), url('../public/images/background_texture.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95)), url('/images/background_texture.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #252222;
 }
 header {
   @apply text-ivory;
   color: text-ivory;
+}
+
+footer {
+  @apply text-ivory;
+  color: text-ivory;
+  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.75)), url('/images/spiked_wood.jpg');
+  background-repeat: repeat-x;
+  background-size: contain;
 }
 
 h1 {

@@ -19,6 +19,7 @@ const config: Config = {
       'gray-dark': '#273444',
       gray: '#8492a6',
       'gray-light': '#d3dce6',
+      'off-black': '#1B1111',
     },
     fontFamily: {
       sans: ['Germania One', 'helvetica', 'arial'],
