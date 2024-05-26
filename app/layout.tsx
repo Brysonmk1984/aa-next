@@ -4,6 +4,9 @@ import './globals.css';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { Sidebar } from './components/SideBar.component';
+import { useState } from 'react';
+import { ContentWrapper } from './components/ContentWrapper.component';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,9 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <UserProvider>
         <body className={inter.className}>
-          <Header />
-          {children}
-          <Footer />
+          <ContentWrapper>{children}</ContentWrapper>
         </body>
       </UserProvider>
     </html>

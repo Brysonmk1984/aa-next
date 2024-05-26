@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Gelasio:wght@400&family=Germania+One&display=swap');
+@import './burger-menu.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -68,7 +69,30 @@ div {
 .page-content {
   background-image: url('/images/parchment.webp');
   background-repeat: no-repeat;
-  background-size: stretch 100%;
+  background-size: 100% auto;
   background-position: center;
   min-height: 700px;
+  max-width: 1200px;
 }
+
+@media (max-width: 1200px) {
+  main {
+    padding: 2rem !important;
+  }
+}
+
+@media (max-width: 800px) {
+  main {
+    padding: 0rem !important;
+  }
+  .page-content {
+    background-size: auto 100%;
+    min-height: 700px;
+  }
+}
+
+/* @media (min-width: 1201px) {
+  #desktop-nav {
+    display: flex;
+  }
+} */

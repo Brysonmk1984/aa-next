@@ -3,18 +3,24 @@ import Image from 'next/image';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 
 interface IProfileClient {
+  className?: string;
   user: UserProfile | undefined;
   isLoading: boolean;
 }
-export default function ProfileClient({ user, isLoading }: IProfileClient) {
-  if (isLoading) return <div>Loading...</div>;
-  if (!user) return <a href="/api/auth/login">Login</a>;
+export default function ProfileClient(props: IProfileClient) {
+  const { user, className = '' } = props;
+  if (!user)
+    return (
+      <a href="/api/auth/login" className={className}>
+        Login
+      </a>
+    );
 
   return (
     user && (
-      <div>
-        <a href="/api/auth/logout">Logout</a>
-      </div>
+      <a href="/api/auth/logout" className={className}>
+        Logout
+      </a>
     )
   );
 }
