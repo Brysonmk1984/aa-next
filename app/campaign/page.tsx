@@ -2,6 +2,7 @@ import { CampaignLevelWithReward } from '@/types/campaign.type';
 import { getSession, getAccessToken, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { LevelList } from './LevelList.component';
 import { getCampaignLevels } from '@/actions/getCampaignLevels.action';
+import { PageTemplate } from '@/components/PageTemplate.component';
 
 export default async function Campaign() {
   const session = await getSession();
@@ -22,15 +23,13 @@ export default async function Campaign() {
   }
 
   return (
-    <main className="flex   min-h-[800px]  flex-col items-center p-24">
+    <PageTemplate>
       <h1>Campaign</h1>
-      <section className="page-content w-full  mx-auto ">
-        <LevelList
-          levels={campaignLevelsWithRewards}
-          highestLevel={highestLevel}
-          session={JSON.parse(JSON.stringify(session))}
-        />
-      </section>
-    </main>
+      <LevelList
+        levels={campaignLevelsWithRewards}
+        highestLevel={highestLevel}
+        session={JSON.parse(JSON.stringify(session))}
+      />
+    </PageTemplate>
   );
 }

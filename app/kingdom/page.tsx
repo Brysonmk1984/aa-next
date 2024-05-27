@@ -1,9 +1,9 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { PageTemplate } from '@/components/PageTemplate.component';
 
 export default async function Kingdom() {
   return (
-    <main className="flex min-h-[800px] flex-col items-center justify-between p-24">
-      <section className="page-content w-full  mx-auto "></section>
-    </main>
+    <PageTemplate>
+      <h1>Kingdom</h1>
+    </PageTemplate>
   );
 }

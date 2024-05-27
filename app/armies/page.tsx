@@ -1,4 +1,5 @@
 import { getAuth0Session } from '@/actions/getAuth0Session.action';
+import { PageTemplate } from '@/components/PageTemplate.component';
 import TdBuyCell from '@/components/TdBuyCell';
 import { getArmies } from '@/services/army';
 import { getNationAndArmies } from '@/services/kingdom';
@@ -24,30 +25,29 @@ export default async function Army() {
   }
 
   return (
-    <main className="flex  min-h-[800px]  flex-col items-center justify-between p-24">
-      <section className="page-content w-full  mx-auto ">
-        <table className="army-list">
-          <thead>
-            <tr>
-              <th>Count</th>
-              <th>Army</th>
-              <th>Gold</th>
-              <th></th>
-            </tr>
-          </thead>
+    <PageTemplate>
+      <h1>Armies</h1>
+      <table className="army-list">
+        <thead>
+          <tr>
+            <th>Count</th>
+            <th>Army</th>
+            <th>Gold</th>
+            <th></th>
+          </tr>
+        </thead>
 
-          <tbody>
-            {armies.map((army) => (
-              <tr key={army.id}>
-                <td className="army-count">{army.count}</td>
-                <td className="army-name">{army.name}</td>
-                <td className="army-cost">ㆆ&nbsp;20,000</td>
-                {session && <TdBuyCell army={army} nationId={nationAndArmies.id} accessToken={session.accessToken} />}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
-    </main>
+        <tbody>
+          {armies.map((army) => (
+            <tr key={army.id}>
+              <td className="army-count">{army.count}</td>
+              <td className="army-name">{army.name}</td>
+              <td className="army-cost">ㆆ&nbsp;20,000</td>
+              {session && <TdBuyCell army={army} nationId={nationAndArmies.id} accessToken={session.accessToken} />}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </PageTemplate>
   );
 }

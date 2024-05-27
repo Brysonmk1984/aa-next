@@ -32,15 +32,12 @@ footer {
 }
 
 h1 {
-  @apply font-serif;
+  @apply font-sans;
   @apply text-4xl;
-}
-h2 {
-  @apply font-serif;
-  @apply text-xl;
+  opacity: 0.9;
 }
 
-h3 {
+h2 {
   @apply font-serif;
 }
 
@@ -67,12 +64,18 @@ div {
   font-style: normal;
 }
 .page-content {
-  background-image: url('/images/parchment.webp');
+  background-image: url('/images/parchment.png');
   background-repeat: no-repeat;
   background-size: 100% auto;
-  background-position: center;
+  background-position: top;
   min-height: 700px;
   max-width: 1200px;
+}
+#desktop-nav a:last-child {
+  margin-right: 1em;
+}
+#desktop-nav a:hover {
+  color: ivory;
 }
 
 @media (max-width: 1200px) {
@@ -88,11 +91,6 @@ div {
   .page-content {
     background-size: auto 100%;
     min-height: 700px;
+    margin-top: 3em;
   }
 }
-
-/* @media (min-width: 1201px) {
-  #desktop-nav {
-    display: flex;
-  }
-} */

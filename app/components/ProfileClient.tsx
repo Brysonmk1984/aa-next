@@ -8,7 +8,12 @@ interface IProfileClient {
   isLoading: boolean;
 }
 export default function ProfileClient(props: IProfileClient) {
-  const { user, className = '' } = props;
+  const { user, isLoading, className = '' } = props;
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
   if (!user)
     return (
       <a href="/api/auth/login" className={className}>
