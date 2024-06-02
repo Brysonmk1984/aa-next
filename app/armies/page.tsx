@@ -1,16 +1,14 @@
 import { getAuth0Session } from '@/actions/getAuth0Session.action';
 import { PageTemplate } from '@/components/PageTemplate.component';
 import TdBuyCell from '@/components/TdBuyCell';
-import { getArmies } from '@/services/army';
-import { getNationAndArmies } from '@/services/kingdom';
-import { handleUserUpdateCheck } from '@/services/user';
-import { Nation, ResolvedUser } from '@/types';
-import { Army } from '@/types';
+import { getArmies, getNationAndArmies, handleUserUpdateCheck } from '@/services';
+
+import { Nation, ResolvedUser, Army as ArmyType } from '@/types';
 
 export default async function Army() {
   const session = await getAuth0Session();
 
-  let armies: Array<Army>;
+  let armies: Array<ArmyType>;
   let nationAndArmies: Nation;
 
   if (session) {

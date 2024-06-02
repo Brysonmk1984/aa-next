@@ -4,9 +4,9 @@ import { Nation, NationArmy } from '@/types';
 
 export const getNationAndArmies = async (userId: number) => {
   const route = `${API_ENDPOINT}/kingdom/${userId}`;
-  const [nation, _armies]: [Nation, NationArmy] = await fetchWithAuth(route);
+  const [nation, armies]: [Nation, NationArmy[]] = await fetchWithAuth(route);
 
-  return nation;
+  return { nation, armies };
 };
 
 export const initializeNation = async (userId: number) => {

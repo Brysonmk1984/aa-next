@@ -65,7 +65,7 @@ div {
 }
 .page-content {
   background-image: url('/images/parchment.png');
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-size: 100% auto;
   background-position: top;
   min-height: 700px;

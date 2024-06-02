@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import { Sidebar } from './components/SideBar.component';
-import { useState } from 'react';
 import { ContentWrapper } from './components/ContentWrapper.component';
+import { getAuth0Session } from './actions/getAuth0Session.action';
+import { Nation, NationArmy } from './types';
+
+import { KingdomProvider } from './contexts';
+import { getNationAndArmies, handleUserUpdateCheck } from './services';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,13 +16,28 @@ export const metadata: Metadata = {
   description: 'An incremental strategy game set in a realm of medieval fantasy',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await getAuth0Session();
+  let nation: Nation = null;
+  let armies: NationArmy[] = [];
+  console.log('HERERRRERERE', session);
+
+  if (session) {
+    const { id: userId } = await handleUserUpdateCheck(session.user);
+
+    ({ nation, armies } = await getNationAndArmies(userId));
+
+    console.log('INSSSSIDE', { nation, armies });
+  }
+
   return (
     <html lang="en">
       <UserProvider>
-        <body className={inter.className}>
-          <ContentWrapper>{children}</ContentWrapper>
-        </body>
+        <KingdomProvider nation={nation} armies={armies}>
+          <body className={inter.className}>
+            <ContentWrapper>{children}</ContentWrapper>
+          </body>
+        </KingdomProvider>
       </UserProvider>
     </html>
   );

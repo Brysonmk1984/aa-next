@@ -6,11 +6,16 @@ import { PageTemplate } from '@/components/PageTemplate.component';
 
 export default async function Campaign() {
   const session = await getSession();
+  console.log(session);
 
   let campaignLevelsWithRewards: Array<CampaignLevelWithReward>;
   let highestLevel: number = 1;
   try {
+    console.log('GETTING CAMPAIGN LEVELS');
+
     const [campaignLevels, rewards] = await getCampaignLevels();
+    console.log('RESULTS', [campaignLevels, rewards]);
+
     campaignLevelsWithRewards = campaignLevels.map((campaignLevel) => {
       let l = campaignLevel.level;
       return {
@@ -19,6 +24,8 @@ export default async function Campaign() {
       };
     });
   } catch (error) {
+    console.error('THE ERROR on campaign level page', error);
+
     throw error;
   }
 

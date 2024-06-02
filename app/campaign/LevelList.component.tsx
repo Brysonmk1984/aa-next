@@ -4,7 +4,7 @@ import { CampaignLevel } from '@/types/campaign.type';
 import { ComponentType, useState } from 'react';
 import { LevelAccordion } from './LevelAccordion.component';
 import { CampaignNationProfile } from '@/types/nation.type';
-import { getCampaignLevelDetails } from '@/services/campaign';
+import { getCampaignLevelDetails } from '@/services';
 
 interface LevelListProps {
   levels: Array<CampaignLevel>;

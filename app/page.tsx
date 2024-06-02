@@ -3,10 +3,10 @@ import { API_ENDPOINT } from './configs/environment.config';
 
 import { getSession } from '@auth0/nextjs-auth0';
 import { ResolvedUser, User } from './types';
-import { getArmies } from './services/army';
-import { handleUserUpdateCheck } from './services/user';
+
 import { Session } from 'inspector';
 import { PageTemplate } from './components/PageTemplate.component';
+import { getArmies, handleUserUpdateCheck } from './services';
 
 export default async function Home() {
   const userSession = await getSession();

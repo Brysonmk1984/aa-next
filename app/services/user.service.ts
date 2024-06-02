@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '@/configs/environment.config';
 import { ResolvedUser, User } from '@/types';
-import { initializeNation } from './kingdom';
+import { initializeNation } from './kingdom.service';
 
 const findOrCreateUser = async ({ email, email_verified: emailVerified, sub }: User) => {
   const result = await fetch(`${API_ENDPOINT}/users`, {
