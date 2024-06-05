@@ -1,6 +1,7 @@
 'use-client';
 
 import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
+import { useKingdomContext } from '@/contexts';
 import { runCampaignBattle } from '@/services';
 
 import { CampaignLevel, CampaignLevelWithReward } from '@/types/campaign.type';
@@ -35,12 +36,14 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
 }) => {
   const isAuthed = session?.accessToken;
   const [visibleLevels, setVisibleLevels] = useState(!isAuthed ? 30 : highestLevel + 3);
+  const { nation, armies } = useKingdomContext();
+
   const handleBattleClick = async (l: CampaignLevel) => {
     try {
       const result = await runCampaignBattle({
         level: l.level,
         accessToken: session.accessToken,
-        contenders: [5, l.nation_id],
+        contenders: [nation.id, l.nation_id],
       });
     } catch (e) {
       console.error(e);
@@ -50,6 +53,7 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   return (
     <Accordion allowZeroExpanded={true} preExpanded={[activeLevel]} onChange={onChange}>
       {levels.map((l) => {
+        console.log(nation.id, l.nation_id);
         let [rewardAmount, reward] = l.reward;
 
         if (l.level <= visibleLevels) {
