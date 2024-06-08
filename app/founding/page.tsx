@@ -1,9 +1,9 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
 
-export default function Nations() {
+export default async function Founding() {
   return (
     <PageTemplate>
-      <h1>Nations</h1>
+      <h1>Founding of a Nation</h1>
     </PageTemplate>
   );
 }

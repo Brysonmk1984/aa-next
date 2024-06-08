@@ -7,8 +7,7 @@ export const Links = () => {
   return (
     <>
       <Link href="/campaign">Campaign</Link>
-      <Link href="/nations">Nations</Link>
-      {user && <Link href="/kingdom">Kingdom</Link>}
+      {user && <Link href="/nation">Nation</Link>}
       {user && <Link href="/armies">Enlist</Link>}
 
       <ProfileClient user={user} isLoading={isLoading} />

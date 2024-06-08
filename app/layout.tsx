@@ -6,7 +6,7 @@ import { ContentWrapper } from './components/ContentWrapper.component';
 import { getAuth0Session } from './actions/getAuth0Session.action';
 import { Nation, NationArmy } from './types';
 
-import { KingdomProvider } from './contexts';
+import { NationProvider } from './contexts';
 import { getNationAndArmies, handleUserUpdateCheck } from './services';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -24,20 +24,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   if (session) {
     const { id: userId } = await handleUserUpdateCheck(session.user);
-
     ({ nation, armies } = await getNationAndArmies(userId));
-
-    console.log('INSSSSIDE', { nation, armies });
   }
 
   return (
     <html lang="en">
       <UserProvider>
-        <KingdomProvider nation={nation} armies={armies}>
+        <NationProvider nation={nation} armies={armies}>
           <body className={inter.className}>
             <ContentWrapper>{children}</ContentWrapper>
           </body>
-        </KingdomProvider>
+        </NationProvider>
       </UserProvider>
     </html>
   );
