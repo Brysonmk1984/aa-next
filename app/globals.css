@@ -34,11 +34,16 @@ footer {
 h1 {
   @apply font-sans;
   @apply text-4xl;
-  opacity: 0.9;
+  @apply text-red;
+  color: text-red;
+  margin: 2rem 0rem;
 }
 
 h2 {
-  @apply font-serif;
+  @apply font-sans;
+  @apply text-xl;
+  opacity: 0.9;
+  margin: 1rem 0rem;
 }
 
 #logo {
@@ -76,6 +81,22 @@ div {
 }
 #desktop-nav a:hover {
   color: ivory;
+}
+input,
+textarea {
+  padding: 3px 6px;
+  margin: 6px 0px;
+  width: 100%;
+}
+
+.btn {
+  @apply font-bold py-2 px-4;
+}
+.btn-blue {
+  @apply bg-red text-ivory;
+}
+.btn-blue:hover {
+  @apply bg-red text-light-ivory;
 }
 
 @media (max-width: 1200px) {

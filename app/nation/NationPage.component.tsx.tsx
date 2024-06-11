@@ -9,11 +9,14 @@ export const NationPage = () => {
 
   return (
     <>
-      {nation.name ? <h1>Nation of {nation.name}</h1> : <h1>Nation</h1>}
-      {nation.name && <h2>{nation.name}</h2>}
-      <span>gold:</span>
-      <span>{nation.gold}</span>
-      {nation.lore && <p>{nation.lore}</p>}
+      {nation?.name ? <h1>Nation of {nation.name}</h1> : <h1>Nation</h1>}
+      {nation?.gold && (
+        <div>
+          <span>gold:</span>
+          <span>{nation.gold}</span>
+        </div>
+      )}
+      {nation?.lore && <p>{nation.lore}</p>}
       <h2>Standing Army</h2>
       <div className=" relative">
         <div className="h-[350px] relative ">

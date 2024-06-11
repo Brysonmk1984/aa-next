@@ -17,7 +17,8 @@ export const fetchWrapper = async (url: string, options?: RequestInit) => {
   const response = await fetch(url, options);
 
   if (!response.ok) {
-    throw new Error(`FetchError: Request failed with status code ${response.status} (${response.statusText})`);
+    const message = `FetchError: Request failed with status code ${response.status} (${response.statusText})`;
+    throw new Error(message);
   }
 
   return response.json();

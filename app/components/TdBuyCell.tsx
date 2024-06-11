@@ -26,7 +26,7 @@ export default function TdBuyCell({ army, nationId, accessToken }: TdBuyCellProp
 
   return (
     <td className="buy-cell">
-      <button onClick={handleBuyArmy}>Buy</button>
+      <button onClick={handleBuyArmy}>Hire</button>
     </td>
   );
 }

@@ -5,7 +5,7 @@ import { getArmies, getNationAndArmies, handleUserUpdateCheck } from '@/services
 
 import { Nation, ResolvedUser, Army as ArmyType, NationArmy } from '@/types';
 
-export default async function Army() {
+export default async function Enlist() {
   const session = await getAuth0Session();
 
   let armies: Array<ArmyType>;
