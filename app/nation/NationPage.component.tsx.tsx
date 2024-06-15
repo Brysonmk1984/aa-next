@@ -35,7 +35,7 @@ export const NationPage = () => {
                   />
                 </div>
                 <div className="text-center">
-                  <h3 className=" text-2xl">Minute Men Militia</h3>
+                  <h3 className=" text-2xl">{army_name}</h3>
                   <dl className="flex items-center justify-center ">
                     <dt className=" text-2xl px-1">x</dt>
                     <dd className=" text-3xl">{count}</dd>

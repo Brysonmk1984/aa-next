@@ -1,7 +1,4 @@
 'use client';
-
-import ProfileClient from './ProfileClient';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from 'next/image';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Link from 'next/link';

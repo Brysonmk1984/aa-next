@@ -6,22 +6,7 @@ import { getArmies, getNationAndArmies, handleUserUpdateCheck } from '@/services
 import { Nation, ResolvedUser, Army as ArmyType, NationArmy } from '@/types';
 
 export default async function Enlist() {
-  const session = await getAuth0Session();
-
-  let armies: Array<ArmyType>;
-  let nation: Nation;
-  let nationArmies: NationArmy[];
-
-  if (session) {
-    const { id: userId } = await handleUserUpdateCheck(session.user);
-
-    armies = await getArmies();
-    ({ nation, armies: nationArmies } = await getNationAndArmies(userId));
-  }
-
-  if (!(session && nation && armies)) {
-    return <em>Display the army cards here</em>;
-  }
+  const armies = await getArmies();
 
   return (
     <PageTemplate>
@@ -42,7 +27,7 @@ export default async function Enlist() {
               <td className="army-count">{army.count}</td>
               <td className="army-name">{army.name}</td>
               <td className="army-cost">ㆆ&nbsp;20,000</td>
-              {session && <TdBuyCell army={army} nationId={nation.id} accessToken={session.accessToken} />}
+              <TdBuyCell armyId={army.id} />
             </tr>
           ))}
         </tbody>

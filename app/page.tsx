@@ -9,12 +9,6 @@ import { PageTemplate } from './components/PageTemplate.component';
 import { getArmies, handleUserUpdateCheck } from './services';
 
 export default async function Home() {
-  const userSession = await getSession();
-
-  if (!!userSession?.user) {
-    await handleUserUpdateCheck(userSession.user as User);
-  }
-
   const armies = await getArmies();
 
   return (
