@@ -13,7 +13,7 @@ export const configureFetchOptions = (options: RequestInit = {}) => {
   return { ...options, Authorization };
 };
 
-export const fetchWrapper = async (url: string, options?: RequestInit) => {
+export const fetchWrapper = async <T>(url: string, options?: RequestInit): Promise<T> => {
   const response = await fetch(url, options);
 
   if (!response.ok) {

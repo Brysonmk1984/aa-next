@@ -18,9 +18,10 @@ export const initializeNation = async (userId: number) => {
 };
 
 export const patchNation = async (userId: number, nationId: number, body: Partial<Nation>): Promise<Nation> => {
-  const route = `${API_ENDPOINT}/${userId}/nation/${nationId}/`;
+  const route = `${API_ENDPOINT}/kingdom/${userId}/nation/${nationId}`;
+  console.log(route);
 
-  const result = await fetchWithAuth(route, { method: 'PATCH', body: JSON.stringify(body) });
+  const result = await fetchWithAuth<Nation>(route, { method: 'PATCH', body: JSON.stringify(body) });
 
   return result;
 };

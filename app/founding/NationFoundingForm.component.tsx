@@ -23,15 +23,13 @@ export const NationFoundingForm = () => {
   const nationId = nation?.id;
 
   const [hasUpdated, setHasUpdated] = useState(false);
-  const { storeItem, value } = useSessionStorage<Pick<Nation, 'name' | 'lore'>>('aa-initial-nation-details');
+  const { storeItem, removeItem, value } =
+    useSessionStorage<Pick<Nation, 'name' | 'lore'>>('aa-initial-nation-details');
   const searchParams = useSearchParams();
   const authenticated = searchParams.get('authenticated') === 'true' ? true : false;
 
   const handleSubmit = (e: FormEvent<NationFoundingFormElement>) => {
     e.preventDefault();
-    console.log(e.currentTarget.elements.nationName.value);
-    console.log(e.currentTarget.elements.lore.value);
-
     const payload: Pick<Nation, 'name' | 'lore'> = {
       name: e.currentTarget.elements.nationName.value,
       lore: e.currentTarget.elements.lore.value,
@@ -45,24 +43,25 @@ export const NationFoundingForm = () => {
   useEffect(() => {
     if (authenticated && value && userId && nationId) {
       (async () => {
-        console.log('VALUE to update', value);
-
         if (value) {
-          const result = await patchNation(userId, nationId, value);
-
-          console.log('updatedNationResult', result);
+          await patchNation(userId, nationId, value);
+          removeItem();
+          setHasUpdated(true);
         }
       })();
     }
-  }, [authenticated, nationId, userId, value]);
+  }, [authenticated, nationId, removeItem, userId, value]);
 
-  return hasUpdated ? (
-    <>
-      <strong>A Bold Name for a Nation!</strong>
-      <button onClick={() => window.location.assign('/campaign')} className="btn btn-blue">
+  return hasUpdated && authenticated ? (
+    <div className="flex flex-col items-center">
+      <h2 className=" text-4xl">
+        {' '}
+        <em>"{nation?.name}"...</em> A Bold Name for a Nation!
+      </h2>
+      <button onClick={() => window.location.assign('/campaign')} className="btn btn-blue mt-10">
         Go to Campaign
       </button>
-    </>
+    </div>
   ) : (
     <form className="flex flex-col items-center" onSubmit={handleSubmit}>
       <label className="mb-8  w-full">
