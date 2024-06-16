@@ -1,5 +1,5 @@
 'use-client';
-import { useNationContext } from '@/contexts';
+import { useNation } from '@/hooks';
 import { runCampaignBattle } from '@/services';
 
 import { CampaignLevel, CampaignLevelWithReward } from '@/types/campaign.type';
@@ -32,9 +32,8 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   onChange,
   session,
 }) => {
-  const isAuthed = session?.accessToken;
-  const [visibleLevels, setVisibleLevels] = useState(!isAuthed ? 30 : highestLevel + 3);
-  const { nation, armies } = useNationContext();
+  const [visibleLevels, setVisibleLevels] = useState(highestLevel);
+  const { nation, armies } = useNation();
   console.log({ nation, armies });
 
   const handleBattleClick = async (l: CampaignLevel) => {

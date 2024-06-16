@@ -24,5 +24,9 @@ export const NationProvider = ({ nation, armies, children }: PropsWithChildren<N
   const [n] = useState<Nation | null>(nation);
   const [a] = useState<NationArmy[]>(armies);
 
+  if (n && n.name === '') {
+    window.location.assign('/founding');
+  }
+
   return <NationContext.Provider value={{ nation: n, armies: a }}>{children}</NationContext.Provider>;
 };

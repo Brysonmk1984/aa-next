@@ -49,6 +49,10 @@ h2 {
 #logo {
   filter: sepia(100%);
 }
+
+p {
+  margin-bottom: 30px;
+}
 p,
 li,
 span,

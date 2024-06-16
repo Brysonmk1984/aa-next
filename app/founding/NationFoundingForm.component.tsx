@@ -18,7 +18,7 @@ interface NationFoundingFormElement extends HTMLFormElement {
 
 export const NationFoundingForm = () => {
   const { nation } = useNationContext();
-  const { user } = useUserContext();
+  const { user, isAuthenticated } = useUserContext();
   const userId = user?.id;
   const nationId = nation?.id;
 
@@ -26,37 +26,44 @@ export const NationFoundingForm = () => {
   const { storeItem, removeItem, value } =
     useSessionStorage<Pick<Nation, 'name' | 'lore'>>('aa-initial-nation-details');
   const searchParams = useSearchParams();
-  const authenticated = searchParams.get('authenticated') === 'true' ? true : false;
+  const authenticatedQueryParam = searchParams.get('authenticated') === 'true' ? true : false;
 
-  const handleSubmit = (e: FormEvent<NationFoundingFormElement>) => {
+  const handleSubmit = async (e: FormEvent<NationFoundingFormElement>) => {
     e.preventDefault();
     const payload: Pick<Nation, 'name' | 'lore'> = {
       name: e.currentTarget.elements.nationName.value,
       lore: e.currentTarget.elements.lore.value,
     };
 
-    storeItem(payload);
+    // User is logged in already but doesn't have a nation name yet. Do update with submitted values
+    if (isAuthenticated && userId && nationId) {
+      await handlePatchNation(userId, nationId, payload);
+      window.location.assign('/campaign');
+      return;
+    }
 
+    // User is not logged in, store items in session storage, then log in. They'll be returned to this page and patchNation will be called from useEffect
+    storeItem(payload);
     window.location.assign('/api/auth/login');
   };
 
-  useEffect(() => {
-    if (authenticated && value && userId && nationId) {
-      (async () => {
-        if (value) {
-          await patchNation(userId, nationId, value);
-          removeItem();
-          setHasUpdated(true);
-        }
-      })();
-    }
-  }, [authenticated, nationId, removeItem, userId, value]);
+  const handlePatchNation = async (userId: number, nationId: number, payload: Partial<Nation>) => {
+    await patchNation(userId, nationId, payload);
+    removeItem();
+    setHasUpdated(true);
+  };
 
-  return hasUpdated && authenticated ? (
+  useEffect(() => {
+    if (authenticatedQueryParam && value && userId && nationId) {
+      patchNation(userId, nationId, value);
+    }
+  }, [authenticatedQueryParam, nationId, removeItem, userId, value]);
+
+  return hasUpdated && authenticatedQueryParam ? (
     <div className="flex flex-col items-center">
       <h2 className=" text-4xl">
         {' '}
-        <em>"{nation?.name}"...</em> A Bold Name for a Nation!
+        <em>&quote;{nation?.name}&quote;...</em> A Bold Name for a Nation!
       </h2>
       <button onClick={() => window.location.assign('/campaign')} className="btn btn-blue mt-10">
         Go to Campaign

@@ -7,7 +7,9 @@ export const Links = () => {
 
   return (
     <>
-      <Link href="/campaign">Campaign</Link>
+      {/* {!user && <Link href="/">Home</Link>} */}
+      <Link href="/how-to-play">Guide</Link>
+      {user && <Link href="/campaign">Campaign</Link>}
       {user && <Link href="/nation">Nation</Link>}
       {user && <Link href="/enlist">Enlist</Link>}
 

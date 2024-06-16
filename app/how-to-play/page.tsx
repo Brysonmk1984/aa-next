@@ -1,10 +1,10 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
-import { NationPage } from './NationPage.component';
+import { GuidePage } from './AboutPage.component';
 
-export default async function Nation() {
+export default async function Splash() {
   return (
     <PageTemplate>
-      <NationPage />
+      <GuidePage />
     </PageTemplate>
   );
 }
