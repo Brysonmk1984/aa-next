@@ -9,7 +9,6 @@ interface IProfileClient {
 }
 export default function ProfileClient(props: IProfileClient) {
   const { user, isLoading, className = '' } = props;
-  console.log({ user });
 
   if (isLoading) {
     return <span>Loading...</span>;

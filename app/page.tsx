@@ -1,4 +1,4 @@
-import { PagePage } from './PagePage.compenent';
+import { PagePage } from './PagePage.component';
 import { PageTemplate } from './components/PageTemplate.component';
 import { useUserContext } from './contexts';
 

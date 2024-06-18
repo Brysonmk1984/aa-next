@@ -12,8 +12,6 @@ export async function runCampaignBattle({
   contenders: [number, number];
 }) {
   try {
-    console.log(accessToken);
-
     const response = await fetchWrapper(`${API_ENDPOINT}/battles/campaign/levels/${level}`, {
       method: 'POST',
       headers: {
@@ -36,5 +34,14 @@ export const getCampaignLevelDetails = async (level: number) => {
   const route = `${API_ENDPOINT}/campaign/levels/${level}/nation`;
   const result: CampaignNationProfile = await fetchWrapper(route);
 
+  return result;
+};
+
+export const getHighestLevelCompleted = async (nationId: number) => {
+  const route = `${API_ENDPOINT}/campaign/nation/${nationId}/highest_completed`;
+  console.log(11111, route);
+
+  const result: number = await fetchWrapper(route);
+  console.log(2222, result);
   return result;
 };

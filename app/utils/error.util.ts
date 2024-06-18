@@ -27,3 +27,34 @@ export const errorType = (errorish: unknown) => {
   }
   return new NonErrorException(errorish);
 };
+
+/**
+ * ContextualError is an error implementation that should be used when you want to log contextual
+ * data in the error message. It is a simple wrapper around `Error` and solely appends a formatted
+ * string of contextual data to the error message.
+ */
+export class ContextualError extends Error {
+  context: Record<string, any> | undefined;
+  originalMessage: string;
+
+  constructor(message: string, context?: Record<string, any>, options?: ErrorOptions) {
+    super(message, options);
+    this.originalMessage = message;
+    this.message = this.createMessage(message, context);
+    this.context = context;
+  }
+
+  private createMessage(message: string, context?: Record<string, any>) {
+    if (!context) {
+      return message;
+    }
+    const contextString = Object.entries(context).reduce((acc, entry, ind) => {
+      const entryString = `${entry[0]}=${entry[1]}`;
+      if (ind === 0) {
+        return entryString;
+      }
+      return `${acc}; ${entryString}`;
+    }, '');
+    return `${message}: context[${contextString}]`;
+  }
+}

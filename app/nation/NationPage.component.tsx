@@ -22,7 +22,6 @@ export const NationPage = () => {
         <div className="h-[350px] relative ">
           {armies.map((armies) => {
             const { id, army_name, count } = armies;
-            console.log(armies);
 
             return (
               <div key={id} className="w-[200px]">

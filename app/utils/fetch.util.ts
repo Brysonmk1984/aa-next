@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { getCookie } from './getCookie';
+import { ContextualError } from './error.util';
 
 export const configureFetchOptions = (options: RequestInit = {}) => {
   if (typeof window === 'undefined') {
@@ -17,8 +18,8 @@ export const fetchWrapper = async <T>(url: string, options?: RequestInit): Promi
   const response = await fetch(url, options);
 
   if (!response.ok) {
-    const message = `FetchError: Request failed with status code ${response.status} (${response.statusText})`;
-    throw new Error(message);
+    const message = `FetchError: Request failed`;
+    throw new ContextualError(message, { status: response.status, statusText: response.statusText });
   }
 
   return response.json();

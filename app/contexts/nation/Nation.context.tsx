@@ -4,9 +4,13 @@ import { Nation, NationArmy } from '@/types';
 import { createContext } from '@/utils/context-abstraction.util';
 import { PropsWithChildren, useState } from 'react';
 
+export type NationCampaignDetails = {
+  highestLevelCompleted: number;
+};
 interface NationState {
   nation: Nation | null;
   armies: Array<NationArmy>;
+  campaign: NationCampaignDetails;
 }
 
 interface NationValue extends NationState {}
@@ -20,7 +24,7 @@ export const useNationContext = () => {
 };
 
 interface NationProviderProps extends NationState {}
-export const NationProvider = ({ nation, armies, children }: PropsWithChildren<NationProviderProps>) => {
+export const NationProvider = ({ nation, armies, campaign, children }: PropsWithChildren<NationProviderProps>) => {
   const [n] = useState<Nation | null>(nation);
   const [a] = useState<NationArmy[]>(armies);
 
@@ -28,5 +32,5 @@ export const NationProvider = ({ nation, armies, children }: PropsWithChildren<N
     window.location.assign('/founding');
   }
 
-  return <NationContext.Provider value={{ nation: n, armies: a }}>{children}</NationContext.Provider>;
+  return <NationContext.Provider value={{ nation: n, armies: a, campaign }}>{children}</NationContext.Provider>;
 };

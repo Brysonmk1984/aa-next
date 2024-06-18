@@ -1,5 +1,5 @@
 'use-client';
-import { useNation } from '@/hooks';
+import { useNation } from '@/hooks/nation.hook';
 import { runCampaignBattle } from '@/services';
 
 import { CampaignLevel, CampaignLevelWithReward } from '@/types/campaign.type';
@@ -18,7 +18,7 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 interface LevelAccordion {
   levels: Array<CampaignLevelWithReward>;
   activeLevel: number;
-  highestLevel: number;
+  highestLevelCompleted: number;
   selectedNation: CampaignNationProfile | undefined;
   onChange: (expandedItems: Array<number>) => void;
   session: Record<PropertyKey, string>;
@@ -27,14 +27,13 @@ interface LevelAccordion {
 export const LevelAccordion: ComponentType<LevelAccordion> = ({
   levels,
   activeLevel,
-  highestLevel,
+  highestLevelCompleted,
   selectedNation,
   onChange,
   session,
 }) => {
-  const [visibleLevels, setVisibleLevels] = useState(highestLevel);
-  const { nation, armies } = useNation();
-  console.log({ nation, armies });
+  const [visibleLevels, setVisibleLevels] = useState(highestLevelCompleted + 1);
+  const { nation } = useNation();
 
   const handleBattleClick = async (l: CampaignLevel) => {
     try {
@@ -86,14 +85,12 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
                       </p>
                     </div>
                     <div className="w-64 flex-initial text-center">
-                      {isAuthed && (
-                        <button
-                          className="px-3 py-1 border border-r-ivory bg-red  hover:bg-gray-dark"
-                          onClick={() => handleBattleClick(l)}
-                        >
-                          Battle
-                        </button>
-                      )}
+                      <button
+                        className="px-3 py-1 border border-r-ivory bg-red  hover:bg-gray-dark"
+                        onClick={() => handleBattleClick(l)}
+                      >
+                        Battle
+                      </button>
                     </div>
                   </div>
                 )}

@@ -5,14 +5,17 @@ import { ComponentType, useState } from 'react';
 import { LevelAccordion } from './LevelAccordion.component';
 import { CampaignNationProfile } from '@/types/nation.type';
 import { getCampaignLevelDetails } from '@/services';
+import { useNation } from '@/hooks/nation.hook';
 
 interface LevelListProps {
   levels: Array<CampaignLevel>;
-  highestLevel: number;
   session: Record<PropertyKey, any>;
 }
 
-export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel, session }) => {
+export const LevelList: ComponentType<LevelListProps> = ({ levels, session }) => {
+  const {
+    campaign: { highestLevelCompleted },
+  } = useNation();
   const [activeLevel, setActiveLevel] = useState(0);
   const [selectedNation, setSelectedNation] = useState<CampaignNationProfile>();
 
@@ -38,7 +41,7 @@ export const LevelList: ComponentType<LevelListProps> = ({ levels, highestLevel,
           <LevelAccordion
             levels={levels}
             activeLevel={activeLevel}
-            highestLevel={highestLevel}
+            highestLevelCompleted={highestLevelCompleted}
             selectedNation={selectedNation}
             onChange={handleAccordionChange}
             session={session}

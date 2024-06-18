@@ -1,6 +1,7 @@
 // app/api/auth/[auth0]/route.js
 import { AUTH_AUD } from '@/configs/environment.config';
-import { errorType } from '@/utils/errorType.util';
+import { errorType } from '@/utils';
+
 import { handleAuth, handleLogin, handleCallback } from '@auth0/nextjs-auth0';
 import { headers } from 'next/headers';
 import { NextApiRequest, NextApiResponse } from 'next/types';

@@ -2,8 +2,8 @@
 
 import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT } from '@/configs/environment.config';
-import { useNation } from '@/hooks';
-import { Nation } from '@/types';
+import { useNation } from '@/hooks/nation.hook';
+import { useUser } from '@/hooks/user.hook';
 
 interface TdBuyCellProps {
   armyId: number;
@@ -11,18 +11,22 @@ interface TdBuyCellProps {
 
 export default function TdBuyCell({ armyId }: TdBuyCellProps) {
   const { nation } = useNation();
+  const { user } = useUser();
 
-  const handleBuyArmy = async (nation: Nation) => {
-    const path = `${API_ENDPOINT}/kingdom/${nation.id}/army/${armyId}`;
-
-    await fetchWithAuth(path, {
-      method: 'POST',
-    });
+  const handleBuyArmy = async () => {
+    try {
+      const path = `${API_ENDPOINT}/kingdom/${user.id}/nation/${nation.id}/army/${armyId}`;
+      await fetchWithAuth(path, {
+        method: 'POST',
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
     <td className="buy-cell">
-      <button onClick={() => handleBuyArmy(nation)}>Hire</button>
+      <button onClick={handleBuyArmy}>Hire</button>
     </td>
   );
 }

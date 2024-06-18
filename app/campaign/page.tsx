@@ -6,15 +6,10 @@ import { PageTemplate } from '@/components/PageTemplate.component';
 
 export default async function Campaign() {
   const session = await getSession();
-  console.log(session);
 
   let campaignLevelsWithRewards: Array<CampaignLevelWithReward>;
-  let highestLevel: number = 1;
   try {
-    console.log('GETTING CAMPAIGN LEVELS');
-
     const [campaignLevels, rewards] = await getCampaignLevels();
-    console.log('RESULTS', [campaignLevels, rewards]);
 
     campaignLevelsWithRewards = campaignLevels.map((campaignLevel) => {
       let l = campaignLevel.level;
@@ -32,11 +27,7 @@ export default async function Campaign() {
   return (
     <PageTemplate>
       <h1>Campaign</h1>
-      <LevelList
-        levels={campaignLevelsWithRewards}
-        highestLevel={highestLevel}
-        session={JSON.parse(JSON.stringify(session))}
-      />
+      <LevelList levels={campaignLevelsWithRewards} session={JSON.parse(JSON.stringify(session))} />
     </PageTemplate>
   );
 }
