@@ -59,6 +59,15 @@ export const NationFoundingForm = () => {
     }
   }, [authenticatedQueryParam, nationId, removeItem, userId, value]);
 
+  if (!!nation?.name) {
+    return (
+      <div className="flex flex-col items-center">
+        <h2 className=" text-4xl">{nation.name}</h2>
+        <p>{nation.lore}</p>
+      </div>
+    );
+  }
+
   return hasUpdated && authenticatedQueryParam ? (
     <div className="flex flex-col items-center">
       <h2 className=" text-4xl">
