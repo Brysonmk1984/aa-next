@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { PageTemplate } from './components/PageTemplate.component';
 import { useUserContext } from './contexts';
 
@@ -18,35 +19,32 @@ export const PagePage = () => {
     <>
       <h1>Armies of Avalore</h1>
       <h2>An incremental strategy game set in a realm of medieval fantasy</h2>
-      <p>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum."
-      </p>
-      <p>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum."
-      </p>
-      <p>
-        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
-        corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
-        culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et
-        expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id
-        quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem
-        quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et
-        molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus
-        maiores alias consequatur aut perferendis doloribus asperiores repellat."
-      </p>
 
-      <div className="flex justify-center">
-        <button className="btn btn-blue" onClick={handleBegin}>
-          Begin
-        </button>
+      <div className="px-8">
+        <blockquote>
+          “Without change something sleeps inside us, and seldom awakens. The sleeper must awaken.”
+        </blockquote>
+        <em>Frank Herbert, Dune</em>
+      </div>
+      <br />
+      <p className="mt-8">
+        You are a prodigy, a leader, a ruler perhaps? In some respect, you've found yourself at the helm of a nascient
+        civilization fighting for survival and prosperity after the latest cataclysm to strike this plane of existence.
+        Your civilization has coalesced into a nation state that's in direct conflict with similarly founded nation
+        states. In this age, peace is impossible as the stars forbid. That leaves conflict and strife, even for those
+        who wish it. How will you proceed?
+      </p>
+      <br />
+      <div className="flex flex-col justify-center items-center">
+        <div className=" text-lg">
+          <Link href={'/how-to-play'}>Learn more</Link>
+        </div>
+        <strong className="block my-4">- or -</strong>
+        <div className="flex justify-center">
+          <button className="btn btn-red" onClick={handleBegin}>
+            Begin
+          </button>
+        </div>
       </div>
     </>
   );

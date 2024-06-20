@@ -1,9 +1,11 @@
+import { ArmyName } from './campaign.type';
+
 type WeaponType = 'piercing' | 'blunt' | 'edged' | 'magic' | 'crushing';
 type ArmorType = 'chain' | 'plate' | 'unarmored' | 'leather';
 
 export type Army = {
   id: number;
-  name: string;
+  name: ArmyName;
   count: number;
   shield_rating: string;
   flying: false;

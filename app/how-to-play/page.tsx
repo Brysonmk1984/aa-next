@@ -1,5 +1,5 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
-import { GuidePage } from './AboutPage.component';
+import { GuidePage } from './GuidePage.component';
 
 export default async function Splash() {
   return (

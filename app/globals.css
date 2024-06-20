@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Gelasio:wght@400&family=Germania+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gelasio:wght@400,700');
+@import url('https://fonts.googleapis.com/css2?family=Germania+One&display=swap');
 @import './burger-menu.css';
 @tailwind base;
 @tailwind components;
@@ -36,13 +37,26 @@ h1 {
   @apply text-4xl;
   @apply text-red;
   color: text-red;
-  margin: 2rem 0rem;
+  margin: 1.2rem 0rem;
 }
 
 h2 {
   @apply font-sans;
-  @apply text-xl;
+  @apply text-2xl;
   opacity: 0.9;
+  margin: 1rem 0rem;
+  margin-bottom: 3rem;
+}
+
+h3 {
+  @apply text-xl;
+  @apply text-red;
+  font-weight: 700;
+  margin: 1rem 0rem;
+}
+h4 {
+  opacity: 0.9;
+  font-weight: 700;
   margin: 1rem 0rem;
 }
 
@@ -53,6 +67,20 @@ h2 {
 p {
   margin-bottom: 30px;
 }
+
+hr {
+  @apply text-off-black;
+  color: text-off-black;
+}
+
+ol {
+  list-style-type: decimal-leading-zero;
+  margin: 1rem 0px;
+}
+ol li {
+  margin-bottom: 1rem;
+}
+
 p,
 li,
 span,
@@ -96,11 +124,29 @@ textarea {
 .btn {
   @apply font-bold py-2 px-4;
 }
-.btn-blue {
+.btn-red {
   @apply bg-red text-ivory;
 }
-.btn-blue:hover {
+.btn-red:hover {
   @apply bg-red text-light-ivory;
+}
+
+a {
+  @apply text-red;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#siteTitle a,
+nav a {
+  @apply text-ivory;
+  color: text-ivory;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+blockquote {
+  letter-spacing: 1px;
 }
 
 @media (max-width: 1200px) {
@@ -118,4 +164,18 @@ textarea {
     min-height: 700px;
     margin-top: 3em;
   }
+}
+
+/* Reset Styles */
+
+table {
+  border-spacing: 0px;
+  border-collapse: separate;
+}
+td {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 26px;
+  padding: 10px 16px;
+  border: solid 1px #1b1111;
 }
