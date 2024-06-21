@@ -40,7 +40,7 @@ export const GuidePage = () => {
         all combatants take their action, then the opposing side&apos;s turn begins.
       </p>
       <h4 className="ml-3">Blocking, Dodging & Hitting</h4>
-      <p className="ml-6">
+      <div className="ml-6">
         If an aggressor attacks rather than marches, then one of three possible outcomes happen to a defender:
         <ol className="ml-12">
           <li>
@@ -58,9 +58,9 @@ export const GuidePage = () => {
             hit the defender. Hits are considered kills and the defending warrior is removed from further turns.
           </li>
         </ol>
-      </p>
+      </div>
       <h4 className="ml-3">Win Conditions</h4>
-      <p className="ml-6">
+      <div className="ml-6">
         There are two ways to win a battle:
         <ol className="ml-12">
           <li>Total Annihilation</li>
@@ -76,9 +76,9 @@ export const GuidePage = () => {
             remaining and the winning side has ground soldiers that can continue to march and reach the commander.
           </p>
         </ol>
-      </p>
+      </div>
       <h4 className="ml-3">Weapon & Armor Types</h4>
-      <p className="ml-6">
+      <div className="ml-6">
         <strong>Chance to Hit Percentage:</strong>
         <table className="mb-20">
           <thead>
@@ -102,11 +102,11 @@ export const GuidePage = () => {
               <td>
                 <strong>Unarmored</strong>
               </td>
-              <td>1</td>
-              <td>2</td>
-              <td>5</td>
-              <td>9</td>
-              <td>13</td>
+              <td>0.75</td>
+              <td>1.0</td>
+              <td>1.0</td>
+              <td>0.25</td>
+              <td>0.25</td>
             </tr>
             <tr>
               <td className=" border-none">
@@ -115,37 +115,37 @@ export const GuidePage = () => {
               <td>
                 <strong>Leather</strong>
               </td>
-              <td>1</td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>5</td>
+              <td>0.75</td>
+              <td>0.75</td>
+              <td>0.75</td>
+              <td>0.5</td>
+              <td>0.5</td>
             </tr>
             <tr>
               <td className=" border-none"></td>
               <td>
                 <strong>Chain Mail</strong>
               </td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>2</td>
-              <td>2</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td>0.6</td>
+              <td>0.75</td>
+              <td>1.0</td>
             </tr>
             <tr>
               <td className=" border-none"></td>
               <td>
                 <strong>Plate Mail</strong>
               </td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>2</td>
-              <td>2</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td>0.1</td>
+              <td>1.0</td>
+              <td>0.75</td>
             </tr>
           </tbody>
         </table>
-      </p>
+      </div>
 
       <h4 className="ml-3">Range, AoE & Spread</h4>
       <p className="ml-6">
@@ -155,7 +155,7 @@ export const GuidePage = () => {
         ranged warriors who fight with bow and arrow and can fire their missles with a range of up to 150m. Finally,
         some warriors are flying units, and can only be reached by enemies who have a range of at least 15m.
       </p>
-      <p className="ml-6">
+      <div className="ml-6">
         Some Warriors have an <strong>area of effect</strong> (AoE) value. This allows them to potentially hit multiple
         enemies in a single attack depending on the enemy&apos;s <strong>spread</strong> value (how spread-out they are
         in their battle formation). Potential aoe values are between 0.0 and 3.0 (meters). Potential spread values are
@@ -222,18 +222,17 @@ export const GuidePage = () => {
             </tr>
           </tbody>
         </table>
-      </p>
+      </div>
       <p className="ml-6"></p>
       <h3>Out of Battle</h3>
       <h4 className="ml-3">Income & Upkeep</h4>
       <h4 className="ml-3">Enlisting Armies</h4>
       <h4 className="ml-3">The Campaign</h4>
-      <div className="my-16">
-        <hr className=" border-dashed" />
-      </div>
 
-      <h2>Warriors of The Great Realm:</h2>
-      <Link href="/warriors">Learn more about the combatants</Link>
+      <div className="my-16">
+        <h2>Warriors of The Great Realm:</h2>
+        <Link href="/warriors">Learn more about the combatants</Link>
+      </div>
 
       {!user && (
         <div className="flex justify-center mt-12">
