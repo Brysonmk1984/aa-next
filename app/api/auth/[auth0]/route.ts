@@ -9,7 +9,10 @@ import { NextApiRequest, NextApiResponse } from 'next/types';
 export const GET = handleAuth({
   async login(req: NextApiRequest, res: NextApiResponse) {
     const referrer = headers().get('referer');
-    const loggingInFromFoundingPage = referrer?.includes('/founding?nationName=');
+    const loggingInFromFoundingPage = referrer?.includes('/founding');
+
+    console.log(referrer, loggingInFromFoundingPage);
+
     const returnTo = loggingInFromFoundingPage ? '/founding?authenticated=true' : referrer ?? undefined;
 
     try {

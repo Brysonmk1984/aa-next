@@ -2,7 +2,7 @@
 
 import { Nation, NationArmy } from '@/types';
 import { createContext } from '@/utils/context-abstraction.util';
-import { PropsWithChildren, useState } from 'react';
+import { Dispatch, PropsWithChildren, SetStateAction, useState } from 'react';
 
 export type NationCampaignDetails = {
   highestLevelCompleted: number;
@@ -11,7 +11,9 @@ interface NationState {
   nation: Nation | null;
   armies: Array<NationArmy>;
   campaign: NationCampaignDetails;
+  dispatch: (val: UpdateNationAction) => void;
 }
+type UpdateNationAction = { type: string; payload: Pick<Nation, 'name' | 'lore'> };
 
 interface NationValue extends NationState {}
 
@@ -25,12 +27,24 @@ export const useNationContext = () => {
 
 interface NationProviderProps extends NationState {}
 export const NationProvider = ({ nation, armies, campaign, children }: PropsWithChildren<NationProviderProps>) => {
-  const [n] = useState<Nation | null>(nation);
+  const [n, setNation] = useState<Nation | null>(nation);
   const [a] = useState<NationArmy[]>(armies);
 
   if (n && n.name === '') {
     window.location.assign('/founding');
   }
 
-  return <NationContext.Provider value={{ nation: n, armies: a, campaign }}>{children}</NationContext.Provider>;
+  const dispatch = ({ type, payload }: UpdateNationAction) => {
+    if (type === 'updateNation') {
+      if (nation === null) {
+        throw new Error('Tried to update null nation');
+      }
+
+      setNation({ ...nation, ...payload });
+    }
+  };
+
+  return (
+    <NationContext.Provider value={{ nation: n, armies: a, campaign, dispatch }}>{children}</NationContext.Provider>
+  );
 };

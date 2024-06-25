@@ -6,7 +6,7 @@ import { useSessionStorage } from '@/hooks';
 import { patchNation } from '@/services';
 import { Nation } from '@/types';
 import { useParams, useSearchParams } from 'next/navigation';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 
 interface FormElements extends HTMLFormControlsCollection {
   nationName: HTMLInputElement;
@@ -17,7 +17,7 @@ interface NationFoundingFormElement extends HTMLFormElement {
 }
 
 export const NationFoundingForm = () => {
-  const { nation } = useNationContext();
+  const { nation, dispatch } = useNationContext();
   const { user, isAuthenticated } = useUserContext();
   const userId = user?.id;
   const nationId = nation?.id;
@@ -26,9 +26,12 @@ export const NationFoundingForm = () => {
   const { storeItem, removeItem, value } =
     useSessionStorage<Pick<Nation, 'name' | 'lore'>>('aa-initial-nation-details');
   const searchParams = useSearchParams();
+
   const authenticatedQueryParam = searchParams.get('authenticated') === 'true' ? true : false;
 
   const handleSubmit = async (e: FormEvent<NationFoundingFormElement>) => {
+    console.log('submitting');
+
     e.preventDefault();
     const payload: Pick<Nation, 'name' | 'lore'> = {
       name: e.currentTarget.elements.nationName.value,
@@ -47,19 +50,28 @@ export const NationFoundingForm = () => {
     window.location.assign('/api/auth/login');
   };
 
-  const handlePatchNation = async (userId: number, nationId: number, payload: Partial<Nation>) => {
-    await patchNation(userId, nationId, payload);
-    removeItem();
-    setHasUpdated(true);
-  };
+  const handlePatchNation = useCallback(
+    async (userId: number, nationId: number, payload: Pick<Nation, 'name' | 'lore'>) => {
+      await patchNation(userId, nationId, payload);
+      removeItem();
+      console.log('SETTING HAS UPDATED');
+      dispatch({ type: 'updateNation', payload });
+      setHasUpdated(true);
+    },
+    [removeItem, dispatch],
+  );
 
   useEffect(() => {
-    if (authenticatedQueryParam && value && userId && nationId) {
-      patchNation(userId, nationId, value);
-    }
-  }, [authenticatedQueryParam, nationId, removeItem, userId, value]);
+    console.log(authenticatedQueryParam, value, userId, nationId);
 
-  if (!!nation?.name) {
+    if (authenticatedQueryParam && value && userId && nationId) {
+      handlePatchNation(userId, nationId, value);
+    }
+  }, [authenticatedQueryParam, handlePatchNation, nationId, removeItem, userId, value]);
+
+  console.log(searchParams.get('authenticated'), hasUpdated);
+
+  if (!!nation?.name && !authenticatedQueryParam) {
     return (
       <div className="flex flex-col items-center">
         <h2 className=" text-4xl">{nation.name}</h2>
@@ -72,7 +84,7 @@ export const NationFoundingForm = () => {
     <div className="flex flex-col items-center">
       <h2 className=" text-4xl">
         {' '}
-        <em>&quote;{nation?.name}&quote;...</em> A Bold Name for a Nation!
+        <em>{nation?.name}...</em> A Bold Name for a Nation!
       </h2>
       <button onClick={() => window.location.assign('/campaign')} className="btn btn-red mt-10">
         Go to Campaign
