@@ -226,8 +226,55 @@ export const GuidePage = () => {
       <p className="ml-6"></p>
       <h3>Out of Battle</h3>
       <h4 className="ml-3">Income & Upkeep</h4>
+      <p className="ml-6">
+        Every Hour, your nation will gain income at a rate of <strong>100 + (max_campaign_level_completed * 10)</strong>
+        . This means that the more levels completed in the campaign, the more income received every hour from that point
+        forward.{' '}
+        <em>
+          eg: The fictitious "Marsh Walkers" nation just defeated the Level 10 campaign nation in battle. They will now
+          collect income at a rate of 200 (100 + (10 * 10)).
+        </em>
+      </p>
+      <p className="ml-6">
+        In addition to collecting income, nations will also be taxed an upkeep charge depending on the size of their
+        standing army. The larger the army, the larger the upkeep charge. Upkeep is applied immediately after the hourly
+        income is updated. The upkeep is calculated as followed:
+      </p>
+      <table className="ml-6">
+        <thead>
+          <tr>
+            <th>Upkeep Bracket</th>
+            <th>Warrior Count</th>
+            <th>Cost of Upkeep per Hour</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>None</td>
+            <td>10k soldiers or less</td>
+            <td>0 gold</td>
+          </tr>
+          <tr>
+            <td>Low</td>
+            <td>Over 10k soldiers</td>
+            <td>25 gold</td>
+          </tr>
+          <tr>
+            <td>Medium</td>
+            <td>Over 50k soldiers</td>
+            <td>75 gold</td>
+          </tr>
+          <tr>
+            <td>High</td>
+            <td>Over 90k soldiers</td>
+            <td>150 gold</td>
+          </tr>
+        </tbody>
+      </table>
       <h4 className="ml-3">Enlisting Armies</h4>
+      <p className="ml-6">asdasd</p>
       <h4 className="ml-3">The Campaign</h4>
+      <p className="ml-6">asdasd</p>
 
       <div className="my-16">
         <h2>Warriors of The Great Realm:</h2>

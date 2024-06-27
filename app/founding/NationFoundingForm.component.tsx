@@ -64,12 +64,10 @@ export const NationFoundingForm = () => {
   useEffect(() => {
     console.log(authenticatedQueryParam, value, userId, nationId);
 
-    if (authenticatedQueryParam && value && userId && nationId) {
+    if (authenticatedQueryParam && userId && value && nationId && !hasUpdated) {
       handlePatchNation(userId, nationId, value);
     }
-  }, [authenticatedQueryParam, handlePatchNation, nationId, removeItem, userId, value]);
-
-  console.log(searchParams.get('authenticated'), hasUpdated);
+  }, [authenticatedQueryParam, handlePatchNation, nationId, userId, value, hasUpdated]);
 
   if (!!nation?.name && !authenticatedQueryParam) {
     return (
