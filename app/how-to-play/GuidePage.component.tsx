@@ -63,12 +63,16 @@ export const GuidePage = () => {
       <div className="ml-6">
         There are two ways to win a battle:
         <ol className="ml-12">
-          <li>Total Annihilation</li>
+          <li>
+            <strong>Total Annihilation</strong>
+          </li>
           <p>
             By far the most common way to win. With each side marching towards each other and engaging in battle, it is
             likely one side will eventually finish off the opposing force.
           </p>
-          <li>Commander Capture</li>
+          <li>
+            <strong>Commander Capture</strong>
+          </li>
           <p>
             An alternative win condition. If a ground force reaches the enemy commander, located at 150m for the eastern
             army or -150. for the western army, then the commander is considered captured and the battle ends in favor
@@ -240,7 +244,7 @@ export const GuidePage = () => {
         standing army. The larger the army, the larger the upkeep charge. Upkeep is applied immediately after the hourly
         income is updated. The upkeep is calculated as followed:
       </p>
-      <table className="ml-6">
+      <table className="ml-6 mb-12">
         <thead>
           <tr>
             <th>Upkeep Bracket</th>
@@ -272,9 +276,39 @@ export const GuidePage = () => {
         </tbody>
       </table>
       <h4 className="ml-3">Enlisting Armies</h4>
-      <p className="ml-6">asdasd</p>
+      <div className="ml-6">
+        <p>
+          In order to progress, your nation will inevitably need to grow its army to face larger threats. There are two
+          ways to do this:
+        </p>
+        <ol className="ml-12">
+          <li>
+            <strong>Enlist more warriors using gold</strong>
+          </li>
+          <p>
+            As more income is collected, your nation will have more gold to spend enlisting warriors to grow your army.
+            <Link href="enlist">Click here</Link> to enlist more warriors.
+          </p>
+          <li>
+            <strong>Recruit warriors from a defeated nation</strong>
+          </li>
+          <p>
+            Progressing through the campaign, you'll sometimes be rewarded with some warriors of the same type you've
+            just defeated. These warriors will automatically be added to your standing army.
+          </p>
+        </ol>
+      </div>
       <h4 className="ml-3">The Campaign</h4>
-      <p className="ml-6">asdasd</p>
+      <p className="ml-6">
+        There is currently one game mode available - the campaign. You start out as a small faction attempting to live
+        independently from other nations, but competing nations have the same idea. You'll need to fight to expand your
+        territory by defeating neighboring nations. Your standing army starts out small; just a mere 100 militia men. In
+        order to progress through the campaign your nation will have to face ever-larger and more diverse armies and so
+        it will take time to acquire enough gold grow your forces to a point where you can defeat a neighboring nation.
+        The first opposing nation call timidly call themselves "The Fretfull Ones" and have a standing army of 1,000
+        Militia. What will it take to conquer these wheyfaced neighbors? <Link href="/campaign">Click here</Link> to go
+        to the campaign.
+      </p>
 
       <div className="my-16">
         <h2>Warriors of The Great Realm:</h2>

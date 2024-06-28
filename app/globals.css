@@ -55,6 +55,7 @@ h3 {
   margin: 1rem 0rem;
 }
 h4 {
+  @apply text-lg;
   opacity: 0.9;
   font-weight: 700;
   margin: 1rem 0rem;
@@ -101,7 +102,7 @@ div {
   font-style: normal;
 }
 .page-content {
-  background-image: url('/images/parchment.png');
+  background-image: url('/images/parchment_expanded.webp');
   background-repeat: repeat-y;
   background-size: 100% auto;
   background-position: top;
