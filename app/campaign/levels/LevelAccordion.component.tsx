@@ -1,5 +1,6 @@
 'use-client';
 import { useNation } from '@/hooks/nation.hook';
+import { useUser } from '@/hooks/user.hook';
 import { runCampaignBattle } from '@/services';
 
 import { CampaignLevel, CampaignLevelWithReward } from '@/types/campaign.type';
@@ -21,7 +22,6 @@ interface LevelAccordion {
   highestLevelCompleted: number;
   selectedNation: CampaignNationProfile | undefined;
   onChange: (expandedItems: Array<number>) => void;
-  session: Record<PropertyKey, string>;
 }
 
 export const LevelAccordion: ComponentType<LevelAccordion> = ({
@@ -30,7 +30,6 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
   highestLevelCompleted,
   selectedNation,
   onChange,
-  session,
 }) => {
   const [visibleLevels, setVisibleLevels] = useState(highestLevelCompleted + 1);
   const { nation } = useNation();
@@ -39,7 +38,6 @@ export const LevelAccordion: ComponentType<LevelAccordion> = ({
     try {
       const result = await runCampaignBattle({
         level: l.level,
-        accessToken: session.accessToken,
         contenders: [nation.id, l.nation_id],
       });
     } catch (e) {

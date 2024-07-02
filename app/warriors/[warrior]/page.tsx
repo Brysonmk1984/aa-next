@@ -10,7 +10,7 @@ type PageProps = {
   };
 };
 
-export default async function Page({ params }: PageProps) {
+export default async function WarriorPage({ params }: PageProps) {
   const armies = await getArmies();
 
   let matchingArmy = armies.find((army) => {

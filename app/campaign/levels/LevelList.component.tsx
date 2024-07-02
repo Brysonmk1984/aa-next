@@ -9,7 +9,6 @@ import { useNation } from '@/hooks/nation.hook';
 
 interface LevelListProps {
   levels: Array<CampaignLevel>;
-  session: Record<PropertyKey, any>;
 }
 
 export const LevelList: ComponentType<LevelListProps> = ({ levels, session }) => {
@@ -44,7 +43,6 @@ export const LevelList: ComponentType<LevelListProps> = ({ levels, session }) =>
             highestLevelCompleted={highestLevelCompleted}
             selectedNation={selectedNation}
             onChange={handleAccordionChange}
-            session={session}
           />
         </div>
       )}

@@ -25,7 +25,7 @@ export const useNationContext = () => {
   return useContext();
 };
 
-interface NationProviderProps extends NationState {}
+type NationProviderProps = Omit<NationState, 'dispatch'>;
 export const NationProvider = ({ nation, armies, campaign, children }: PropsWithChildren<NationProviderProps>) => {
   const [n, setNation] = useState<Nation | null>(nation);
   const [a] = useState<NationArmy[]>(armies);
