@@ -26,7 +26,7 @@ export default async function LevelsPage() {
   return (
     <PageTemplate>
       <CampaignLevelsPage levels={campaignLevelsWithRewards} />
-      <LevelList levels={campaignLevelsWithRewards} />
+      {/* <LevelList levels={campaignLevelsWithRewards} /> */}
     </PageTemplate>
   );
 }

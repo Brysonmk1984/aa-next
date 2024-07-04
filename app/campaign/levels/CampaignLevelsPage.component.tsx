@@ -1,6 +1,8 @@
 'use client';
 
 import { CampaignLevelWithReward } from '@/types/campaign.type';
+import { numberFormat } from '@/utils/numberFormat';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 interface CampaignLevelsPageProps {
@@ -61,15 +63,26 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
       <h1>Levels</h1>
       <div>
         {levelGroups.map((group, i) => {
+          const regionNum = i + 1;
           return (
             <>
-              <h2>{regions[i] ?? `Region ${i + 1}`}</h2>
+              <h2>{regions[i] ?? `Region ${regionNum}`}</h2>
               <div className="flex flex-wrap justify-center">
                 {group.map((level, j) => {
+                  const levelNum = j + 1;
                   return (
-                    <div key={j} className="border rounded-sm w-1/4 p-4 m-4">
-                      level {j}:{j}
-                    </div>
+                    <Link
+                      href={`/campaign/levels/${level.id}/prebattle`}
+                      key={levelNum}
+                      className="relative border border-dashed rounded-sm w-1/4 p-4 m-4 w-[300px] h-[300px] text-center no-underline"
+                    >
+                      <h3>{level.nation_name}</h3>
+
+                      <div className="absolute bottom-1 right-2 font-thin text-gray-dark">
+                        Region <strong className="font-bold text-lg">{regionNum}</strong>, Nation{' '}
+                        <strong className=" font-bold text-lg">{levelNum}</strong>
+                      </div>
+                    </Link>
                   );
                 })}
               </div>
