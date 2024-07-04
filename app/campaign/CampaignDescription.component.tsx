@@ -15,9 +15,11 @@ export const CampaignDescription = () => {
         The first opposing nation call timidly call themselves "The Fretfull Ones" and have a standing army of 1,000
         Militia. What will it take to conquer these wheyfaced neighbors?
       </p>
-      <button className="btn btn-red" onClick={() => router.push('/campaign/levels')}>
-        Begin
-      </button>
+      <div className="flex justify-center">
+        <button className="btn btn-red" onClick={() => router.push('/campaign/levels')}>
+          Begin
+        </button>
+      </div>
     </>
   );
 };
