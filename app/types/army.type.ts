@@ -3,7 +3,7 @@ import { ArmyName } from './campaign.type';
 type WeaponType = 'piercing' | 'blunt' | 'edged' | 'magic' | 'crushing';
 type ArmorType = 'chain' | 'plate' | 'unarmored' | 'leather';
 
-export type Army = {
+export interface Army {
   id: number;
   name: ArmyName;
   count: number;
@@ -20,4 +20,4 @@ export type Army = {
   attack_speed: number;
   lore: string;
   cost: number;
-};
+}

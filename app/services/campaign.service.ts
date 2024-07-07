@@ -1,21 +1,29 @@
 import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT } from '@/configs/environment.config';
+import { BattleDetails } from '@/types/battle.type';
 import { CampaignNationProfile } from '@/types/nation.type';
+import { errorType } from '@/utils';
 import { fetchWrapper } from '@/utils/fetch.util';
 
-export async function runCampaignBattle({ level, contenders }: { level: number; contenders: [number, number] }) {
+interface RunCampaignBattle {
+  level: number;
+  contenders: [number, number];
+}
+
+export async function runCampaignBattle({ level, contenders }: RunCampaignBattle) {
   try {
-    const response = await fetchWithAuth(`${API_ENDPOINT}/battles/campaign/levels/${level}`, {
+    const response = await fetchWithAuth<BattleDetails>(`${API_ENDPOINT}/battles/campaign/levels/${level}`, {
       method: 'POST',
       body: JSON.stringify({
         east_competitor: contenders[0],
         west_competitor: contenders[1],
       }),
     });
+    console.log({ response });
 
     return response;
   } catch (e) {
-    console.error(e);
+    throw errorType(e);
   }
 }
 

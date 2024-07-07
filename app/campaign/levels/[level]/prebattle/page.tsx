@@ -22,7 +22,7 @@ export default async function PreBattle({ params }: PageProps) {
   }
   return (
     <PageTemplate>
-      <PreBattlePage opposingNationDetails={opponent} />
+      <PreBattlePage enemyDetails={opponent} level={params.level} />
     </PageTemplate>
   );
 }
