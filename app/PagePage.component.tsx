@@ -22,9 +22,12 @@ export const PagePage = () => {
 
       <div className="px-8">
         <blockquote>
-          “Without change something sleeps inside us, and seldom awakens. The sleeper must awaken.”
+          “Most civilization is based on cowardice. It's so easy to civilize by teaching cowardice. You water down the
+          standards which would lead to bravery. You restrain the will. You regulate the appetites. You fence in the
+          horizons. You make a law for every movement. You deny the existence of chaos. You teach even the children to
+          breathe slowly. You tame.”
         </blockquote>
-        <em>Frank Herbert, Dune</em>
+        <em>Frank Herbert, GEoD</em>
       </div>
       <br />
       <p className="mt-8">

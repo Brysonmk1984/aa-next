@@ -1,9 +1,10 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
+import { PostBattlePage } from './PostBattlePage.component';
 
-export default async function PreBattlePage() {
+export default async function PostBattle() {
   return (
     <PageTemplate>
-      <h1 className="block">Postbattle</h1>
+      <PostBattlePage />
     </PageTemplate>
   );
 }
