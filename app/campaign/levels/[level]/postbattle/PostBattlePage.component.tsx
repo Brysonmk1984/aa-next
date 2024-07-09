@@ -13,6 +13,9 @@ export const PostBattlePage: ComponentType<PostBattlePage> = () => {
   return (
     <>
       <h1 className="block">Aftermath</h1>
+      <h2>Results</h2>
+      <h2>Stats</h2>
+      <h2>Reward</h2>
     </>
   );
 };
