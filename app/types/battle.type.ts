@@ -1,17 +1,17 @@
 import { Army } from './army.type';
 import { ArmyName } from './campaign.type';
 
-enum WinCondition {
+export enum WinCondition {
   ArmyConquered = 'ArmyConquered',
   KingCaptured = 'KingCaptured',
 }
 
-enum DirectionOfArmy {
+export enum DirectionOfArmy {
   EasternArmy = 'EasternArmy',
   WesternArmy = 'WesternArmy',
 }
 
-enum StartingDirection {
+export enum StartingDirection {
   EAST = 'EAST',
   WEST = 'WEST',
 }
@@ -40,15 +40,15 @@ interface BattleResult {
   western_battalions: Battalion[];
 }
 
-type RewardTypeGold = 'Gold';
+export type RewardTypeGold = 'Gold';
 
-interface RewardTypeEnlist {
+export interface RewardTypeEnlist {
   Enlist: ArmyName;
 }
 
-type RewardType = RewardTypeGold & RewardTypeEnlist;
+export type RewardType = RewardTypeGold | RewardTypeEnlist;
 
-interface BattleStats {
+export interface BattleStats {
   armor_defense_count: number;
   block_count: number;
   dodge_count: number;

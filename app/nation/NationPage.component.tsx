@@ -1,7 +1,7 @@
 'use client';
 
 import { useNationContext } from '@/contexts';
-import { toKebabCase } from '@/utils';
+import { sentenceCaseToKebabCase } from '@/utils';
 import { getArmyImage } from '@/utils/army-image-map.util';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -47,7 +47,7 @@ export const NationPage = () => {
             return (
               <div key={id} className="w-[200px]">
                 <div className="relative w-[200px] h-[325px]">
-                  <Link href={`/warriors/${toKebabCase(army_name)}`}>
+                  <Link href={`/warriors/${sentenceCaseToKebabCase(army_name)}`}>
                     <Image
                       src={`/images/armies/${getArmyImage(army_name)}.webp`}
                       alt={army_name}
@@ -58,7 +58,7 @@ export const NationPage = () => {
                 </div>
                 <div className="text-center">
                   <h3 className=" text-2xl">
-                    <Link className="no-underline" href={`/warriors/${toKebabCase(army_name)}`}>
+                    <Link className="no-underline" href={`/warriors/${sentenceCaseToKebabCase(army_name)}`}>
                       {army_name}
                     </Link>
                   </h3>

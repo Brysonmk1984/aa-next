@@ -11,7 +11,6 @@ interface PageProps {
 
 export default async function PreBattle({ params }: PageProps) {
   let opponent: CampaignNationProfile;
-  console.log(params.level);
 
   try {
     opponent = await getCampaignLevelDetails(params.level);

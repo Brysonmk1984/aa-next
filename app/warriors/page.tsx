@@ -1,6 +1,6 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
 import { getArmies } from '@/services';
-import { toKebabCase } from '@/utils';
+import { sentenceCaseToKebabCase } from '@/utils';
 import { getArmyImage } from '@/utils/army-image-map.util';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,7 +20,7 @@ export default async function WarriorsPage() {
             return (
               <div key={id} className="w-[300px]">
                 <div className="relative w-[300px] h-[350px]">
-                  <Link href={`/warriors/${encodeURIComponent(toKebabCase(name))}`}>
+                  <Link href={`/warriors/${encodeURIComponent(sentenceCaseToKebabCase(name))}`}>
                     <Image src={`/images/armies/${getArmyImage(name)}.webp`} alt={name} objectFit="cover" fill />
                   </Link>
                 </div>

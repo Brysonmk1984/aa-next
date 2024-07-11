@@ -3,9 +3,6 @@
 import { useUserContext } from '@/contexts';
 import { getArmies } from '@/services';
 import { Army } from '@/types';
-import { toKebabCase } from '@/utils';
-import { getArmyImage } from '@/utils/army-image-map.util';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 

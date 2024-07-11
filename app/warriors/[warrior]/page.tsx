@@ -1,6 +1,6 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
 import { getArmies } from '@/services';
-import { toKebabCase } from '@/utils';
+import { sentenceCaseToKebabCase } from '@/utils';
 import { getArmyImage } from '@/utils/army-image-map.util';
 import Image from 'next/image';
 
@@ -14,7 +14,7 @@ export default async function WarriorPage({ params }: PageProps) {
   const armies = await getArmies();
 
   let matchingArmy = armies.find((army) => {
-    if (toKebabCase(army.name) === decodeURIComponent(params.warrior)) {
+    if (sentenceCaseToKebabCase(army.name) === decodeURIComponent(params.warrior)) {
       return army.name;
     }
   });
