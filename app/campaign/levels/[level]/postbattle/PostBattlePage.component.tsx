@@ -46,14 +46,14 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
     army_compositions,
     battle_result,
     events,
-    reward: [amount, earnedReward],
+    reward,
     stats: [player, opponent],
   } = data;
   const { winner, loser, win_type, eastern_battalions, western_battalions } = battle_result;
   const playerIsWinner = winner === DirectionOfArmy.EasternArmy;
   const winnerName = playerIsWinner ? playerNationName : enemyDetails.nation_details.name;
   const loserName = playerIsWinner ? enemyDetails.nation_details.name : playerNationName;
-  console.log(amount, earnedReward);
+
 
   return (
     <div className=" text-center">
@@ -110,14 +110,15 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
           ))}
         </ul>
       </div>
-      {playerIsWinner && (
-        <>
-          <h2>Reward</h2>
+      {playerIsWinner &&
+        reward &&(
+          <>
+            <h2>Reward</h2>
 
-          <strong className="text-xl text-red">{amount}</strong>
-          {typeof earnedReward === 'string' ? <span> {earnedReward}</span> : <span> {earnedReward.Enlist}</span>}
-        </>
-      )}
+            <strong className="text-xl text-red">{reward[0]}</strong>
+            {typeof reward[1] === 'string' ? <span> {reward[1]}</span> : <span> {reward[1].Enlist}</span>}
+          </>,
+        )}
 
       <div className="text-center mt-16 ">
         <Link href={`/campaign/levels`}>

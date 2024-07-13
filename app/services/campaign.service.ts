@@ -1,5 +1,5 @@
 import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
-import { API_ENDPOINT } from '@/configs/environment.config';
+import { API_ENDPOINT, DISABLE_BATTLE_ARMY_COUNT_ADJUSTMENT } from '@/configs/environment.config';
 import { BattleDetails } from '@/types/battle.type';
 import { CampaignNationProfile } from '@/types/nation.type';
 import { errorType } from '@/utils';
@@ -12,14 +12,15 @@ interface RunCampaignBattle {
 
 export async function runCampaignBattle({ level, contenders }: RunCampaignBattle) {
   try {
-    const response = await fetchWithAuth<BattleDetails>(`${API_ENDPOINT}/battles/campaign/levels/${level}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        east_competitor: contenders[0],
-        west_competitor: contenders[1],
-      }),
-    });
-    console.log({ response });
+    const queryString = DISABLE_BATTLE_ARMY_COUNT_ADJUSTMENT ? '?disableCountAdjustment=true' : '';
+
+    const response = await fetchWithAuth<BattleDetails>(
+      `${API_ENDPOINT}/battles/campaign/levels/${level}${queryString}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ east_competitor: contenders[0], west_competitor: contenders[1] }),
+      },
+    );
 
     return response;
   } catch (e) {

@@ -11,7 +11,7 @@ export const configureFetchOptions = (options: RequestInit = {}) => {
   const authorizationToken = getCookie('access_token');
 
   const Authorization = authorizationToken ? `Bearer ${authorizationToken}` : null;
-  return { ...options, Authorization };
+  return { ...options, Authorization, cache: 'no-store' };
 };
 
 export const fetchWrapper = async <T>(url: string, options?: RequestInit): Promise<T> => {
