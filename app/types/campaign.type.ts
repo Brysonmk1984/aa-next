@@ -37,3 +37,7 @@ export enum ArmyName {
 export type CampaignLevelWithReward = CampaignLevel & { reward: CampaignLevelReward };
 
 export type GetCampaignLevels = [Array<Omit<CampaignLevel, 'reward'>>, Record<string, CampaignLevelReward>];
+
+export type NationCampaignDetails = {
+  highestLevelCompleted: number;
+};

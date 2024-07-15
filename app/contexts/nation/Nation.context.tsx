@@ -2,22 +2,11 @@
 
 import { Nation, NationArmy } from '@/types';
 import { createContext } from '@/utils/context-abstraction.util';
-import { Dispatch, PropsWithChildren, SetStateAction, useState } from 'react';
+import { PropsWithChildren, useReducer, useState } from 'react';
+import { NationReducer } from './Nation.reducer';
+import { NationContextValue, NationState } from './Nation.type';
 
-export type NationCampaignDetails = {
-  highestLevelCompleted: number;
-};
-interface NationState {
-  nation: Nation | null;
-  armies: Array<NationArmy>;
-  campaign: NationCampaignDetails;
-  dispatch: (val: UpdateNationAction) => void;
-}
-type UpdateNationAction = { type: string; payload: Pick<Nation, 'name' | 'lore'> };
-
-interface NationValue extends NationState {}
-
-const [NationContext, useContext] = createContext<NationValue>({
+const [NationContext, useContext] = createContext<NationContextValue>({
   name: 'NationContext',
 });
 
@@ -26,25 +15,12 @@ export const useNationContext = () => {
 };
 
 type NationProviderProps = Omit<NationState, 'dispatch'>;
-export const NationProvider = ({ nation, armies, campaign, children }: PropsWithChildren<NationProviderProps>) => {
-  const [n, setNation] = useState<Nation | null>(nation);
-  const [a] = useState<NationArmy[]>(armies);
-
-  if (n && n.name === '') {
+export const NationProvider = (initialValues: PropsWithChildren<NationProviderProps>) => {
+  const [state, dispatch] = useReducer(NationReducer, initialValues);
+  const { nation, armies, campaign } = state;
+  if (nation && nation.name === '') {
     window.location.assign('/founding');
   }
 
-  const dispatch = ({ type, payload }: UpdateNationAction) => {
-    if (type === 'updateNation') {
-      if (nation === null) {
-        throw new Error('Tried to update null nation');
-      }
-
-      setNation({ ...nation, ...payload });
-    }
-  };
-
-  return (
-    <NationContext.Provider value={{ nation: n, armies: a, campaign, dispatch }}>{children}</NationContext.Provider>
-  );
+  return <NationContext.Provider value={{ nation, armies, campaign, dispatch }}>{children}</NationContext.Provider>;
 };
