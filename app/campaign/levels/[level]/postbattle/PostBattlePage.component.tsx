@@ -1,29 +1,25 @@
 'use client';
 
+import { CLEAR_BATTLE_ON_POSTBATTLE } from '@/configs/environment.config';
 import { useSessionStorage } from '@/hooks';
 import { useNation } from '@/hooks/nation.hook';
 import { CampaignNationProfile } from '@/types';
 import {
   BattleDetails,
-  BattleStats,
+
   DirectionOfArmy,
-  RewardType,
-  RewardTypeEnlist,
-  RewardTypeGold,
-  WinCondition,
+
 } from '@/types/battle.type';
 import {
   getTypedEntries,
   mapStatsToDisplay,
   pascalCaseToTitleCase,
-  snakeCaseToSentenceCase,
-  toTitleCase,
+
 } from '@/utils';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ComponentType } from 'react';
-import { RxValue } from 'react-icons/rx';
+import { ComponentType, useEffect, useState } from 'react';
 
 interface PostBattlePage {
   enemyDetails: CampaignNationProfile;
@@ -34,11 +30,28 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
   const {
     nation: { name: playerNationName },
   } = useNation();
-  const { getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
+  const { getItem, removeItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
+  const [data,setData] = useState<BattleDetails>();
 
-  const data = getItem();
-  if (!data) {
-    router.push('/campaign/levels');
+
+
+  useEffect(()=> {
+    (async () =>{
+      const data = getItem();
+      if (!data) {
+        router.push('/campaign/levels');
+        return null;
+      }
+
+      setData(data);
+
+      if(CLEAR_BATTLE_ON_POSTBATTLE){
+        removeItem();
+      }
+    })()
+  },[getItem])
+
+  if(!data){
     return null;
   }
 
