@@ -6,8 +6,8 @@ import { assertHasNationDetails } from '@/utils';
  * @returns A wrapper for the useNationContext that handles type narrowing
  */
 export const useNation = () => {
-  const { nation, armies, campaign } = useNationContext();
+  const { nation, armies, campaign, dispatch } = useNationContext();
   assertHasNationDetails(nation);
 
-  return { nation, armies, campaign };
+  return { nation, armies, campaign, dispatch };
 };

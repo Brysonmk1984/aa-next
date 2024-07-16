@@ -3,7 +3,7 @@ import { NationCampaignDetails } from '@/types/campaign.type';
 import { Dispatch } from 'react';
 
 interface Action {
-  type: 'nationUpdateAction' | 'nationArmiesReplaceAction' | 'nationArmiesUpdateAction';
+  type: 'nationUpdateAction' | 'nationArmiesReplaceAllAction' | 'nationArmiesUpdateAction';
 }
 
 interface NationUpdateAction extends Action {
@@ -11,9 +11,9 @@ interface NationUpdateAction extends Action {
   type: 'nationUpdateAction';
 }
 
-interface NationArmiesReplaceAction extends Action {
+interface nationArmiesReplaceAllAction extends Action {
   payload: NationArmy[];
-  type: 'nationArmiesReplaceAction';
+  type: 'nationArmiesReplaceAllAction';
 }
 
 interface NationArmyUpdateAction extends Action {
@@ -21,17 +21,17 @@ interface NationArmyUpdateAction extends Action {
   type: 'nationArmiesUpdateAction';
 }
 
-export type NationReducerAction = NationUpdateAction | NationArmiesReplaceAction | NationArmyUpdateAction;
+export type NationReducerAction = NationUpdateAction | nationArmiesReplaceAllAction | NationArmyUpdateAction;
 
 export interface NationState {
-  nation: Nation;
+  nation: Nation | null;
   armies: NationArmy[];
   campaign: NationCampaignDetails;
 }
 
 export type NationContextValue = {
-  updateNationState: (payload: Partial<Nation>) => Promise<void>;
-  updateNationArmy: (payload: NationArmy | NationArmy[]) => Promise<void>;
   dispatch: Dispatch<NationReducerAction>;
-  state: NationState;
+  nation: NationState['nation'];
+  armies: NationState['armies'];
+  campaign: NationState['campaign'];
 };

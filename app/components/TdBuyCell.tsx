@@ -10,15 +10,16 @@ interface TdBuyCellProps {
 }
 
 export default function TdBuyCell({ armyId }: TdBuyCellProps) {
-  const { nation } = useNation();
+  const { nation, dispatch } = useNation();
   const { user } = useUser();
 
   const handleBuyArmy = async () => {
     try {
       const path = `${API_ENDPOINT}/kingdom/${user.id}/nation/${nation.id}/army/${armyId}`;
-      await fetchWithAuth(path, {
+      const updatedArmy = await fetchWithAuth(path, {
         method: 'POST',
       });
+      dispatch({ type: 'nationArmiesUpdateAction', payload: updatedArmy });
     } catch (e) {
       console.error(e);
     }

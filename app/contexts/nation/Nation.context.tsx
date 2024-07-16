@@ -15,12 +15,16 @@ export const useNationContext = () => {
 };
 
 type NationProviderProps = Omit<NationState, 'dispatch'>;
-export const NationProvider = (initialValues: PropsWithChildren<NationProviderProps>) => {
-  const [state, dispatch] = useReducer(NationReducer, initialValues);
-  const { nation, armies, campaign } = state;
+export const NationProvider = ({ children, nation, armies, campaign }: PropsWithChildren<NationProviderProps>) => {
+  const [state, dispatch] = useReducer(NationReducer, { nation, armies, campaign });
+
   if (nation && nation.name === '') {
     window.location.assign('/founding');
   }
 
-  return <NationContext.Provider value={{ nation, armies, campaign, dispatch }}>{children}</NationContext.Provider>;
+  return (
+    <NationContext.Provider value={{ nation: state.nation, armies: state.armies, campaign: state.campaign, dispatch }}>
+      {children}
+    </NationContext.Provider>
+  );
 };

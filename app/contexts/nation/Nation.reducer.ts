@@ -11,7 +11,7 @@ export const NationReducer = (state: NationState, action: NationReducerAction): 
         ...state,
         nation: { ...state.nation, ...action.payload },
       };
-    case 'nationArmiesReplaceAction':
+    case 'nationArmiesReplaceAllAction':
       return {
         ...state,
         armies: action.payload,
@@ -21,7 +21,7 @@ export const NationReducer = (state: NationState, action: NationReducerAction): 
 
       const matchingArmyIndex = existingArmies.findIndex((army) => army.army_id === action.payload.army_id);
 
-      if (!matchingArmyIndex) {
+      if (matchingArmyIndex === -1) {
         existingArmies.push(action.payload);
       } else {
         existingArmies.splice(matchingArmyIndex, 1, action.payload);
