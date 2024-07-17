@@ -1,7 +1,6 @@
 'use client';
 
 import { CampaignLevelWithReward } from '@/types/campaign.type';
-import { numberFormat } from '@/utils/numberFormat';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -32,8 +31,6 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
 
   useEffect(() => {
     console.log(levels);
-
-    const levelGroupCount = Math.ceil(levels.length / 5);
 
     const levelGroups = levels.reduce((acc: CampaignLevelWithReward[][], level: CampaignLevelWithReward) => {
       // acc should look like [[{..cl},{..cl},{..cl},{..cl},{..cl}],[..],[..],[..],[..],[..]]

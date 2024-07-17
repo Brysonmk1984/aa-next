@@ -2,7 +2,6 @@ import { CampaignLevelWithReward } from '@/types/campaign.type';
 
 import { getCampaignLevels } from '@/actions/getCampaignLevels.action';
 import { PageTemplate } from '@/components/PageTemplate.component';
-import { LevelList } from './LevelList.component';
 import { CampaignLevelsPage } from './CampaignLevelsPage.component';
 
 export default async function LevelsPage() {
@@ -11,7 +10,6 @@ export default async function LevelsPage() {
     const [campaignLevels, rewards] = await getCampaignLevels();
 
     campaignLevelsWithRewards = campaignLevels.map((campaignLevel) => {
-      let l = campaignLevel.level;
       return {
         reward: rewards[campaignLevel.level] ?? [null, null],
         ...campaignLevel,
@@ -26,7 +24,6 @@ export default async function LevelsPage() {
   return (
     <PageTemplate>
       <CampaignLevelsPage levels={campaignLevelsWithRewards} />
-      {/* <LevelList levels={campaignLevelsWithRewards} /> */}
     </PageTemplate>
   );
 }
