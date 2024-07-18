@@ -15,7 +15,9 @@ interface PreBattlePageProps {
 export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePageProps) => {
   const router = useRouter();
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
-  const { nation, armies } = useNation();
+  const { nation, armies, dispatch } = useNation();
+  console.log({ armies });
+
   const {
     nation_details: { name: enemyName, lore: enemyLore, id: enemyNationId },
     all_armies: enemyArmies,
@@ -28,11 +30,32 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
         level: totalLevel,
         contenders: [nation.id, enemyNationId],
       });
+      console.log(result);
+
+      const armiesToUpdate = result.battle_result.eastern_battalions
+        .map((endingArmy) => {
+          const matchingArmy = armies.find((army) => army.army_name === endingArmy.name);
+
+          if (!matchingArmy) {
+            throw new Error("Couldn't locate matching army");
+          } else if (endingArmy.count === 0) {
+            return undefined;
+          } else {
+            matchingArmy.count = endingArmy.count;
+            return matchingArmy;
+          }
+        })
+        .filter((maybeArmy) => typeof maybeArmy !== 'undefined');
+
+      dispatch({ type: 'nationArmiesReplaceAllAction', payload: armiesToUpdate });
+
+      // TODO: update local state with reward
+
       if (!getItem()) {
         storeItem(result);
       }
 
-      router.push(`/campaign/levels/${totalLevel}/battle`);
+      //router.push(`/campaign/levels/${totalLevel}/battle`);
     } catch (e) {
       console.error(e);
     }
