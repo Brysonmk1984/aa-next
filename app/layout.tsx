@@ -5,10 +5,11 @@ import { UserProvider as AuthZeroUserProvider } from '@auth0/nextjs-auth0/client
 import { ContentWrapper } from './components/ContentWrapper.component';
 import { Auth0Session, getAuth0Session } from './actions/getAuth0Session.action';
 import { decode } from 'jsonwebtoken';
-import { NationCampaignDetails, NationProvider } from './contexts';
+import { NationProvider } from './contexts';
 import { getHighestLevelCompleted, getNationAndArmies, handleUserUpdateCheck } from './services';
 import UserProvider from './contexts/user/User.context';
 import { ResolvedSessionInfo, initialProviderValues } from './configs/initialValues.config';
+import { NationCampaignDetails } from './types/campaign.type';
 
 const inter = Inter({ subsets: ['latin'] });
 

@@ -3,7 +3,7 @@ import { NationReducerAction, NationState } from './Nation.type';
 
 export const NationReducer = (state: NationState, action: NationReducerAction): NationState => {
   switch (action.type) {
-    case 'nationUpdateAction':
+    case 'nationUpdateAction': {
       if (state.nation === null) {
         throw new Error('Tried to update null nation');
       }
@@ -11,14 +11,15 @@ export const NationReducer = (state: NationState, action: NationReducerAction): 
         ...state,
         nation: { ...state.nation, ...action.payload },
       };
-    case 'nationArmiesReplaceAllAction':
+    }
+    case 'nationArmiesReplaceAllAction': {
       return {
         ...state,
         armies: action.payload,
       };
-    case 'nationArmiesUpdateAction':
+    }
+    case 'nationArmiesUpdateAction': {
       const existingArmies = state.armies;
-
       const matchingArmyIndex = existingArmies.findIndex((army) => army.army_id === action.payload.army_id);
 
       if (matchingArmyIndex === -1) {
@@ -31,7 +32,23 @@ export const NationReducer = (state: NationState, action: NationReducerAction): 
         ...state,
         armies: existingArmies,
       };
+    }
+    case 'addNationGoldByAmount': {
+      if (!state.nation) {
+        throw new Error('No nation to add gold to');
+      }
+      return {
+        ...state,
+        nation: { ...state.nation, gold: state.nation.gold + action.payload },
+      };
+    }
+    case 'updateHighestLevelCompleted': {
+      return {
+        ...state,
+        campaign: { highestLevelCompleted: action.payload },
+      };
+    }
     default:
-      return state;
+      throw new Error('Invalid action for the Nation reducer.');
   }
 };

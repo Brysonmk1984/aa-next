@@ -3,7 +3,12 @@ import { NationCampaignDetails } from '@/types/campaign.type';
 import { Dispatch } from 'react';
 
 interface Action {
-  type: 'nationUpdateAction' | 'nationArmiesReplaceAllAction' | 'nationArmiesUpdateAction';
+  type:
+    | 'nationUpdateAction'
+    | 'nationArmiesReplaceAllAction'
+    | 'nationArmiesUpdateAction'
+    | 'addNationGoldByAmount'
+    | 'updateHighestLevelCompleted';
 }
 
 interface NationUpdateAction extends Action {
@@ -21,7 +26,22 @@ interface NationArmyUpdateAction extends Action {
   type: 'nationArmiesUpdateAction';
 }
 
-export type NationReducerAction = NationUpdateAction | nationArmiesReplaceAllAction | NationArmyUpdateAction;
+interface AddNationGoldByAmount extends Action {
+  payload: number;
+  type: 'addNationGoldByAmount';
+}
+
+interface UpdateHighestLevelCompleted extends Action {
+  payload: number;
+  type: 'updateHighestLevelCompleted';
+}
+
+export type NationReducerAction =
+  | NationUpdateAction
+  | nationArmiesReplaceAllAction
+  | NationArmyUpdateAction
+  | AddNationGoldByAmount
+  | UpdateHighestLevelCompleted;
 
 export interface NationState {
   nation: Nation | null;

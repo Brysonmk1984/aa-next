@@ -3,7 +3,7 @@ import { useSessionStorage } from '@/hooks';
 import { useNation } from '@/hooks/nation.hook';
 import { runCampaignBattle } from '@/services';
 import { CampaignNationProfile } from '@/types';
-import { BattleDetails } from '@/types/battle.type';
+import { BattleDetails, DirectionOfArmy, RewardTypeEnum } from '@/types/battle.type';
 import { convertLevel } from '@/utils';
 import { useRouter } from 'next/navigation';
 
@@ -32,6 +32,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
       });
       console.log(result);
 
+      // TODO: Instead of this, we need to just GET nation armies belonging to user. This way, we're also accounting for the nations already created as a result of a reward
       const armiesToUpdate = result.battle_result.eastern_battalions
         .map((endingArmy) => {
           const matchingArmy = armies.find((army) => army.army_name === endingArmy.name);
@@ -49,7 +50,13 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
 
       dispatch({ type: 'nationArmiesReplaceAllAction', payload: armiesToUpdate });
 
-      // TODO: update local state with reward
+      if (result.battle_result.winner === DirectionOfArmy.EasternArmy) {
+        if (result.reward[1] === 'Gold') {
+          dispatch({ type: 'addNationGoldByAmount', payload: result.reward[0] });
+        }
+
+        dispatch({ type: 'updateHighestLevelCompleted', payload: totalLevel });
+      }
 
       if (!getItem()) {
         storeItem(result);
