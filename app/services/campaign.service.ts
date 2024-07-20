@@ -1,9 +1,8 @@
-import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT, DISABLE_BATTLE_ARMY_COUNT_ADJUSTMENT } from '@/configs/environment.config';
 import { BattleDetails } from '@/types/battle.type';
 import { CampaignNationProfile } from '@/types/nation.type';
 import { errorType } from '@/utils';
-import { fetchWrapper } from '@/utils/fetch.util';
+import { fetchPassthrough, fetchWrapper } from '@/utils/fetch.util';
 
 interface RunCampaignBattle {
   level: number;
@@ -13,7 +12,7 @@ interface RunCampaignBattle {
 export async function runCampaignBattle({ level, contenders }: RunCampaignBattle) {
   const queryString = DISABLE_BATTLE_ARMY_COUNT_ADJUSTMENT ? '?disableCountAdjustment=true' : '';
 
-  const response = await fetchWithAuth<BattleDetails>(
+  const response = await fetchPassthrough<BattleDetails>(
     `${API_ENDPOINT}/battles/campaign/levels/${level}${queryString}`,
     {
       method: 'POST',

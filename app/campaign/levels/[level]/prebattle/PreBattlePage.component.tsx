@@ -32,14 +32,13 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
         level: totalLevel,
         contenders: [nation.id, enemyNationId],
       });
-      console.log(result);
 
-      // TODO: This should work, but I need to fix the getSession page refresh issue to see
       const armiesAfterBattleAndRewards = await getNationArmies(user.id, nation.id);
 
       dispatch({ type: 'nationArmiesReplaceAllAction', payload: armiesAfterBattleAndRewards });
 
       if (result.battle_result.winner === DirectionOfArmy.EasternArmy) {
+        // NationArmy rewards are already fetched from the getNationArmies request
         if (result.reward[1] === 'Gold') {
           dispatch({ type: 'addNationGoldByAmount', payload: result.reward[0] });
         }

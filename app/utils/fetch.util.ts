@@ -24,3 +24,20 @@ export const fetchWrapper = async <T>(url: string, options?: RequestInit): Promi
 
   return response.json();
 };
+
+export const fetchPassthrough = async <T>(url: string, options?: RequestInit): Promise<T> => {
+  const response = await fetch('/api/fetch', {
+    method: 'POST',
+    body: JSON.stringify({
+      url,
+      options,
+    }),
+  });
+
+  if (!response.ok) {
+    const message = `fetchPassthrough Error: Request failed`;
+    throw new ContextualError(message, { status: response.status, statusText: response.statusText });
+  }
+
+  return response.json();
+};
