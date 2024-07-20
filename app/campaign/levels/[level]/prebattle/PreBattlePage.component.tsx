@@ -1,7 +1,8 @@
 'use client';
 import { useSessionStorage } from '@/hooks';
 import { useNation } from '@/hooks/nation.hook';
-import { runCampaignBattle } from '@/services';
+import { useUser } from '@/hooks/user.hook';
+import { getNationArmies, runCampaignBattle } from '@/services';
 import { CampaignNationProfile } from '@/types';
 import { BattleDetails, DirectionOfArmy, RewardTypeEnum } from '@/types/battle.type';
 import { convertLevel } from '@/utils';
@@ -15,6 +16,7 @@ interface PreBattlePageProps {
 export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePageProps) => {
   const router = useRouter();
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
+  const { user } = useUser();
   const { nation, armies, dispatch } = useNation();
   console.log({ armies });
 
@@ -32,23 +34,10 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
       });
       console.log(result);
 
-      // TODO: Instead of this, we need to just GET nation armies belonging to user. This way, we're also accounting for the nations already created as a result of a reward
-      const armiesToUpdate = result.battle_result.eastern_battalions
-        .map((endingArmy) => {
-          const matchingArmy = armies.find((army) => army.army_name === endingArmy.name);
+      // TODO: This should work, but I need to fix the getSession page refresh issue to see
+      const armiesAfterBattleAndRewards = await getNationArmies(user.id, nation.id);
 
-          if (!matchingArmy) {
-            throw new Error("Couldn't locate matching army");
-          } else if (endingArmy.count === 0) {
-            return undefined;
-          } else {
-            matchingArmy.count = endingArmy.count;
-            return matchingArmy;
-          }
-        })
-        .filter((maybeArmy) => typeof maybeArmy !== 'undefined');
-
-      dispatch({ type: 'nationArmiesReplaceAllAction', payload: armiesToUpdate });
+      dispatch({ type: 'nationArmiesReplaceAllAction', payload: armiesAfterBattleAndRewards });
 
       if (result.battle_result.winner === DirectionOfArmy.EasternArmy) {
         if (result.reward[1] === 'Gold') {

@@ -11,21 +11,17 @@ interface RunCampaignBattle {
 }
 
 export async function runCampaignBattle({ level, contenders }: RunCampaignBattle) {
-  try {
-    const queryString = DISABLE_BATTLE_ARMY_COUNT_ADJUSTMENT ? '?disableCountAdjustment=true' : '';
+  const queryString = DISABLE_BATTLE_ARMY_COUNT_ADJUSTMENT ? '?disableCountAdjustment=true' : '';
 
-    const response = await fetchWithAuth<BattleDetails>(
-      `${API_ENDPOINT}/battles/campaign/levels/${level}${queryString}`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ east_competitor: contenders[0], west_competitor: contenders[1] }),
-      },
-    );
+  const response = await fetchWithAuth<BattleDetails>(
+    `${API_ENDPOINT}/battles/campaign/levels/${level}${queryString}`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ east_competitor: contenders[0], west_competitor: contenders[1] }),
+    },
+  );
 
-    return response;
-  } catch (e) {
-    throw errorType(e);
-  }
+  return response;
 }
 
 export const getCampaignLevelDetails = async (level: number) => {

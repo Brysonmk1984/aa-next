@@ -10,6 +10,14 @@ export const getNationAndArmies = async (userId: number) => {
   return { nation, armies };
 };
 
+export const getNationArmies = async (userId: number, nationId: number) => {
+  const route = `${API_ENDPOINT}/kingdom/${userId}/nation/:${nationId}/army`;
+  const armies = await fetchWithAuth(route);
+
+  console.log('UPDATED', { armies });
+  return armies;
+};
+
 export const initializeNation = async (userId: number) => {
   const route = `${API_ENDPOINT}/kingdom/${userId}`;
   const [nation, _armies]: [Nation, NationArmy] = await fetchWithAuth(route, { method: 'POST' });
