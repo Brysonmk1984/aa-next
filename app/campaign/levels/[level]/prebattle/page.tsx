@@ -5,15 +5,15 @@ import { PreBattlePage } from './PreBattlePage.component';
 import { redirect } from 'next/navigation';
 
 interface PageProps {
-  params: { level: number };
+  params: { level: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default async function PreBattle({ params }: PageProps) {
   let opponent: CampaignNationProfile;
-
+  const level = +params.level;
   try {
-    opponent = await getCampaignLevelDetails(params.level);
+    opponent = await getCampaignLevelDetails(level);
   } catch (e) {
     console.log('Error', e);
     redirect('/campaign/levels');
@@ -21,7 +21,7 @@ export default async function PreBattle({ params }: PageProps) {
   }
   return (
     <PageTemplate>
-      <PreBattlePage enemyDetails={opponent} level={params.level} />
+      <PreBattlePage enemyDetails={opponent} level={level} />
     </PageTemplate>
   );
 }

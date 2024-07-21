@@ -18,7 +18,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
   const { user } = useUser();
   const { nation, armies, dispatch } = useNation();
-  console.log({ armies });
+  console.log({ armies, totalLevel });
 
   const {
     nation_details: { name: enemyName, lore: enemyLore, id: enemyNationId },

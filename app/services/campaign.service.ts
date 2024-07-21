@@ -34,5 +34,6 @@ export const getHighestLevelCompleted = async (nationId: number) => {
   const route = `${API_ENDPOINT}/campaign/nation/${nationId}/highest_completed`;
 
   const result: number = await fetchWrapper(route);
-  return result;
+
+  return +result;
 };

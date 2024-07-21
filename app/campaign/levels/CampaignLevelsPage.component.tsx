@@ -1,6 +1,9 @@
 'use client';
 
+import { useNation } from '@/hooks/nation.hook';
 import { CampaignLevelWithReward } from '@/types/campaign.type';
+import { convertLevel } from '@/utils';
+import classNames from 'classnames';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -27,11 +30,12 @@ const regions = [
 ];
 
 export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
+  const {
+    campaign: { highestLevelCompleted },
+  } = useNation();
   const [levelGroups, setLevelGroups] = useState<CampaignLevelWithReward[][]>([]);
 
   useEffect(() => {
-    console.log(levels);
-
     const levelGroups = levels.reduce((acc: CampaignLevelWithReward[][], level: CampaignLevelWithReward) => {
       // acc should look like [[{..cl},{..cl},{..cl},{..cl},{..cl}],[..],[..],[..],[..],[..]]
 
@@ -55,31 +59,48 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
     setLevelGroups(levelGroups);
   }, [levels]);
 
+  const { region } = convertLevel(highestLevelCompleted);
+
   return (
     <>
       <h1>Levels</h1>
       <div>
         {levelGroups.map((group, i) => {
           const regionNum = i + 1;
+
+          if (regionNum > region) {
+            return null;
+          }
+
           return (
             <>
               <h2>{regions[i] ?? `Region ${regionNum}`}</h2>
               <div className="flex flex-wrap justify-center">
                 {group.map((level, j) => {
+                  if (highestLevelCompleted + 1 < level.level) {
+                    return null;
+                  }
                   const levelNum = j + 1;
-                  return (
-                    <Link
-                      href={`/campaign/levels/${level.id}/prebattle`}
-                      key={levelNum}
-                      className="relative border border-dashed rounded-sm w-1/4 p-4 m-4 w-[300px] h-[300px] text-center no-underline"
-                    >
-                      <h3>{level.nation_name}</h3>
 
-                      <div className="absolute bottom-1 right-2 font-thin text-gray-dark">
-                        Region <strong className="font-bold text-lg">{regionNum}</strong>, Nation{' '}
-                        <strong className=" font-bold text-lg">{levelNum}</strong>
-                      </div>
-                    </Link>
+                  return (
+                    <>
+                      <Link
+                        href={`/campaign/levels/${level.id}/prebattle`}
+                        key={levelNum}
+                        className={classNames(
+                          'relative border border-dashed rounded-sm w-1/4 p-4 m-4 w-[300px] h-[300px] text-center no-underline',
+                        )}
+                      >
+                        <h3 className={classNames({ ' line-through': highestLevelCompleted >= level.level })}>
+                          {level.nation_name}
+                        </h3>
+                        {highestLevelCompleted >= level.level && <div className="text-8xl mt-8"> &#10003;</div>}
+                        <div className="absolute bottom-1 right-2 font-thin text-gray-dark">
+                          Region <strong className="font-bold text-lg">{regionNum}</strong>, Nation{' '}
+                          <strong className=" font-bold text-lg">{levelNum}</strong>
+                        </div>
+                      </Link>
+                    </>
                   );
                 })}
               </div>
