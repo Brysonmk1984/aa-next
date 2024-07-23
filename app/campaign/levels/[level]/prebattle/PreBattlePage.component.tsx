@@ -63,16 +63,14 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
           <h2>{nation.name}</h2>
           <h3>Warriors</h3>
           <ul>
-            <li>
-              {armies.map((army) => {
-                return (
-                  <li key={army.id} className="flex gap-2 items-center">
-                    <span className="font-bold text-gray-dark text-lg w-[50px] text-right">{army.count}</span>
-                    <span className=" text-gray-dark">{army.army_name}</span>
-                  </li>
-                );
-              })}
-            </li>
+            {armies.map((army) => {
+              return (
+                <li key={army.id} className="flex gap-2 items-center">
+                  <span className="font-bold text-gray-dark text-lg w-[50px] text-right">{army.count}</span>
+                  <span className=" text-gray-dark">{army.army_name}</span>
+                </li>
+              );
+            })}
           </ul>
           <div className="text-center mt-8">
             <button className="btn btn-red" onClick={() => router.push('/enlist')}>

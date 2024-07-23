@@ -1,11 +1,12 @@
 'use client';
 
+import { ALLOW_PREVIOUS_LEVEL_BATTLES } from '@/configs/environment.config';
 import { useNation } from '@/hooks/nation.hook';
 import { CampaignLevelWithReward } from '@/types/campaign.type';
 import { convertLevel } from '@/utils';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { ComponentType, useEffect, useState } from 'react';
 
 interface CampaignLevelsPageProps {
   levels: CampaignLevelWithReward[];
@@ -77,29 +78,48 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
               <h2>{regions[i] ?? `Region ${regionNum}`}</h2>
               <div className="flex flex-wrap justify-center">
                 {group.map((level, j) => {
+                  // Later levels
                   if (highestLevelCompleted + 1 < level.level) {
                     return null;
                   }
-                  const levelNum = j + 1;
+
+                  // Current or previous levels
+                  const levelWithinGroupNum = j + 1;
+
+                  const isPreviousLevel = highestLevelCompleted >= level.level;
 
                   return (
                     <>
-                      <Link
-                        href={`/campaign/levels/${level.id}/prebattle`}
-                        key={levelNum}
-                        className={classNames(
-                          'relative border border-dashed rounded-sm w-1/4 p-4 m-4 w-[300px] h-[300px] text-center no-underline',
-                        )}
-                      >
-                        <h3 className={classNames({ ' line-through': highestLevelCompleted >= level.level })}>
-                          {level.nation_name}
-                        </h3>
-                        {highestLevelCompleted >= level.level && <div className="text-8xl mt-8"> &#10003;</div>}
-                        <div className="absolute bottom-1 right-2 font-thin text-gray-dark">
-                          Region <strong className="font-bold text-lg">{regionNum}</strong>, Nation{' '}
-                          <strong className=" font-bold text-lg">{levelNum}</strong>
+                      {isPreviousLevel && !ALLOW_PREVIOUS_LEVEL_BATTLES ? (
+                        <div
+                          key={level.level}
+                          className={classNames('relative  m-4 w-[300px] h-[300px] text-center no-underline')}
+                        >
+                          <div className="w-full h-full border rounded-sm p-4">
+                            <LevelPanelContent
+                              isPreviousLevel={isPreviousLevel}
+                              level={level}
+                              regionNum={regionNum}
+                              levelWithinGroupNum={levelWithinGroupNum}
+                            />
+                          </div>
                         </div>
-                      </Link>
+                      ) : (
+                        <Link
+                          href={`/campaign/levels/${level.id}/prebattle`}
+                          key={level.level}
+                          className={classNames(
+                            'relative border border-dashed rounded-sm  p-4 m-4 w-[300px] h-[300px] text-center no-underline',
+                          )}
+                        >
+                          <LevelPanelContent
+                            isPreviousLevel={isPreviousLevel}
+                            level={level}
+                            regionNum={regionNum}
+                            levelWithinGroupNum={levelWithinGroupNum}
+                          />
+                        </Link>
+                      )}
                     </>
                   );
                 })}
@@ -107,6 +127,31 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
             </>
           );
         })}
+      </div>
+    </>
+  );
+};
+
+interface LevelPanelContentProps {
+  isPreviousLevel: boolean;
+  level: CampaignLevelWithReward;
+  regionNum: number;
+  levelWithinGroupNum: number;
+}
+
+const LevelPanelContent: ComponentType<LevelPanelContentProps> = ({
+  isPreviousLevel,
+  level,
+  regionNum,
+  levelWithinGroupNum,
+}) => {
+  return (
+    <>
+      <h3 className={classNames({ ' line-through': isPreviousLevel })}>{level.nation_name}</h3>
+      {isPreviousLevel && <div className="text-8xl mt-8 text-red"> &#10003;</div>}
+      <div className="absolute bottom-1 right-2 font-thin text-gray-dark">
+        Region <strong className="font-bold text-lg">{regionNum}</strong>, Nation
+        <strong className=" font-bold text-lg">{levelWithinGroupNum}</strong>
       </div>
     </>
   );

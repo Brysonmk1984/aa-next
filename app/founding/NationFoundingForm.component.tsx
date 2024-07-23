@@ -1,6 +1,5 @@
 'use client';
 
-import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { useNationContext, useUserContext } from '@/contexts';
 import { useSessionStorage } from '@/hooks';
 import { patchNation } from '@/services';

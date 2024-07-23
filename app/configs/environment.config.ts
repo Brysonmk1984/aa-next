@@ -7,3 +7,5 @@ export const AUTH_AUD = process.env.AUTH_AUD;
 
 export const DISABLE_BATTLE_ARMY_COUNT_ADJUSTMENT = ARMY_COUNT_ADJUSTMENT === 'true' ? true : false;
 export const CLEAR_BATTLE_ON_POSTBATTLE = process.env.NEXT_PUBLIC_CLEAR_BATTLE_ON_POSTBATTLE;
+export const ALLOW_PREVIOUS_LEVEL_BATTLES =
+  process.env.NEXT_PUBLIC_ALLOW_PREVIOUS_LEVEL_BATTLES === 'true' ? true : false;
