@@ -1,9 +1,6 @@
-import { getAuth0Session } from '@/actions/getAuth0Session.action';
 import { PageTemplate } from '@/components/PageTemplate.component';
 import TdBuyCell from '@/components/TdBuyCell';
-import { getArmies, getNationAndArmies, handleUserUpdateCheck } from '@/services';
-
-import { Nation, ResolvedUser, Army as ArmyType, NationArmy } from '@/types';
+import { getArmies } from '@/services';
 
 export default async function Enlist() {
   const armies = await getArmies();
