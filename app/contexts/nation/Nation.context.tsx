@@ -5,6 +5,7 @@ import { createContext } from '@/utils/context-abstraction.util';
 import { PropsWithChildren, useReducer, useState } from 'react';
 import { NationReducer } from './Nation.reducer';
 import { NationContextValue, NationState } from './Nation.type';
+import { useRouter } from 'next/navigation';
 
 const [NationContext, useContext] = createContext<NationContextValue>({
   name: 'NationContext',
@@ -16,10 +17,11 @@ export const useNationContext = () => {
 
 type NationProviderProps = Omit<NationState, 'dispatch'>;
 export const NationProvider = ({ children, nation, armies, campaign }: PropsWithChildren<NationProviderProps>) => {
+  const router = useRouter();
   const [state, dispatch] = useReducer(NationReducer, { nation, armies, campaign });
 
-  if (nation && nation.name === '') {
-    window.location.assign('/founding');
+  if (nation && !nation.name) {
+    router.push('/founding');
   }
 
   return (

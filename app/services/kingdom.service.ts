@@ -41,10 +41,15 @@ export const getNationArmies = async (userId: number, nationId: number) => {
   return armies;
 };
 
+/**
+ * Updates the nation with whatever values are to be changed - for CLIENT - uses fetchPassthrough since fetchWithAuth causes screen jank when ran on the client side
+ * @param userId
+ * @returns
+ */
 export const patchNation = async (userId: number, nationId: number, body: Partial<Nation>): Promise<Nation> => {
   const route = `${API_ENDPOINT}/kingdom/${userId}/nation/${nationId}`;
 
-  const result = await fetchWithAuth<Nation>(route, { method: 'PATCH', body: JSON.stringify(body) });
+  const result = await fetchPassthrough<Nation>(route, { method: 'PATCH', body: JSON.stringify(body) });
 
   return result;
 };

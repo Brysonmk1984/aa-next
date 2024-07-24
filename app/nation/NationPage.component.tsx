@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export const NationPage = () => {
   const { nation, armies } = useNationContext();
-  console.log(armies);
+
   return (
     <>
       <div className="flex justify-between">

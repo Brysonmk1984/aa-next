@@ -18,16 +18,19 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
   const { user } = useUser();
   const { nation, armies, dispatch } = useNation();
-  console.log({ armies, totalLevel });
 
   const {
     nation_details: { name: enemyName, lore: enemyLore, id: enemyNationId },
     all_armies: enemyArmies,
   } = enemyDetails;
-  const { level, region } = convertLevel(totalLevel);
+  const { levelInRegionNum, regionNum } = convertLevel(totalLevel);
 
   const handleBattleClick = async () => {
     try {
+      if (nation && !nation.name) {
+        router.push('/founding');
+      }
+
       const result = await runCampaignBattle({
         level: totalLevel,
         contenders: [nation.id, enemyNationId],
@@ -80,11 +83,11 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
         </div>
         <div className="flex-grow md:border-l p-8">
           <h1 className="block">{enemyName}</h1>
-          {level && (
-            <h2>
-              Region {region}, Nation {level}
-            </h2>
-          )}
+
+          <h2>
+            Region {regionNum}, Nation {levelInRegionNum}
+          </h2>
+
           <p>{enemyLore}</p>
           <br />
           <h3>Warriors</h3>

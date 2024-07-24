@@ -54,7 +54,7 @@ export const NationFoundingForm = () => {
       await patchNation(userId, nationId, payload);
       removeItem();
       console.log('SETTING HAS UPDATED');
-      dispatch({ type: 'updateNation', payload });
+      dispatch({ type: 'nationUpdateAction', payload });
       setHasUpdated(true);
     },
     [removeItem, dispatch],
