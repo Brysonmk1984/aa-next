@@ -1,6 +1,8 @@
 import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT } from '@/configs/environment.config';
 import { Nation, NationArmy } from '@/types';
+import { calculateArmyCount, determineUpkeep } from '@/utils';
+
 import { fetchPassthrough } from '@/utils/fetch.util';
 
 /**
@@ -26,6 +28,7 @@ export const getNationAndArmies = async (userId: number) => {
   // This uses fetchWithAuth, but since it's running on server, it's ok, getSession works
   const [nation, armies]: [Nation, NationArmy[]] = await fetchWithAuth(route);
 
+  nation.upkeep = determineUpkeep(calculateArmyCount(armies));
   return { nation, armies };
 };
 
@@ -53,3 +56,6 @@ export const patchNation = async (userId: number, nationId: number, body: Partia
 
   return result;
 };
+function calculateUpkeep(armies: NationArmy[]) {
+  throw new Error('Function not implemented.');
+}

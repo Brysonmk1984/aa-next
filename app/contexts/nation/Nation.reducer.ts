@@ -48,6 +48,15 @@ export const NationReducer = (state: NationState, action: NationReducerAction): 
         campaign: { highestLevelCompleted: action.payload },
       };
     }
+    case 'setUpkeepLevel': {
+      return {
+        ...state,
+        nation: {
+          ...state.nation,
+          upkeep: action.payload,
+        },
+      };
+    }
     default:
       throw new Error('Invalid action for the Nation reducer.');
   }

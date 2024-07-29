@@ -4,8 +4,9 @@ import { useNation } from '@/hooks/nation.hook';
 import { useUser } from '@/hooks/user.hook';
 import { getNationArmies, runCampaignBattle } from '@/services';
 import { CampaignNationProfile } from '@/types';
-import { BattleDetails, DirectionOfArmy, RewardTypeEnum } from '@/types/battle.type';
-import { convertLevel } from '@/utils';
+import { BattleDetails, DirectionOfArmy } from '@/types/battle.type';
+import { calculateArmyCount, convertLevel } from '@/utils';
+import classNames from 'classnames';
 import { useRouter } from 'next/navigation';
 
 interface PreBattlePageProps {
@@ -18,6 +19,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
   const { user } = useUser();
   const { nation, armies, dispatch } = useNation();
+  const hasStandingArmy = !!calculateArmyCount(armies);
 
   const {
     nation_details: { name: enemyName, lore: enemyLore, id: enemyNationId },
@@ -105,10 +107,22 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
       </div>
       <div className="text-center mt-8 border-t border-dashed">
         <div className="mt-4">
-          <button className="btn btn-red" onClick={handleBattleClick}>
+          <button
+            className={classNames('btn btn-red', {
+              'disabled:bg-gray-dark disabled:text-gray disabled:border-gray-dark disabled:shadow-none':
+                !hasStandingArmy,
+            })}
+            onClick={handleBattleClick}
+            disabled={!hasStandingArmy}
+          >
             Battle
           </button>
         </div>
+        {!hasStandingArmy && (
+          <p className="mt-4 text-sm">
+            <em>You need an army to fight</em>
+          </p>
+        )}
       </div>
     </>
   );

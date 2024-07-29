@@ -1,5 +1,6 @@
 'use client';
 
+import { UpkeepKeys, UpkeepValues } from '@/constants/upkeep';
 import { useNationContext } from '@/contexts';
 import { sentenceCaseToKebabCase } from '@/utils';
 import { getArmyImage } from '@/utils/army-image-map.util';
@@ -38,7 +39,19 @@ export const NationPage = () => {
           <em>{nation.lore}</em>
         </p>
       )}
-      <h2>Standing Army</h2>
+      <div className="flex justify-between">
+        <h2>Standing Army</h2>
+        {nation?.upkeep !== UpkeepKeys.None && (
+          <div className="flex flex-col text-right">
+            <span className="text-2xl font-sans opacity-90 block text-red">{nation.upkeep}</span>
+            <span className="text-lg font-sans opacity-90 block">Upkeep</span>
+            <span className="block text-sm">
+              <strong className="text-lg text-red">{UpkeepValues[nation.upkeep]}</strong> Gold/hr
+            </span>
+          </div>
+        )}
+      </div>
+
       <div>
         <div className="flex flex-row justify-around flex-wrap">
           {armies.map((army) => {

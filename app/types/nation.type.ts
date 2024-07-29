@@ -1,3 +1,4 @@
+import { UpkeepKeys } from '@/constants/upkeep';
 import { NationArmy } from '.';
 
 export interface Nation {
@@ -9,6 +10,7 @@ export interface Nation {
   lore: string | null;
   created_at: string;
   updated_at: string;
+  upkeep: UpkeepKeys;
 }
 
 export interface CampaignNation extends Nation {
