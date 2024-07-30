@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3999",
     "build": "NODE_ENV=production next build",
+    "build:no-lint": "DISABLE_ESLINT_PLUGIN=true NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "next lint",
     "ts:check": "tsc --noEmit"

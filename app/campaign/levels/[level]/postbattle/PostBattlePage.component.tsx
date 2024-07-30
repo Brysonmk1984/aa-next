@@ -4,18 +4,8 @@ import { CLEAR_BATTLE_ON_POSTBATTLE } from '@/configs/environment.config';
 import { useSessionStorage } from '@/hooks';
 import { useNation } from '@/hooks/nation.hook';
 import { CampaignNationProfile } from '@/types';
-import {
-  BattleDetails,
-
-  DirectionOfArmy,
-
-} from '@/types/battle.type';
-import {
-  getTypedEntries,
-  mapStatsToDisplay,
-  pascalCaseToTitleCase,
-
-} from '@/utils';
+import { BattleDetails, DirectionOfArmy } from '@/types/battle.type';
+import { getTypedEntries, mapStatsToDisplay, pascalCaseToTitleCase } from '@/utils';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -31,12 +21,10 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
     nation: { name: playerNationName },
   } = useNation();
   const { getItem, removeItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
-  const [data,setData] = useState<BattleDetails>();
+  const [data, setData] = useState<BattleDetails>();
 
-
-
-  useEffect(()=> {
-    (async () =>{
+  useEffect(() => {
+    (async () => {
       const data = getItem();
       if (!data) {
         router.push('/campaign/levels');
@@ -45,13 +33,13 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
 
       setData(data);
 
-      if(CLEAR_BATTLE_ON_POSTBATTLE){
+      if (CLEAR_BATTLE_ON_POSTBATTLE) {
         removeItem();
       }
-    })()
-  },[getItem])
+    })();
+  }, [getItem]);
 
-  if(!data){
+  if (!data) {
     return null;
   }
 
@@ -66,7 +54,6 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
   const playerIsWinner = winner === DirectionOfArmy.EasternArmy;
   const winnerName = playerIsWinner ? playerNationName : enemyDetails.nation_details.name;
   const loserName = playerIsWinner ? enemyDetails.nation_details.name : playerNationName;
-
 
   return (
     <div className=" text-center">
@@ -123,15 +110,14 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
           ))}
         </ul>
       </div>
-      {playerIsWinner &&
-        reward &&(
-          <>
-            <h2>Reward</h2>
+      {playerIsWinner && reward ? (
+        <>
+          <h2>Reward</h2>
 
-            <strong className="text-xl text-red">{reward[0]}</strong>
-            {typeof reward[1] === 'string' ? <span> {reward[1]}</span> : <span> {reward[1].Enlist}</span>}
-          </>,
-        )}
+          <strong className="text-xl text-red">{reward[0]}</strong>
+          {typeof reward[1] === 'string' ? <span> {reward[1]}</span> : <span> {reward[1].Enlist}</span>}
+        </>
+      ) : null}
 
       <div className="text-center mt-16 ">
         <Link href={`/campaign/levels`}>
