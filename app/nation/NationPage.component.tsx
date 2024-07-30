@@ -2,18 +2,19 @@
 
 import { UpkeepKeys, UpkeepValues } from '@/constants/upkeep';
 import { useNationContext } from '@/contexts';
+import { useNation } from '@/hooks/nation.hook';
 import { sentenceCaseToKebabCase } from '@/utils';
 import { getArmyImage } from '@/utils/army-image-map.util';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export const NationPage = () => {
-  const { nation, armies } = useNationContext();
+  const { nation, armies } = useNation();
 
   return (
     <>
       <div className="flex justify-between">
-        {nation?.name ? (
+        {nation.name ? (
           <div>
             <span className="font-sans text-2xl opacity-90"> Nation of</span>
 
@@ -24,7 +25,7 @@ export const NationPage = () => {
         )}
 
         <div>
-          {nation?.gold && (
+          {nation.gold && (
             <div className=" text-right">
               <span className=" font-sans text-4xl">{nation.gold}</span>
               <br />
@@ -34,22 +35,35 @@ export const NationPage = () => {
         </div>
       </div>
 
-      {nation?.lore && (
+      {nation.lore && (
         <p>
           <em>{nation.lore}</em>
         </p>
       )}
       <div className="flex justify-between">
         <h2>Standing Army</h2>
-        {nation?.upkeep !== UpkeepKeys.None && (
-          <div className="flex flex-col text-right">
-            <span className="text-2xl font-sans opacity-90 block text-red">{nation.upkeep}</span>
-            <span className="text-lg font-sans opacity-90 block">Upkeep</span>
+        <div className="flex items-end">
+          {
+            <div className="flex flex-col text-right">
+              <span className="text-lg font-sans opacity-90 block">Income</span>
+              <span className="block text-sm">
+                <strong className="text-lg text-red">{nation.income}</strong> Gold/hr
+              </span>
+            </div>
+          }
+
+          <div className="flex flex-col text-right ml-8 ">
+            {nation.upkeep !== UpkeepKeys.None && (
+              <span className="text-2xl font-sans opacity-90 block text-red">{nation.upkeep}</span>
+            )}
+            <span className="text-lg font-sans opacity-90 block">
+              {nation.upkeep == UpkeepKeys.None ? 'No Upkeep' : 'Upkeep'}
+            </span>
             <span className="block text-sm">
               <strong className="text-lg text-red">{UpkeepValues[nation.upkeep]}</strong> Gold/hr
             </span>
           </div>
-        )}
+        </div>
       </div>
 
       <div>

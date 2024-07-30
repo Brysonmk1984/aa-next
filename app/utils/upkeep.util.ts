@@ -19,3 +19,7 @@ export const determineUpkeep = (count: number) => {
       return UpkeepKeys.None;
   }
 };
+
+export const determineIncome = (highestLevelCompleted: number) => {
+  return 100 + highestLevelCompleted * 10;
+};

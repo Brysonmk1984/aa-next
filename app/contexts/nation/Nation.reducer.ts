@@ -1,8 +1,31 @@
-import { Nation, NationArmy } from '@/types';
 import { NationReducerAction, NationState } from './Nation.type';
 
 export const NationReducer = (state: NationState, action: NationReducerAction): NationState => {
   switch (action.type) {
+    case 'setUpkeepLevel': {
+      if (state.nation === null) {
+        throw new Error('Tried to update upkeep null nation');
+      }
+      return {
+        ...state,
+        nation: {
+          ...state.nation,
+          upkeep: action.payload,
+        },
+      };
+    }
+    case 'setIncomeAmount': {
+      if (state.nation === null) {
+        throw new Error('Tried to update income for null nation');
+      }
+      return {
+        ...state,
+        nation: {
+          ...state.nation,
+          income: action.payload,
+        },
+      };
+    }
     case 'nationUpdateAction': {
       if (state.nation === null) {
         throw new Error('Tried to update null nation');
@@ -48,15 +71,7 @@ export const NationReducer = (state: NationState, action: NationReducerAction): 
         campaign: { highestLevelCompleted: action.payload },
       };
     }
-    case 'setUpkeepLevel': {
-      return {
-        ...state,
-        nation: {
-          ...state.nation,
-          upkeep: action.payload,
-        },
-      };
-    }
+
     default:
       throw new Error('Invalid action for the Nation reducer.');
   }

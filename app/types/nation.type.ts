@@ -11,6 +11,7 @@ export interface Nation {
   created_at: string;
   updated_at: string;
   upkeep: UpkeepKeys;
+  income: number;
 }
 
 export interface CampaignNation extends Nation {

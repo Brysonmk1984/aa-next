@@ -29,6 +29,7 @@ export const getNationAndArmies = async (userId: number) => {
   const [nation, armies]: [Nation, NationArmy[]] = await fetchWithAuth(route);
 
   nation.upkeep = determineUpkeep(calculateArmyCount(armies));
+
   return { nation, armies };
 };
 

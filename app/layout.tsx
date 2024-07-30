@@ -10,6 +10,7 @@ import { getHighestLevelCompleted, getNationAndArmies, handleUserUpdateCheck } f
 import UserProvider from './contexts/user/User.context';
 import { ResolvedSessionInfo, initialProviderValues } from './configs/initialValues.config';
 import { NationCampaignDetails } from './types/campaign.type';
+import { determineIncome } from './utils';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -41,7 +42,7 @@ const getProviderData = async (session: Auth0Session): Promise<ResolvedSessionIn
   const { nation, armies } = await getNationAndArmies(user.id);
 
   const highestLevelCompleted = await getHighestLevelCompleted(nation.id);
-
+  nation.income = determineIncome(highestLevelCompleted);
   const campaign: NationCampaignDetails = {
     highestLevelCompleted,
   };
