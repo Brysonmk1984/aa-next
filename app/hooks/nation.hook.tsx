@@ -1,5 +1,5 @@
 import { useNationContext } from '@/contexts';
-import { assertHasNationDetails } from '@/utils';
+import { assertHasCampaignDetails, assertHasNationDetails } from '@/utils';
 
 /**
  *
@@ -8,6 +8,7 @@ import { assertHasNationDetails } from '@/utils';
 export const useNation = () => {
   const { nation, armies, campaign, dispatch } = useNationContext();
   assertHasNationDetails(nation);
+  assertHasCampaignDetails(campaign);
 
   return { nation, armies, campaign, dispatch };
 };

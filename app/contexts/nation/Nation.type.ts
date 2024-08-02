@@ -61,7 +61,7 @@ export type NationReducerAction =
 export interface NationState {
   nation: Nation | null;
   armies: NationArmy[];
-  campaign: NationCampaignDetails;
+  campaign: NationCampaignDetails | null;
 }
 
 export type NationContextValue = {
