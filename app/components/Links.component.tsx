@@ -14,8 +14,6 @@ export const Links = () => {
         <Link href={(campaign?.highestLevelCompleted ?? 0) > 1 ? '/campaign/levels' : '/campaign'}>Campaign</Link>
       )}
       {user && <Link href="/nation">Nation</Link>}
-      {user && <Link href="/enlist">Enlist</Link>}
-
       <ProfileClient user={user} />
     </>
   );

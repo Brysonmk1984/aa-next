@@ -1,8 +1,8 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
+
 import { getArmies } from '@/services';
 import { sentenceCaseToKebabCase } from '@/utils';
-import { getArmyImage } from '@/utils/army-image-map.util';
-import Image from 'next/image';
+import { WarriorPage } from './WarriorPage.component';
 
 type PageProps = {
   params: {
@@ -10,7 +10,7 @@ type PageProps = {
   };
 };
 
-export default async function WarriorPage({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const armies = await getArmies();
 
   let matchingArmy = armies.find((army) => {
@@ -25,33 +25,7 @@ export default async function WarriorPage({ params }: PageProps) {
 
   return (
     <PageTemplate>
-      <h1 className="block">{matchingArmy.name}</h1>
-
-      <div className="flex">
-        <div className="relative w-[550px] h-[750px]">
-          <Image
-            src={`/images/armies/${getArmyImage(matchingArmy.name)}.webp`}
-            alt={matchingArmy.name}
-            objectFit="cover"
-            fill
-          />
-        </div>
-        <div>
-          <dl>
-            {Object.entries(matchingArmy).map(([k, v], i) => {
-              if (k !== 'lore') {
-                return (
-                  <div key={i} className="flex justify-between mb-1">
-                    <dt className=" font-bold">{k}:</dt>
-                    <dt className=" max-w-[250px] text-lg">{typeof v === 'boolean' ? JSON.stringify(v) : v}</dt>
-                  </div>
-                );
-              }
-            })}
-          </dl>
-          <p className="w-[450px] mt-12 text-lg">{matchingArmy.lore}</p>
-        </div>
-      </div>
+      <WarriorPage matchingArmy={matchingArmy} />
     </PageTemplate>
   );
 }
