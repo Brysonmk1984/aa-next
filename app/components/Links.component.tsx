@@ -1,20 +1,19 @@
-import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
-import ProfileClient from './ProfileClient';
+import { ProfileClient } from './ProfileClient';
+import { useUserContext } from '@/contexts';
 
 export const Links = () => {
-  const { user, isLoading } = useUser();
+  const { user } = useUserContext();
 
   return (
     <>
-      {/* {!user && <Link href="/">Home</Link>} */}
       <Link href="/how-to-play">Guide</Link>
       <Link href="/warriors">Warriors</Link>
       {user && <Link href="/campaign">Campaign</Link>}
       {user && <Link href="/nation">Nation</Link>}
       {user && <Link href="/enlist">Enlist</Link>}
 
-      <ProfileClient user={user} isLoading={isLoading} />
+      <ProfileClient user={user} />
     </>
   );
 };
