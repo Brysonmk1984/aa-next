@@ -40,13 +40,13 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ matchingArmy }) => {
           <div className=" text-right">
             <span className="text-xl font-sans opacity-90">Cost</span>
             <br />
-            <span className=" font-sans text-4xl">{matchingArmy.cost}</span>
+            <span className=" font-sans text-4xl">{matchingArmy.cost.toLocaleString()}</span>
           </div>
           /
           <div className=" text-right">
             <span className="text-xl font-sans opacity-90">Count</span>
             <br />
-            <span className=" font-sans text-4xl">{matchingArmy.count}</span>
+            <span className=" font-sans text-4xl">{matchingArmy.count.toLocaleString()}</span>
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ matchingArmy }) => {
           </div>
           {user && nation && (
             <button className="btn btn-red mt-8" onClick={() => handleBuyArmy(matchingArmy.id)}>
-              Enlist x {matchingArmy.count}
+              Enlist x {matchingArmy.count.toLocaleString()}
             </button>
           )}
         </div>

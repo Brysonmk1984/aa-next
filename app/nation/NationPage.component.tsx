@@ -27,7 +27,7 @@ export const NationPage = () => {
         <div>
           {nation.gold && (
             <div className=" text-right">
-              <span className=" font-sans text-4xl">{nation.gold}</span>
+              <span className=" font-sans text-4xl">{nation.gold.toLocaleString()}</span>
               <br />
               <span className="text-xl font-sans opacity-90">Gold</span>
             </div>
@@ -47,7 +47,7 @@ export const NationPage = () => {
             <div className="flex flex-col text-right">
               <span className="text-lg font-sans opacity-90 block">Income</span>
               <span className="block text-sm">
-                <strong className="text-lg text-red">{nation.income}</strong> Gold/hr
+                <strong className="text-lg text-red">{nation.income.toLocaleString()}</strong> Gold/hr
               </span>
             </div>
           }
@@ -60,7 +60,7 @@ export const NationPage = () => {
               {nation.upkeep == UpkeepKeys.None ? 'No Upkeep' : 'Upkeep'}
             </span>
             <span className="block text-sm">
-              <strong className="text-lg text-red">{UpkeepValues[nation.upkeep]}</strong> Gold/hr
+              <strong className="text-lg text-red">{UpkeepValues[nation.upkeep].toLocaleString()}</strong> Gold/hr
             </span>
           </div>
         </div>
@@ -91,7 +91,7 @@ export const NationPage = () => {
                   </h3>
                   <dl className="flex items-center justify-center ">
                     <dt className=" text-2xl px-1">x</dt>
-                    <dd className=" text-3xl">{count}</dd>
+                    <dd className=" text-3xl">{count.toLocaleString()}</dd>
                   </dl>
                 </div>
               </div>

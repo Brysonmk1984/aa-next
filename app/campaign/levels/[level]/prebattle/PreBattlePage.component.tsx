@@ -71,7 +71,9 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
             {armies.map((army) => {
               return (
                 <li key={army.id} className="flex gap-2 items-center">
-                  <span className="font-bold text-gray-dark text-lg w-[50px] text-right">{army.count}</span>
+                  <span className="font-bold text-gray-dark text-lg w-[50px] text-right">
+                    {army.count.toLocaleString()}
+                  </span>
                   <span className=" text-gray-dark">{army.army_name}</span>
                 </li>
               );
@@ -97,7 +99,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
             {enemyArmies.map((army) => {
               return (
                 <li key={army.id} className="flex gap-2 items-center">
-                  <span className="font-bold text-gray-dark text-lg text-right">{army.count}</span>
+                  <span className="font-bold text-gray-dark text-lg text-right">{army.count.toLocaleString()}</span>
                   <span className=" text-gray-dark">{army.army_name}</span>
                 </li>
               );

@@ -70,7 +70,9 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
           <ul className="text-left">
             {eastern_battalions.map((battalion, i) => (
               <li key={i}>
-                <span className="text-red text-lg font-bold inline-block w-14 text-right mr-2">{battalion.count}</span>
+                <span className="text-red text-lg font-bold inline-block w-14 text-right mr-2">
+                  {battalion.count.toLocaleString()}
+                </span>
                 {<span className={classNames({ 'line-through': !battalion.count })}>{battalion.name}</span>}
               </li>
             ))}
@@ -78,7 +80,9 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
           <ul className="text-left">
             {western_battalions.map((battalion, i) => (
               <li key={i}>
-                <span className="text-red text-lg font-bold inline-block w-14 text-right mr-2">{battalion.count}</span>
+                <span className="text-red text-lg font-bold inline-block w-14 text-right mr-2">
+                  {battalion.count.toLocaleString()}
+                </span>
                 {
                   <span className={classNames({ 'line-through': !battalion.count })}>
                     <span>{battalion.name}</span>
@@ -95,7 +99,9 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
         <ul className="text-left">
           {getTypedEntries(player).map(([stat, value], i) => (
             <li key={i}>
-              <span className="text-red text-lg font-bold inline-block w-14 text-right mr-2">{value}</span>
+              <span className="text-red text-lg font-bold inline-block w-14 text-right mr-2">
+                {value.toLocaleString()}
+              </span>
               <span>{mapStatsToDisplay(stat)}</span>
             </li>
           ))}
@@ -104,7 +110,9 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
         <ul className="text-left">
           {getTypedEntries(opponent).map(([stat, value], i) => (
             <li key={i}>
-              <span className="text-red text-lg font-bold inline-block w-14 text-right mr-2">{value}</span>
+              <span className="text-red text-lg font-bold inline-block w-14 text-right mr-2">
+                {value.toLocaleString()}
+              </span>
               <span>{mapStatsToDisplay(stat)}</span>
             </li>
           ))}
@@ -114,7 +122,7 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
         <>
           <h2>Reward</h2>
 
-          <strong className="text-xl text-red">{reward[0]}</strong>
+          <strong className="text-xl text-red">{reward[0].toLocaleString()}</strong>
           {typeof reward[1] === 'string' ? <span> {reward[1]}</span> : <span> {reward[1].Enlist}</span>}
         </>
       ) : null}
