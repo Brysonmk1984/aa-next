@@ -34,7 +34,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ matchingArmy }) => {
 
   return (
     <>
-      <div className="flex justify-between items-start mb-8">
+      <div className="flex justify-between items-start mb-8 ">
         <h1 className="block my-0">{matchingArmy.name}</h1>
         <div className="flex gap-4">
           <div className=" text-right">
@@ -51,7 +51,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ matchingArmy }) => {
         </div>
       </div>
 
-      <div className="flex items-start">
+      <div className="flex flex-col lg:flex-row items-center">
         <div className="text-center">
           <div className="relative w-[550px] h-[650px]">
             <Image
@@ -62,7 +62,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ matchingArmy }) => {
             />
           </div>
           {user && nation && (
-            <button className="btn btn-red" onClick={() => handleBuyArmy(matchingArmy.id)}>
+            <button className="btn btn-red mt-8" onClick={() => handleBuyArmy(matchingArmy.id)}>
               Enlist x {matchingArmy.count}
             </button>
           )}
