@@ -284,7 +284,7 @@ export const GuidePage = () => {
           </li>
           <p>
             As more income is collected, your nation will have more gold to spend enlisting warriors to grow your army.
-            <Link href="enlist">Click here</Link> to enlist more warriors.
+            <Link href="warriors">Click here</Link> to enlist more warriors.
           </p>
           <li>
             <strong>Recruit warriors from a defeated nation</strong>

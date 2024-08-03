@@ -99,7 +99,7 @@ export const NationPage = () => {
           })}
         </div>
         <div className="flex justify-center mt-8">
-          <Link className="no-underline" href={`/enlist`}>
+          <Link className="no-underline" href={`/warriors`}>
             <button className="btn btn-transparent">Enlist More</button>
           </Link>
         </div>
