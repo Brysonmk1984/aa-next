@@ -17,6 +17,13 @@ export const pascalCaseToTitleCase = (phrase: string) => {
     .join('');
 };
 
+export const lowercaseToTitleCase = (phrase: string) => {
+  return phrase
+    .split(' ')
+    .map((word) => word.slice(0, 1).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 export const snakeCaseToSentenceCase = (phrase: string) => {
   return phrase.split('_').join(' ');
 };
