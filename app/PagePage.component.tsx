@@ -44,7 +44,7 @@ export const PagePage = () => {
         </div>
         <strong className="block my-4">- or -</strong>
         <div className="flex justify-center">
-          <button className="btn btn-red" onClick={handleBegin}>
+          <button className="btn btn-transparent" onClick={handleBegin}>
             Begin
           </button>
         </div>

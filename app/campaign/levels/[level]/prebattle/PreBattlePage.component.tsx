@@ -80,7 +80,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
             })}
           </ul>
           <div className="text-center mt-8">
-            <button className="btn btn-red" onClick={() => router.push('/enlist')}>
+            <button className="btn btn-transparent" onClick={() => router.push('/enlist')}>
               Hire More
             </button>
           </div>
@@ -110,7 +110,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
       <div className="text-center mt-8 border-t border-dashed">
         <div className="mt-4">
           <button
-            className={classNames('btn btn-red', {
+            className={classNames('btn btn-transparent', {
               'disabled:bg-gray-dark disabled:text-gray disabled:border-gray-dark disabled:shadow-none':
                 !hasStandingArmy,
             })}

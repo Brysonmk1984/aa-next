@@ -62,8 +62,8 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ matchingArmy }) => {
             />
           </div>
           {user && nation && (
-            <button className="btn btn-red mt-8" onClick={() => handleBuyArmy(matchingArmy.id)}>
-              Enlist x {matchingArmy.count.toLocaleString()}
+            <button className="btn btn-transparent mt-8" onClick={() => handleBuyArmy(matchingArmy.id)}>
+              Enlist
             </button>
           )}
         </div>

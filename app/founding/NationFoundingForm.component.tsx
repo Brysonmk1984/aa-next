@@ -83,7 +83,7 @@ export const NationFoundingForm = () => {
         {' '}
         <em>{nation?.name}...</em> A Bold Name for a Nation!
       </h2>
-      <button onClick={() => window.location.assign('/campaign')} className="btn btn-red mt-10">
+      <button onClick={() => window.location.assign('/campaign')} className="btn btn-transparent mt-10">
         Go to Campaign
       </button>
     </div>
@@ -101,7 +101,7 @@ export const NationFoundingForm = () => {
           placeholder="Ye find thy town on the backs of beasts and bloodshed..."
         ></textarea>
       </label>
-      <button type="submit" className="btn btn-red">
+      <button type="submit" className="btn btn-transparent">
         Establish
       </button>
     </form>

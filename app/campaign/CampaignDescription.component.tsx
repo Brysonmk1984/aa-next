@@ -16,7 +16,7 @@ export const CampaignDescription = () => {
         Militia. What will it take to conquer these wheyfaced neighbors?
       </p>
       <div className="flex justify-center">
-        <button className="btn btn-red" onClick={() => router.push('/campaign/levels')}>
+        <button className="btn btn-transparent" onClick={() => router.push('/campaign/levels')}>
           Begin
         </button>
       </div>

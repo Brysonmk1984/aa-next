@@ -129,7 +129,7 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
 
       <div className="text-center mt-16 ">
         <Link href={`/campaign/levels`}>
-          <button className="btn btn-red">Back to Campaign</button>
+          <button className="btn btn-transparent">Back to Campaign</button>
         </Link>
       </div>
     </div>

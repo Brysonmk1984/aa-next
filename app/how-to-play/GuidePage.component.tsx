@@ -314,7 +314,7 @@ export const GuidePage = () => {
 
       {!user && (
         <div className="flex justify-center mt-12">
-          <button className="btn btn-red" onClick={() => window.location.assign('/founding')}>
+          <button className="btn btn-transparent" onClick={() => window.location.assign('/founding')}>
             Begin
           </button>
         </div>

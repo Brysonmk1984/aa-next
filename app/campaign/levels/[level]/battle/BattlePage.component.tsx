@@ -118,7 +118,7 @@ export const BattlePage = ({ level: totalLevel, enemyDetails }: BattlePageProps)
         </ol>
         {displayComplete && (
           <Link href={`/campaign/levels/${totalLevel}/postbattle`}>
-            <button className="btn btn-red">View Breakdown</button>
+            <button className="btn btn-transparent">View Breakdown</button>
           </Link>
         )}
       </div>
