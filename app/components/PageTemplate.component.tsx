@@ -9,7 +9,7 @@ export const PageTemplate: ComponentType<PageTemplateProps> = ({ children }) => 
   return (
     <main className="flex min-h-[50%] flex-col items-center justify-between p-24">
       <section className="page-content w-full mx-auto">
-        <div className="absolute left-1/2 ml-[-170px] mt-[-70px]">
+        <div className="absolute left-1/2 ml-[-170px] mt-[-70px] grayscale-[40%]">
           <Image src={'/images/aa_seal.png'} width={200} height={141} alt="wax seal" />
         </div>
 
