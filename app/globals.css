@@ -160,7 +160,7 @@ a {
   @apply text-red;
   font-weight: bold;
   border-bottom: solid 2px #121415;
-  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  border-radius: 255px 15px 225px 1px/15px 225px 15px 255px;
   cursor: url('/images/glove_point.png'), auto !important;
   font-family: 'Germania One', system-ui;
 }
