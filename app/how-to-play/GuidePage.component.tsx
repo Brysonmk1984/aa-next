@@ -85,7 +85,7 @@ export const GuidePage = () => {
           <thead>
             <tr>
               <th></th>
-              <th colspan="6">Weapon Type</th>
+              <th colSpan={6}>Weapon Type</th>
             </tr>
             <tr>
               <th></th>
@@ -165,7 +165,7 @@ export const GuidePage = () => {
           <thead>
             <tr>
               <th></th>
-              <th colspan="8">Area of Effect</th>
+              <th colSpan={8}>Area of Effect</th>
             </tr>
             <tr>
               <th></th>
