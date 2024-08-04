@@ -37,7 +37,7 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
         removeItem();
       }
     })();
-  }, [getItem]);
+  }, [getItem, removeItem, router]);
 
   if (!data) {
     return null;
