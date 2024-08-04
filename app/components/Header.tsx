@@ -11,12 +11,14 @@ interface HeaderProps {
 export default function Header({ setOpenSidebar }: HeaderProps) {
   return (
     <header>
-      <div className="flex justify-between p-2">
-        <div className="flex items-center gap-5">
+      {/* Entire Header */}
+      <div className="flex justify-between items-start p-2 pt-0">
+        {/* Logo and Logo Text */}
+        <div className="flex items-center gap-5 pt-4">
           <Link href={'/'}>
             <Image
               id="logo"
-              className=" opacity-75"
+              className=" opacity-75 "
               src="/images/aa_monogram.png"
               height={115}
               width={115}
@@ -24,7 +26,7 @@ export default function Header({ setOpenSidebar }: HeaderProps) {
             />
           </Link>
 
-          <div>
+          <div className="pt-8">
             <div id="siteTitle" className="sm:text-5xl text-4xl opacity-90 font-sans">
               <Link href={'/'}>
                 Armies <span className="sm:text-xl text-sm">of</span> Avalore
@@ -35,7 +37,8 @@ export default function Header({ setOpenSidebar }: HeaderProps) {
             </p>
           </div>
         </div>
-        <nav id="desktop-nav" className=" lg:flex  hidden gap-6  justify-end items-center font-serif text-xl">
+        {/* Nav Links */}
+        <nav id="desktop-nav" className=" lg:flex  hidden gap-6  justify-end items-start font-serif text-xl">
           <Links />
         </nav>
       </div>

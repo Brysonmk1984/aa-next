@@ -60,9 +60,9 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-item-list a {
   display: block;
   height: 3rem;
-  border-bottom: solid 1px #62150d;
+  border-bottom: solid 1px #62150d !important;
   line-height: 3rem;
-  text-align: right;
+  text-align: right !important;
 }
 .bm-item-list a:hover {
   color: ivory;
@@ -81,4 +81,19 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 .bm-burger-button {
   display: none;
+}
+
+.bm-item-list .nav_link_content {
+  background-image: none !important;
+  text-align: right !important;
+  width: initial !important;
+  height: initial !important;
+}
+.bm-item-list .current_page {
+  width: initial;
+  height: initial;
+}
+
+.bm-item-list .nav_link_content span {
+  padding-top: 0px;
 }

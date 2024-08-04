@@ -114,7 +114,7 @@ div {
   margin-right: 1em;
 }
 #desktop-nav a:hover {
-  color: ivory;
+  color: hwb(60 94% 0%);
   border-color: ivory;
 }
 input,
@@ -172,6 +172,7 @@ a:hover {
 #siteTitle a {
   @apply text-ivory;
   border: none;
+  text-align: center;
 }
 
 nav a {
@@ -180,15 +181,45 @@ nav a {
   text-decoration: none;
   font-weight: 400;
   font-family: 'Gelasio', serif;
-  padding: 1px 4px;
+  padding: 0px 4px;
   border-bottom: solid 2px #121415;
   border-color: rgb(255 232 160 / var(--tw-text-opacity));
+}
+
+nav a span {
+  display: block;
+  padding-top: 20px;
+}
+
+nav a .nav_link_content {
+  background: none;
+}
+
+nav a:active {
+  border: none;
+}
+
+nav a.current_page {
+  border: none;
+}
+
+nav a.current_page:hover {
+  opacity: 1;
+}
+
+nav a.current_page .nav_link_content {
+  background-image: url('/images/nav_flag.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center top;
+  width: 104px;
+  height: 175px;
+  text-align: center;
 }
 
 blockquote {
   letter-spacing: 1px;
 }
-
 @media (max-width: 1200px) {
   main {
     padding: 2rem !important;
