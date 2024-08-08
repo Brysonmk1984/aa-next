@@ -1,12 +1,13 @@
 import { User } from '@/types';
+import { errorType } from '@/utils';
 import { fetchWrapper } from '@/utils/fetch.util';
 import { getSession } from '@auth0/nextjs-auth0';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const body = await req.json();
+    const body = await (req as unknown as Request).json();
     if (!body.url) {
       return new NextResponse(
         JSON.stringify({
@@ -18,10 +19,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const { url, options = {} } = body;
-    const { accessToken } = (await getSession()) as { user: User; accessToken?: string | undefined };
-    console.log({ accessToken });
+    // Unclear why I can't just pass the original Next response. When I do, the getSession function call fails
+    const { accessToken } = (await getSession(req, new NextResponse() as any)) as {
+      user: User;
+      accessToken?: string | undefined;
+    };
 
+    const { url, options = {} } = body;
     if (accessToken) {
       options.headers = {
         Authorization: `Bearer ${accessToken}`,
@@ -34,6 +38,10 @@ export async function POST(req: Request) {
       status: 200,
     });
   } catch (e) {
-    console.error(e);
+    const error = errorType(e);
+    console.error(error);
+    return new NextResponse(null, {
+      status: 500,
+    });
   }
 }

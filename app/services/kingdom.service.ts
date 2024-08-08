@@ -23,14 +23,18 @@ export const initializeNation = async (userId: number) => {
  * @returns option.nation & option.armies
  */
 export const getNationAndArmies = async (userId: number) => {
-  const route = `${API_ENDPOINT}/kingdom/${userId}`;
+  try {
+    const route = `${API_ENDPOINT}/kingdom/${userId}`;
+    // This uses fetchWithAuth, but since it's running on server, it's ok, getSession works
+    const [nation, armies]: [Nation, NationArmy[]] = await fetchWithAuth(route);
 
-  // This uses fetchWithAuth, but since it's running on server, it's ok, getSession works
-  const [nation, armies]: [Nation, NationArmy[]] = await fetchWithAuth(route);
+    nation.upkeep = determineUpkeep(calculateArmyCount(armies));
 
-  nation.upkeep = determineUpkeep(calculateArmyCount(armies));
-
-  return { nation, armies };
+    return { nation, armies };
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 };
 
 /**
