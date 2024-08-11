@@ -5,7 +5,7 @@ import { getSession } from '@auth0/nextjs-auth0';
 import { NextApiRequest } from 'next';
 import { NextResponse } from 'next/server';
 
-export default async function POST(req: NextApiRequest) {
+export async function POST(req: Request) {
   try {
     const body = await (req as unknown as Request).json();
     if (!body.url) {
@@ -20,7 +20,7 @@ export default async function POST(req: NextApiRequest) {
     }
 
     // Unclear why I can't just pass the original Next response. When I do, the getSession function call fails
-    const { accessToken } = (await getSession(req, new NextResponse() as any)) as {
+    const { accessToken } = (await getSession(req as any, new NextResponse() as any)) as {
       user: User;
       accessToken?: string | undefined;
     };
