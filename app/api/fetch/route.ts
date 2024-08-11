@@ -2,10 +2,10 @@ import { User } from '@/types';
 import { errorType } from '@/utils';
 import { fetchWrapper } from '@/utils/fetch.util';
 import { getSession } from '@auth0/nextjs-auth0';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 import { NextResponse } from 'next/server';
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextApiRequest) {
   try {
     const body = await (req as unknown as Request).json();
     if (!body.url) {
