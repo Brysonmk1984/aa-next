@@ -156,7 +156,7 @@ textarea {
   opacity: 0.9;
 }
 
-a {
+a, .link-style {
   @apply text-red;
   font-weight: bold;
   border-bottom: solid 2px #121415;
@@ -164,7 +164,7 @@ a {
   cursor: url('/images/glove_point.png'), auto !important;
   font-family: 'Germania One', system-ui;
 }
-a:hover {
+a:hover, .link-style:hover  {
   opacity: 0.9;
   border-bottom: solid 2px #303436;
 }
