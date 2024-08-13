@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { getCookie } from './getCookie';
 import { ContextualError } from './error.util';
+export const fetchCache = 'force-no-store';
 
 export const configureFetchOptions = (options: RequestInit = {}) => {
   if (typeof window === 'undefined') {
@@ -28,6 +29,7 @@ export const fetchWrapper = async <T>(url: string, options?: RequestInit): Promi
 export const fetchPassthrough = async <T>(url: string, options?: RequestInit): Promise<T> => {
   const response = await fetch('/api/fetch', {
     method: 'POST',
+    cache: 'no-store',
     body: JSON.stringify({
       url,
       options,
