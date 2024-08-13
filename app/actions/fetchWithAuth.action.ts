@@ -13,6 +13,7 @@ export async function fetchWithAuth<T = any>(route: string, options: RequestInit
       'Content-Type': 'application/json',
     };
   }
+  options.cache = 'no-store';
 
   const result = await fetchWrapper<T>(route, options);
   return result;
