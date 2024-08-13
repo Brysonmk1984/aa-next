@@ -12,6 +12,8 @@ import { ResolvedSessionInfo, initialProviderValues } from './configs/initialVal
 import { NationCampaignDetails } from './types/campaign.type';
 import { determineIncome } from './utils';
 
+export const fetchCache = 'force-no-store';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
