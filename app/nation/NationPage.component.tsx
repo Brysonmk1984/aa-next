@@ -10,7 +10,6 @@ import Link from 'next/link';
 
 export const NationPage = () => {
   const { nation, armies } = useNation();
-  console.log(nation.gold, typeof nation.gold);
 
   return (
     <>
