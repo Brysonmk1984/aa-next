@@ -6,11 +6,8 @@ import classNames from 'classnames';
 
 const isCurrentRoute = (page: string, pathname: string) => {
   if (pathname.includes(page.toLowerCase())) {
-    console.log(111);
-
     return true;
   }
-  console.log(222);
   return false;
 };
 
@@ -19,7 +16,6 @@ export const Links = () => {
   const { campaign } = useNationContext();
 
   const pathname = usePathname();
-  console.log({ pathname });
 
   return (
     <>

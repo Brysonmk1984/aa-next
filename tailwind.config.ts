@@ -21,6 +21,7 @@ const config: Config = {
       gray: '#8492a6',
       'gray-light': '#d3dce6',
       'off-black': '#1B1111',
+      gold: '#d4af37',
     },
     fontFamily: {
       sans: ['Germania One', 'helvetica', 'arial'],

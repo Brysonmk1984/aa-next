@@ -22,6 +22,8 @@ export const metadata: Metadata = {
 };
 
 const getProviderData = async (session: Auth0Session): Promise<ResolvedSessionInfo> => {
+  console.log({ session });
+
   if (!(session.user && session.accessToken)) {
     return initialProviderValues;
   }
@@ -59,6 +61,7 @@ const getProviderData = async (session: Auth0Session): Promise<ResolvedSessionIn
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getAuth0Session();
+  console.log('SESSION:', session);
 
   const { user, nation, armies, campaign } = await getProviderData(session);
 

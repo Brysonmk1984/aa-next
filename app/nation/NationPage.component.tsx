@@ -10,6 +10,7 @@ import Link from 'next/link';
 
 export const NationPage = () => {
   const { nation, armies } = useNation();
+  console.log(nation.gold, typeof nation.gold);
 
   return (
     <>
@@ -25,11 +26,11 @@ export const NationPage = () => {
         )}
 
         <div>
-          {nation.gold && (
+          {!!nation.gold && (
             <div className=" text-right">
-              <span className=" font-sans text-4xl">{nation.gold.toLocaleString()}</span>
-              <br />
               <span className="text-xl font-sans opacity-90">Gold</span>
+              <br />
+              <span className=" font-sans text-4xl text-red">{nation.gold.toLocaleString()}</span>
             </div>
           )}
         </div>

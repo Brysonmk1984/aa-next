@@ -15,7 +15,7 @@ export default function Header({ setOpenSidebar }: HeaderProps) {
       <div className="flex justify-between items-start p-2 pt-0">
         {/* Logo and Logo Text */}
         <div className="flex items-center gap-5 pt-4">
-          <Link href={'/'}>
+          <Link href={'/'} className="border-none">
             <Image
               id="logo"
               className=" opacity-75 "
