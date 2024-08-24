@@ -13,7 +13,7 @@ export interface Auth0Session {
   accessToken: string | null;
 }
 export async function getAuth0Session(): Promise<Auth0Session> {
-  const sessionResult = await getSession({ cache: 'no-store' } as NextRequest);
+  const sessionResult = await getSession();
   return {
     user: (sessionResult?.user as ExpectedClaims) ?? null,
     accessToken: sessionResult?.accessToken ?? null,
