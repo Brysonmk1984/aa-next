@@ -1,10 +1,11 @@
 import { API_ENDPOINT, AUTH_AUD, CLEAR_BATTLE_ON_POSTBATTLE, ENVIRONMENT } from '@/configs/environment.config';
 import { ResolvedUser, User } from '@/types';
 import { initializeNation } from './kingdom.service';
+import { fetchWrapper } from '@/utils/fetch.util';
 
 const findOrCreateUser = async ({ email, email_verified: emailVerified, sub }: User) => {
   try {
-    const result = await fetch(`${API_ENDPOINT}/users`, {
+    const result = await fetchWrapper<[ResolvedUser, boolean]>(`${API_ENDPOINT}/users`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -13,12 +14,7 @@ const findOrCreateUser = async ({ email, email_verified: emailVerified, sub }: U
       body: JSON.stringify({ email, email_verified: emailVerified, auth0_sub: sub }),
     });
 
-    const userInfo: Promise<[ResolvedUser, boolean]> = await result.json();
-
-    if (!userInfo) {
-      throw new Error("couldn't find or create a user");
-    }
-    return userInfo;
+    return result;
   } catch (e) {
     console.error(e);
     throw e;

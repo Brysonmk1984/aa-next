@@ -20,11 +20,13 @@ export async function POST(req: Request) {
     }
 
     // Unclear why I can't just pass the original Next response. When I do, the getSession function call fails
-    const { accessToken } = (await getSession(req as any, new NextResponse() as any)) as {
+    const asd = (await getSession(req as any, new NextResponse() as any)) as {
       user: User;
       accessToken?: string | undefined;
     };
+    console.log('ASD!', asd);
 
+    const { accessToken } = asd;
     const { url, options = {} } = body;
     if (accessToken) {
       options.headers = {
