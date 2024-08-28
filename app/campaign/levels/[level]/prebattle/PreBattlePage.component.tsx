@@ -55,7 +55,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
         storeItem(result);
       }
 
-      //router.push(`/campaign/levels/${totalLevel}/battle`);
+      router.push(`/campaign/levels/${totalLevel}/battle`);
     } catch (e) {
       console.error(e);
     }

@@ -32,4 +32,6 @@ export const GET = handleAuth({
   },
 });
 
-export const revalidate = 0;
+// This is the actual fix to the data-caching problem
+// https://github.com/vercel/vercel/discussions/10117#discussioncomment-6426751
+//export const revalidate = 0;
