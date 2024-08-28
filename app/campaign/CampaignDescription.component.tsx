@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export const CampaignDescription = () => {
@@ -16,9 +17,9 @@ export const CampaignDescription = () => {
         Militia. What will it take to conquer these wheyfaced neighbors?
       </p>
       <div className="flex justify-center">
-        <button className="btn btn-transparent" onClick={() => router.push('/campaign/levels')}>
+        <Link className="btn-style" href={`/campaign/levels`}>
           Begin
-        </button>
+        </Link>
       </div>
     </>
   );

@@ -61,6 +61,3 @@ export const patchNation = async (userId: number, nationId: number, body: Partia
 
   return result;
 };
-function calculateUpkeep(armies: NationArmy[]) {
-  throw new Error('Function not implemented.');
-}

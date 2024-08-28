@@ -48,4 +48,5 @@ export async function POST(req: Request) {
   }
 }
 
+// apparently this is not needed?
 //export const revalidate = 0;

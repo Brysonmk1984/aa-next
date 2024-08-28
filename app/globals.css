@@ -146,11 +146,33 @@ textarea {
   font-size: x-large;
 }
 .btn-transparent:before,
-.btn-transparent:after {
+.btn-transparent:after,
+a.btn-style:before,
+a.btn-style:after {
   content: ' --- ';
 }
 
 .btn-transparent:hover {
+  color: #303436;
+  border: solid 3px #303436;
+  opacity: 0.9;
+}
+
+a.btn-style {
+  @apply text-gray-dark;
+  background-color: transparent;
+  padding: 0 1rem;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+
+  @apply text-red;
+  border: solid 3px #121415;
+  font-family: 'Germania One', system-ui;
+  font-size: x-large;
+
+  @apply font-bold py-2 px-4;
+  cursor: url('/images/glove_point.png'), auto !important;
+}
+a.btn-style:hover {
   color: #303436;
   border: solid 3px #303436;
   opacity: 0.9;
@@ -223,6 +245,9 @@ blockquote {
   main {
     padding: 2rem !important;
   }
+}
+.no-bottom-border {
+  border-bottom: none;
 }
 
 @media (max-width: 800px) {

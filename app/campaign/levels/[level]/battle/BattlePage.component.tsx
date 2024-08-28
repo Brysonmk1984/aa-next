@@ -68,9 +68,6 @@ export const BattlePage = ({ level: totalLevel, enemyDetails }: BattlePageProps)
     }
 
     const groups = handleEventList(battleResults.events);
-
-    //setEventGroups(groups);
-
     const interval = handleTimedDisplay(groups);
 
     return () => clearInterval(interval);
@@ -99,26 +96,10 @@ export const BattlePage = ({ level: totalLevel, enemyDetails }: BattlePageProps)
               </li>
             );
           })}
-
-          {/* {eventGroups.map((group, i) => {
-            return (
-              <li key={i}>
-                <ul>
-                  {group.map((event, j) => {
-                    return (
-                      <li key={j} className="text-sm">
-                        {event}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </li>
-            );
-          })} */}
         </ol>
         {displayComplete && (
-          <Link href={`/campaign/levels/${totalLevel}/postbattle`}>
-            <button className="btn btn-transparent">View Breakdown</button>
+          <Link className="btn-style" href={`/campaign/levels/${totalLevel}/postbattle`}>
+            Breakdown
           </Link>
         )}
       </div>
