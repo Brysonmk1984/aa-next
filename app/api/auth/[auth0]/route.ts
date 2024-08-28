@@ -31,3 +31,5 @@ export const GET = handleAuth({
     }
   },
 });
+
+export const revalidate = 0;
