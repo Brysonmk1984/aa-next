@@ -28,6 +28,12 @@ export const snakeCaseToSentenceCase = (phrase: string) => {
   return phrase.split('_').join(' ');
 };
 
+export const snakeCaseToCamelCase = (phrase: string) => {
+  return phrase
+    .toLowerCase()
+    .replace(/([-_][a-z])/g, (group: string) => group.toUpperCase().replace('-', '').replace('_', ''));
+};
+
 export const mapStatsToDisplay = (phrase: keyof BattleStats) => {
   const map: Record<keyof BattleStats, string> = {
     starting_direction: '',

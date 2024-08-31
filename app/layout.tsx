@@ -11,6 +11,8 @@ import UserProvider from './contexts/user/User.context';
 import { ResolvedSessionInfo, initialProviderValues } from './configs/initialValues.config';
 import { NationCampaignDetails } from './types/campaign.type';
 import { determineIncome } from './utils';
+import { getGameData } from './services/game.service';
+import GameProvider from './contexts/game/Game.context';
 
 export const fetchCache = 'force-no-store';
 
@@ -60,22 +62,26 @@ const getProviderData = async (session: Auth0Session): Promise<ResolvedSessionIn
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const gameData = await getGameData();
+  console.log({ gameData });
+
   const session = await getAuth0Session();
   console.log('SESSION:', session);
-
   const { user, nation, armies, campaign } = await getProviderData(session);
 
   return (
     <html lang="en">
-      <AuthZeroUserProvider>
-        <UserProvider user={user} isAuthenticated={!!user}>
-          <NationProvider nation={nation} armies={armies} campaign={campaign}>
-            <body className={inter.className}>
-              <ContentWrapper>{children}</ContentWrapper>
-            </body>
-          </NationProvider>
-        </UserProvider>
-      </AuthZeroUserProvider>
+      <GameProvider {...gameData}>
+        <AuthZeroUserProvider>
+          <UserProvider user={user} isAuthenticated={!!user}>
+            <NationProvider nation={nation} armies={armies} campaign={campaign}>
+              <body className={inter.className}>
+                <ContentWrapper>{children}</ContentWrapper>
+              </body>
+            </NationProvider>
+          </UserProvider>
+        </AuthZeroUserProvider>
+      </GameProvider>
     </html>
   );
 }

@@ -84,15 +84,12 @@ export const NationPage = () => {
                   </Link>
                 </div>
                 <div className="text-center">
-                  <h3 className=" text-2xl">
+                  <strong className="text-3xl">{count.toLocaleString()}</strong>
+                  <h3 className="text-2xl mt-2">
                     <Link className="no-underline" href={`/warriors/${sentenceCaseToKebabCase(army_name)}`}>
                       {army_name}
                     </Link>
                   </h3>
-                  <dl className="flex items-center justify-center ">
-                    <dt className=" text-2xl px-1">x</dt>
-                    <dd className=" text-3xl">{count.toLocaleString()}</dd>
-                  </dl>
                 </div>
               </div>
             );
