@@ -1,21 +1,20 @@
 'use client';
 
+import { UpkeepKeys, UpkeepValues } from '@/constants/upkeep';
 import { useUserContext } from '@/contexts';
+import { useGameContext } from '@/contexts/game/Game.context';
 import { getArmies } from '@/services';
 import { Army } from '@/types';
+import { determineAmountPerHour } from '@/utils';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { AoeSpreadTable } from './AoeSpreadTable/AoeSpreadTable.component';
+import { WeaponArmorTable } from './WeaponArmorTable/WeaponArmorTable.component';
 
 export const GuidePage = () => {
+  const { weapon_armor_values, aoe_spread_values, income } = useGameContext();
+  const { income_base, upkeep_calc_minutes, income_per_level } = income;
   const { user } = useUserContext();
-  const [armies, setArmies] = useState<Army[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const armies = await getArmies();
-      setArmies(armies);
-    })();
-  }, []);
 
   return (
     <>
@@ -81,71 +80,7 @@ export const GuidePage = () => {
       <h4 className="ml-3">Weapon & Armor Types</h4>
       <div className="ml-6">
         <strong>Chance to Hit Percentage:</strong>
-        <table className="mb-20">
-          <thead>
-            <tr>
-              <th></th>
-              <th colSpan={6}>Weapon Type</th>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th>Blunt</th>
-              <th>Edged</th>
-              <th>Piercing</th>
-              <th>Crushing</th>
-              <th>Magic</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className=" border-none"></td>
-              <td>
-                <strong>Unarmored</strong>
-              </td>
-              <td>0.75</td>
-              <td>1.0</td>
-              <td>1.0</td>
-              <td>0.25</td>
-              <td>0.25</td>
-            </tr>
-            <tr>
-              <td className=" border-none">
-                <strong>Armor Type</strong>
-              </td>
-              <td>
-                <strong>Leather</strong>
-              </td>
-              <td>0.75</td>
-              <td>0.75</td>
-              <td>0.75</td>
-              <td>0.5</td>
-              <td>0.5</td>
-            </tr>
-            <tr>
-              <td className=" border-none"></td>
-              <td>
-                <strong>Chain Mail</strong>
-              </td>
-              <td>0.5</td>
-              <td>0.5</td>
-              <td>0.6</td>
-              <td>0.75</td>
-              <td>1.0</td>
-            </tr>
-            <tr>
-              <td className=" border-none"></td>
-              <td>
-                <strong>Plate Mail</strong>
-              </td>
-              <td>0.25</td>
-              <td>0.25</td>
-              <td>0.1</td>
-              <td>1.0</td>
-              <td>0.75</td>
-            </tr>
-          </tbody>
-        </table>
+        <WeaponArmorTable weaponArmorValues={weapon_armor_values} />
       </div>
 
       <h4 className="ml-3">Range, AoE & Spread</h4>
@@ -161,79 +96,21 @@ export const GuidePage = () => {
         enemies in a single attack depending on the enemy&apos;s <strong>spread</strong> value (how spread-out they are
         in their battle formation). Potential aoe values are between 0.0 and 3.0 (meters). Potential spread values are
         between 1.0 and 3.0 meters; see the effects of an attack on an opposing force below
-        <table className="my-20">
-          <thead>
-            <tr>
-              <th></th>
-              <th colSpan={8}>Area of Effect</th>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th>0.0</th>
-              <th>0.5</th>
-              <th>1.0</th>
-              <th>1.5</th>
-              <th>2.0</th>
-              <th>2.5</th>
-              <th>3.0</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className=" border-none"></td>
-              <td>
-                <strong>1.0</strong>
-              </td>
-              <td>1</td>
-              <td>2</td>
-              <td>5</td>
-              <td>9</td>
-              <td>13</td>
-              <td>20</td>
-              <td>33</td>
-            </tr>
-            <tr>
-              <td className=" border-none">
-                <strong>Spread</strong>
-              </td>
-              <td>
-                <strong>2.0</strong>
-              </td>
-              <td>1</td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>5</td>
-              <td>7</td>
-              <td>9</td>
-            </tr>
-            <tr>
-              <td className=" border-none"></td>
-              <td>
-                <strong>3.0</strong>
-              </td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>2</td>
-              <td>2</td>
-              <td>3</td>
-              <td>5</td>
-            </tr>
-          </tbody>
-        </table>
+        <AoeSpreadTable aoeSpreadValues={aoe_spread_values} />
       </div>
       <p className="ml-6"></p>
       <h3>Out of Battle</h3>
       <h4 className="ml-3">Income & Upkeep</h4>
       <p className="ml-6">
-        Every Hour, your nation will gain income at a rate of <strong>100 + (max_campaign_level_completed * 10)</strong>
+        Every Hour, your nation will gain income at a rate of{' '}
+        <strong>
+          {income_base} + (max_campaign_level_completed * {income_per_level})
+        </strong>
         . This means that the more levels completed in the campaign, the more income received every hour from that point
         forward.{' '}
         <em>
           eg: The fictitious "Marsh Walkers" nation just defeated the Level 10 campaign nation in battle. They will now
-          collect income at a rate of 200 (100 + (10 * 10)).
+          collect income at a rate of {income_base + 10 * income_per_level} ({income_base} + (10 * {income_per_level})).
         </em>
       </p>
       <p className="ml-6">
@@ -253,22 +130,22 @@ export const GuidePage = () => {
           <tr>
             <td>None</td>
             <td>10k soldiers or less</td>
-            <td>0 gold</td>
+            <td>{determineAmountPerHour(UpkeepValues[UpkeepKeys.None], upkeep_calc_minutes).amountPerHour} gold</td>
           </tr>
           <tr>
             <td>Low</td>
             <td>Over 10k soldiers</td>
-            <td>25 gold</td>
+            <td>{determineAmountPerHour(UpkeepValues[UpkeepKeys.Low], upkeep_calc_minutes).amountPerHour} gold</td>
           </tr>
           <tr>
             <td>Medium</td>
             <td>Over 50k soldiers</td>
-            <td>75 gold</td>
+            <td>{determineAmountPerHour(UpkeepValues[UpkeepKeys.Medium], upkeep_calc_minutes).amountPerHour} gold</td>
           </tr>
           <tr>
             <td>High</td>
             <td>Over 90k soldiers</td>
-            <td>150 gold</td>
+            <td>{determineAmountPerHour(UpkeepValues[UpkeepKeys.High], upkeep_calc_minutes).amountPerHour} gold</td>
           </tr>
         </tbody>
       </table>

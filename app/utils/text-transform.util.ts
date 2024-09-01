@@ -45,3 +45,7 @@ export const mapStatsToDisplay = (phrase: keyof BattleStats) => {
 
   return map[phrase];
 };
+
+export const capitalize = (word: string) => {
+  return word.slice(0, 1).toLocaleUpperCase() + word.slice(1, word.length);
+};

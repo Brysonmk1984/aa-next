@@ -1,4 +1,4 @@
-interface WeaponArmorValues {
+export interface WeaponArmorValues {
   'piercing-unarmored': number;
   'piercing-leather': number;
   'piercing-chain': number;
@@ -21,24 +21,23 @@ interface WeaponArmorValues {
   'magic-plate': number;
 }
 
-type Spread = 0.0 | 0.5 | 1.0 | 1.5 | 2.0 | 2.5 | 3.0;
+export type Spread = 0.0 | 0.5 | 1.0 | 1.5 | 2.0 | 2.5 | 3.0;
 
-interface AoeSpreadValues {
-  1: Array<[Spread, number]>;
-  2: Array<[Spread, number]>;
-  3: Array<[Spread, number]>;
+export interface AoeSpreadValues {
+  '1': Array<[Spread, number]>;
+  '2': Array<[Spread, number]>;
+  '3': Array<[Spread, number]>;
 }
 
-export interface GameDataQueryResult {
-  weapon_armor_values: WeaponArmorValues;
-  aoe_spread_values: AoeSpreadValues;
-  income_calc_minutes: string;
-  upkeep_calc_minutes: string;
+interface IncomeDefaults {
+  income_per_level: number;
+  income_base: number;
+  income_calc_minutes: number;
+  upkeep_calc_minutes: number;
 }
 
 export interface GameData {
-  weaponArmorValues: WeaponArmorValues;
-  aoeSpreadValues: AoeSpreadValues;
-  incomeCalcMinutes: string;
-  upkeepCalcMinutes: string;
+  weapon_armor_values: WeaponArmorValues;
+  aoe_spread_values: AoeSpreadValues;
+  income: IncomeDefaults;
 }

@@ -1,11 +1,10 @@
 import { API_ENDPOINT } from '@/configs/environment.config';
-import { GameData, GameDataQueryResult } from '@/types/game-data.type';
-import { snakeCaseToCamelCase } from '@/utils';
+import { GameData } from '@/types/game-data.type';
 import { fetchWrapper } from '@/utils/fetch.util';
 
-export const getGameData = async (): Promise<GameData> => {
+export const getGameData = async () => {
   const route = `${API_ENDPOINT}/game`;
-  const result: GameDataQueryResult = await fetchWrapper(route);
-  const entries = Object.entries(result).map(([k, v]) => [snakeCaseToCamelCase(k), v]);
-  return Object.fromEntries(entries);
+  const result = await fetchWrapper<GameData>(route);
+
+  return result;
 };

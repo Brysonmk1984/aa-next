@@ -63,10 +63,9 @@ const getProviderData = async (session: Auth0Session): Promise<ResolvedSessionIn
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const gameData = await getGameData();
-  console.log({ gameData });
 
   const session = await getAuth0Session();
-  console.log('SESSION:', session);
+
   const { user, nation, armies, campaign } = await getProviderData(session);
 
   return (

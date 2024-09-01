@@ -18,16 +18,12 @@ export const useGameContext = () => {
 
 interface GameDataProviderProps extends GameState {}
 
-const GameProvider = ({
-  weaponArmorValues,
-  aoeSpreadValues,
-  incomeCalcMinutes,
-  upkeepCalcMinutes,
-  children,
-}: PropsWithChildren<GameDataProviderProps>) => {
+const GameProvider = (props: PropsWithChildren<GameDataProviderProps>) => {
+  const { weapon_armor_values, aoe_spread_values, income, upkeep_calc_minutes } = props;
+
   return (
-    <GameContext.Provider value={{ weaponArmorValues, aoeSpreadValues, incomeCalcMinutes, upkeepCalcMinutes }}>
-      {children}
+    <GameContext.Provider value={{ weapon_armor_values, aoe_spread_values, income, upkeep_calc_minutes }}>
+      {props.children}
     </GameContext.Provider>
   );
 };
