@@ -11,7 +11,7 @@ import UserProvider from './contexts/user/User.context';
 import { ResolvedSessionInfo, initialProviderValues } from './configs/initialValues.config';
 import { NationCampaignDetails } from './types/campaign.type';
 import { determineIncome } from './utils';
-import { getGameData } from './services/game.service';
+import { getDefaultGameData } from './services/game.service';
 import GameProvider from './contexts/game/Game.context';
 
 export const fetchCache = 'force-no-store';
@@ -23,11 +23,9 @@ export const metadata: Metadata = {
   description: 'An incremental strategy game set in a realm of medieval fantasy',
 };
 
-const getProviderData = async (session: Auth0Session): Promise<ResolvedSessionInfo> => {
-  console.log({ session });
-
+const getUserGameData = async (session: Auth0Session): Promise<ResolvedSessionInfo> => {
   if (!(session.user && session.accessToken)) {
-    return initialProviderValues;
+    throw new Error('User is not logged in');
   }
 
   const decodedToken = decode(session.accessToken);
@@ -62,11 +60,10 @@ const getProviderData = async (session: Auth0Session): Promise<ResolvedSessionIn
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const gameData = await getGameData();
+  const [gameData, session] = await Promise.all([getDefaultGameData(), getAuth0Session()]);
+  const isLoggedIn = session.user && session.accessToken;
 
-  const session = await getAuth0Session();
-
-  const { user, nation, armies, campaign } = await getProviderData(session);
+  const { user, nation, armies, campaign } = isLoggedIn ? await getUserGameData(session) : initialProviderValues;
 
   return (
     <html lang="en">
