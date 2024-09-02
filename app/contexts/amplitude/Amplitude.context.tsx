@@ -1,28 +1,38 @@
 'use client';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { getAmplitude } from './amplitude.config';
-import { AmplitudeClient } from 'amplitude-js';
+import { ComponentType, ReactNode, useEffect } from 'react';
+import { init, track } from '@amplitude/analytics-browser';
+import { AMPLITUDE_API_KEY } from '@/configs/environment.config';
+import { createContext } from '@/utils/context-abstraction.util';
 
-export type AmplitudeProviderProps<P = unknown> = React.FC<{ children: ReactNode; token: string } & P>;
+interface AmplitudeProviderValue {
+  trackAmplitudeEvent: (eventName: string, eventProperties: Record<string, any>) => void;
+}
 
-export const AmplitudeContext = createContext<AmplitudeClient | null | undefined>(undefined);
+export const [AmplitudeContext, useContext] = createContext<AmplitudeProviderValue>({
+  name: 'AmplitudeContext',
+});
 
-export const AmplitudeProvider: AmplitudeProviderProps = ({ children, token }) => {
-  const [amplitude, setAmplitude] = useState<AmplitudeClient | null>(null);
-
-  useEffect(() => {
-    setAmplitude(getAmplitude(token) || null);
-  }, [token]);
-
-  return <AmplitudeContext.Provider value={amplitude}>{children}</AmplitudeContext.Provider>;
+export const useAmplitudeContext = () => {
+  const context = useContext();
+  if (context === undefined) throw new Error('useAmplitudeContext must be used within a AmplitudeContextProvider');
+  return context;
 };
 
-export const useAmplitude = () => {
-  const context = useContext(AmplitudeContext);
+interface AmplitudeProviderProps {
+  children: ReactNode;
+}
+export const AmplitudeProvider: ComponentType<AmplitudeProviderProps> = ({ children }) => {
+  const trackAmplitudeEvent = (eventName: string, eventProperties: Record<string, any>) => {
+    track(eventName, eventProperties);
+  };
 
-  if (context === undefined) {
-    throw Error('useAmplitudeContext must be used inside of an <AmplitudeProvider />');
-  }
+  useEffect(() => {
+    init(AMPLITUDE_API_KEY, undefined, {
+      defaultTracking: {
+        sessions: true,
+      },
+    });
+  }, []);
 
-  return context;
+  return <AmplitudeContext.Provider value={{ trackAmplitudeEvent }}>{children}</AmplitudeContext.Provider>;
 };

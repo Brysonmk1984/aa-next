@@ -14,8 +14,6 @@ import { determineIncome } from './utils';
 import { getDefaultGameData } from './services/game.service';
 import GameProvider from './contexts/game/Game.context';
 import { Banner } from './components';
-
-import { AMPLITUDE_TOKEN } from './configs/environment.config';
 import { AmplitudeProvider } from './contexts/amplitude/Amplitude.context';
 
 export const fetchCache = 'force-no-store';
@@ -75,12 +73,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <AuthZeroUserProvider>
           <UserProvider user={user} isAuthenticated={!!user}>
             <NationProvider nation={nation} armies={armies} campaign={campaign}>
-              <AmplitudeProvider token={AMPLITUDE_TOKEN}>
-                <body className={inter.className}>
+              <body className={inter.className}>
+                <AmplitudeProvider>
                   <Banner />
                   <ContentWrapper>{children}</ContentWrapper>
-                </body>
-              </AmplitudeProvider>
+                </AmplitudeProvider>
+              </body>
             </NationProvider>
           </UserProvider>
         </AuthZeroUserProvider>
