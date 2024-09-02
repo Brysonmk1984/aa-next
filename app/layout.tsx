@@ -13,6 +13,7 @@ import { NationCampaignDetails } from './types/campaign.type';
 import { determineIncome } from './utils';
 import { getDefaultGameData } from './services/game.service';
 import GameProvider from './contexts/game/Game.context';
+import { Banner } from './components';
 
 export const fetchCache = 'force-no-store';
 
@@ -72,6 +73,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <UserProvider user={user} isAuthenticated={!!user}>
             <NationProvider nation={nation} armies={armies} campaign={campaign}>
               <body className={inter.className}>
+                <Banner />
                 <ContentWrapper>{children}</ContentWrapper>
               </body>
             </NationProvider>
