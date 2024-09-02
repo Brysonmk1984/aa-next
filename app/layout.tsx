@@ -15,6 +15,9 @@ import { getDefaultGameData } from './services/game.service';
 import GameProvider from './contexts/game/Game.context';
 import { Banner } from './components';
 
+import { AMPLITUDE_TOKEN } from './configs/environment.config';
+import { AmplitudeProvider } from './contexts/amplitude/Amplitude.context';
+
 export const fetchCache = 'force-no-store';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -72,10 +75,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <AuthZeroUserProvider>
           <UserProvider user={user} isAuthenticated={!!user}>
             <NationProvider nation={nation} armies={armies} campaign={campaign}>
-              <body className={inter.className}>
-                <Banner />
-                <ContentWrapper>{children}</ContentWrapper>
-              </body>
+              <AmplitudeProvider token={AMPLITUDE_TOKEN}>
+                <body className={inter.className}>
+                  <Banner />
+                  <ContentWrapper>{children}</ContentWrapper>
+                </body>
+              </AmplitudeProvider>
             </NationProvider>
           </UserProvider>
         </AuthZeroUserProvider>

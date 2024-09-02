@@ -1,7 +1,9 @@
 'use client';
+import * as amplitude from '@amplitude/analytics-browser';
 import Link from 'next/link';
 import { PageTemplate } from './components/PageTemplate.component';
 import { useUserContext } from './contexts';
+import { useEffect } from 'react';
 
 export const PagePage = () => {
   const { user } = useUserContext();
@@ -14,6 +16,10 @@ export const PagePage = () => {
 
     window.location.assign('/founding');
   };
+
+  useEffect(() => {
+    amplitude.track('Page Viewed');
+  }, []);
 
   return (
     <>
