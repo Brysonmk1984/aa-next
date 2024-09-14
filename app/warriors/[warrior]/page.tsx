@@ -1,6 +1,5 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
 
-import { getArmies } from '@/services';
 import { assertsStringIsArmyName, kebabCaseToTitleCase, sentenceCaseToKebabCase } from '@/utils';
 import { WarriorPage } from './WarriorPage.component';
 import { ArmyName } from '@/types/campaign.type';
