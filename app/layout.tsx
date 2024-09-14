@@ -12,7 +12,7 @@ import { ResolvedSessionInfo, initialProviderValues } from './configs/initialVal
 import { NationCampaignDetails } from './types/campaign.type';
 import { determineIncome } from './utils';
 import { getDefaultGameData } from './services/game.service';
-import GameProvider from './contexts/game/Game.context';
+import { GameProvider } from './contexts/game/Game.context';
 import { Banner } from './components';
 import { AmplitudeProvider } from './contexts/amplitude/Amplitude.context';
 

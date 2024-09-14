@@ -1,3 +1,6 @@
+import { Army } from './army.type';
+import { ArmyName } from './campaign.type';
+
 export interface WeaponArmorValues {
   'piercing-unarmored': number;
   'piercing-leather': number;
@@ -40,4 +43,18 @@ export interface GameData {
   weapon_armor_values: WeaponArmorValues;
   aoe_spread_values: AoeSpreadValues;
   income: IncomeDefaults;
+  armies: Army[];
+}
+
+interface ArmyDefaultsRequestResult {
+  army: Army;
+  meta: {
+    cost: number;
+  };
+}
+export interface GameDataRequestResult {
+  weapon_armor_values: WeaponArmorValues;
+  aoe_spread_values: AoeSpreadValues;
+  income: IncomeDefaults;
+  armies: ArmyDefaultsRequestResult[];
 }

@@ -5,6 +5,12 @@ export const sentenceCaseToKebabCase = (phrase: string) => {
   return result;
 };
 
+export const kebabCaseToTitleCase = (phrase: string) => {
+  const lowercase = phrase.replace(/-/g, ' ');
+
+  return lowercaseToTitleCase(lowercase);
+};
+
 export const pascalCaseToTitleCase = (phrase: string) => {
   return phrase
     .split('')

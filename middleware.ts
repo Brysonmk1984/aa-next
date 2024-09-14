@@ -11,5 +11,5 @@ export default withMiddlewareAuthRequired();
 
 // Primary matcher for all middleware
 export const config: { matcher: Array<string> } = {
-  matcher: ['/campaign/:path*', '/nation/:path*', '/enlist/:path*'],
+  matcher: ['/campaign/:path*', '/nation/:path*', '/enlist/:path*', '/balance'],
 };

@@ -1,8 +1,9 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
 
 import { getArmies } from '@/services';
-import { sentenceCaseToKebabCase } from '@/utils';
+import { assertsStringIsArmyName, kebabCaseToTitleCase, sentenceCaseToKebabCase } from '@/utils';
 import { WarriorPage } from './WarriorPage.component';
+import { ArmyName } from '@/types/campaign.type';
 
 type PageProps = {
   params: {
@@ -11,21 +12,12 @@ type PageProps = {
 };
 
 export default async function Page({ params }: PageProps) {
-  const armies = await getArmies();
+  const armyName = kebabCaseToTitleCase(decodeURIComponent(params.warrior));
 
-  let matchingArmy = armies.find((army) => {
-    if (sentenceCaseToKebabCase(army.name) === decodeURIComponent(params.warrior)) {
-      return army.name;
-    }
-  });
-
-  if (!matchingArmy) {
-    throw new Error('No Matching Army');
-  }
-
+  assertsStringIsArmyName(armyName);
   return (
     <PageTemplate>
-      <WarriorPage matchingArmy={matchingArmy} />
+      <WarriorPage armyName={armyName} />
     </PageTemplate>
   );
 }
