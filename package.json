@@ -26,7 +26,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-icons": "^5.2.1",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@types/amplitude-js": "^8.16.5",
