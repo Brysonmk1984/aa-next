@@ -22,10 +22,8 @@ export interface RunTestBattleParams {
  */
 export const runTestBattle = async ({ east, west }: RunTestBattleParams) => {
   try {
-    console.log(east, west);
-
     const route = `${API_ENDPOINT}/battles/testing`;
-    const result = await fetchPassthrough(route, { method: 'POST' });
+    const result = await fetchPassthrough(route, { method: 'POST', body: JSON.stringify({ east, west }) });
     console.log({ result });
 
     return;
