@@ -24,7 +24,6 @@ export async function POST(req: Request) {
       user: User;
       accessToken?: string | undefined;
     };
-    console.log('ASD!', asd);
 
     const { accessToken } = asd;
     const { url, options = {} } = body;
@@ -36,6 +35,7 @@ export async function POST(req: Request) {
     }
 
     const result = await fetchWrapper(url, options);
+
     return new NextResponse(JSON.stringify(result), {
       status: 200,
     });

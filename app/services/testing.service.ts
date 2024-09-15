@@ -24,8 +24,9 @@ export const runTestBattle = async ({ east, west }: RunTestBattleParams) => {
   try {
     console.log(east, west);
 
-    // const route = `${API_ENDPOINT}/test/battles/`;
-    // const result = await fetchPassthrough(route);
+    const route = `${API_ENDPOINT}/battles/testing`;
+    const result = await fetchPassthrough(route, { method: 'POST' });
+    console.log({ result });
 
     return;
   } catch (e) {
