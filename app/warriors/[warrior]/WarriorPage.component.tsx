@@ -3,7 +3,7 @@ import { API_ENDPOINT } from '@/configs/environment.config';
 import { useGameContext, useNationContext, useUserContext } from '@/contexts';
 import { Army, NationArmy } from '@/types';
 import { assertHasNationDetails, assertHasUserDetails, lowercaseToTitleCase, snakeCaseToSentenceCase } from '@/utils';
-import { getArmyImage } from '@/utils/army-image-map.util';
+import { mapWarriorNameToImageKey } from '@/utils/army-image-map.util';
 import { fetchPassthrough } from '@/utils/fetch.util';
 import { ComponentType, useRef } from 'react';
 import Image from 'next/image';
@@ -17,12 +17,12 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   const { user } = useUserContext();
   const { nation, dispatch } = useNationContext();
   const { armies } = useGameContext();
-  const ref = useRef<Army | undefined>();
-  ref.current = armies.find((army) => (army.name = armyName));
-  if (!ref.current) {
-    throw new Error('No Warrior found on WarriorPage');
+
+  const warrior = armies.find((a) => a.name === armyName);
+
+  if (!warrior) {
+    throw new Error('No matching warrior');
   }
-  const warriorRef = ref.current;
 
   const handleBuyArmy = async (armyId: number) => {
     assertHasUserDetails(user);
@@ -43,18 +43,18 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   return (
     <>
       <div className="flex justify-between items-start mb-8 ">
-        <h1 className="block my-0">{warriorRef.name}</h1>
+        <h1 className="block my-0">{warrior.name}</h1>
         <div className="flex gap-4">
           <div className=" text-right">
             <span className="text-xl font-sans opacity-90">Cost</span>
             <br />
-            <span className=" font-sans text-4xl">{warriorRef.cost.toLocaleString()}</span>
+            <span className=" font-sans text-4xl">{warrior.cost.toLocaleString()}</span>
           </div>
           /
           <div className=" text-right">
             <span className="text-xl font-sans opacity-90">Count</span>
             <br />
-            <span className=" font-sans text-4xl">{warriorRef.count.toLocaleString()}</span>
+            <span className=" font-sans text-4xl">{warrior.count.toLocaleString()}</span>
           </div>
         </div>
       </div>
@@ -63,21 +63,21 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
         <div className="text-center">
           <div className="relative w-[550px] h-[650px]">
             <Image
-              src={`/images/armies/${getArmyImage(warriorRef.name)}.webp`}
-              alt={warriorRef.name}
+              src={`/images/armies/${mapWarriorNameToImageKey(warrior.name)}.webp`}
+              alt={warrior.name}
               objectFit="cover"
               fill
             />
           </div>
           {user && nation && (
-            <button className="btn btn-transparent mt-8" onClick={() => handleBuyArmy(warriorRef.id)}>
+            <button className="btn btn-transparent mt-8" onClick={() => handleBuyArmy(warrior.id)}>
               Enlist
             </button>
           )}
         </div>
         <div>
           <dl>
-            {Object.entries(warriorRef)
+            {Object.entries(warrior)
               .filter(([k]) => !attributeBlacklist.includes(k))
               .sort((a, b) => (a[0] < b[0] ? -1 : 1))
               .map(([k, v], i) => {
@@ -89,7 +89,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
                 );
               })}
           </dl>
-          <p className="w-[450px] mt-12 text-lg">{warriorRef.lore}</p>
+          <p className="w-[450px] mt-12 text-lg">{warrior.lore}</p>
         </div>
       </div>
     </>

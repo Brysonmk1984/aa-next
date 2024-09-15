@@ -3,6 +3,7 @@ import { PageTemplate } from '@/components/PageTemplate.component';
 import { assertsStringIsArmyName, kebabCaseToTitleCase, sentenceCaseToKebabCase } from '@/utils';
 import { WarriorPage } from './WarriorPage.component';
 import { ArmyName } from '@/types/campaign.type';
+import { mapWarriorUriParamToName } from '@/utils/army-image-map.util';
 
 type PageProps = {
   params: {
@@ -11,12 +12,13 @@ type PageProps = {
 };
 
 export default async function Page({ params }: PageProps) {
-  const armyName = kebabCaseToTitleCase(decodeURIComponent(params.warrior));
+  const warriorName = mapWarriorUriParamToName(decodeURIComponent(params.warrior));
 
-  assertsStringIsArmyName(armyName);
+  assertsStringIsArmyName(warriorName);
+
   return (
     <PageTemplate>
-      <WarriorPage armyName={armyName} />
+      <WarriorPage armyName={warriorName} />
     </PageTemplate>
   );
 }

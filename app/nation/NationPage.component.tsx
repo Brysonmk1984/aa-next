@@ -5,7 +5,7 @@ import { useNationContext } from '@/contexts';
 import { useGameContext } from '@/contexts/game/Game.context';
 import { useNation } from '@/hooks/nation.hook';
 import { determineAmountPerHour, sentenceCaseToKebabCase } from '@/utils';
-import { getArmyImage } from '@/utils/army-image-map.util';
+import { mapWarriorNameToImageKey } from '@/utils/army-image-map.util';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -82,7 +82,7 @@ export const NationPage = () => {
                 <div className="relative w-[200px] h-[325px]">
                   <Link href={`/warriors/${sentenceCaseToKebabCase(army_name)}`}>
                     <Image
-                      src={`/images/armies/${getArmyImage(army_name)}.webp`}
+                      src={`/images/armies/${mapWarriorNameToImageKey(army_name)}.webp`}
                       alt={army_name}
                       objectFit="cover"
                       fill
