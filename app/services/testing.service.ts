@@ -1,6 +1,6 @@
 import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT } from '@/configs/environment.config';
-import { StartingDirection } from '@/types/battle.type';
+import { BattleDetails, StartingDirection } from '@/types/battle.type';
 import { ArmyName } from '@/types/campaign.type';
 import { fetchPassthrough } from '@/utils/fetch.util';
 
@@ -23,10 +23,12 @@ export interface RunTestBattleParams {
 export const runTestBattle = async ({ east, west }: RunTestBattleParams) => {
   try {
     const route = `${API_ENDPOINT}/battles/testing`;
-    const result = await fetchPassthrough(route, { method: 'POST', body: JSON.stringify({ east, west }) });
-    console.log({ result });
+    const result = await fetchPassthrough<BattleDetails>(route, {
+      method: 'POST',
+      body: JSON.stringify({ east, west }),
+    });
 
-    return;
+    return result;
   } catch (e) {
     console.error(e);
     throw e;

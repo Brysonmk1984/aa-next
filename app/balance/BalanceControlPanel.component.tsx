@@ -7,7 +7,7 @@ import { ComponentType, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ArmyListItem } from './ArmyListItem.component';
 import { runTestBattle, RunTestBattleParams } from '@/services';
-import { StartingDirection } from '@/types/battle.type';
+import { BattleDetails, StartingDirection } from '@/types/battle.type';
 
 type Inputs = Record<string, string>;
 
@@ -27,6 +27,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
   const router = useRouter();
   const isProd = ENVIRONMENT === 'prod';
   const [disablePage, setDisablePage] = useState(isProd ? true : false);
+  const [results, setResults] = useState<BattleDetails>();
 
   const handleChange = (direction: StartingDirection, armyId: number, operator: string) => {
     const existingValue = +getValues(`${direction}-${armyId}`);
@@ -34,7 +35,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
     setValue(`${direction}-${armyId}`, newValue.toString());
   };
 
-  const onSubmit: SubmitHandler<Inputs> = (data, e) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data, e) => {
     e?.preventDefault();
 
     const payload = Object.entries(data).reduce<RunTestBattleParams>(
@@ -55,7 +56,8 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
       { east: [], west: [] },
     );
 
-    runTestBattle(payload);
+    const result = await runTestBattle(payload);
+    setResults(result);
   };
 
   useEffect(() => {
@@ -68,6 +70,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
       setDisablePage(false);
     }
   }, [isProd, router]);
+  console.log(results);
 
   return (
     <div>
@@ -148,6 +151,52 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
           </button>
         </div>
       </form>
+      <hr className="my-8" />
+      {results && (
+        <div className=" font-sans">
+          <h2>
+            WINNER: <strong className=" text-red">{results.battle_result.winner}</strong>
+          </h2>
+          <h3>
+            <strong className="text-red">
+              {results.battle_result.win_type} | {results.battle_result.tick_count} Ticks
+            </strong>
+          </h3>
+          <div className="flex justify-between">
+            <div>
+              <h3>East Stats:</h3>
+              <div>
+                <strong>
+                  {results.army_compositions[0].full_army.reduce((acc, cur) => {
+                    return acc + cur.count;
+                  }, 0)}{' '}
+                  Men
+                </strong>
+              </div>
+              <strong className="text-red">
+                {results.stats[0].dodge_count} Dodged | {results.stats[0].block_count} Shield Blocked |{' '}
+                {results.stats[0].armor_defense_count} Armor Blocked |{results.stats[0].kill} Kills
+              </strong>
+            </div>
+            <div className="text-right">
+              <h3>West Stats:</h3>
+              <div>
+                <strong>
+                  {results.army_compositions[1].full_army.reduce((acc, cur) => {
+                    return acc + cur.count;
+                  }, 0)}{' '}
+                  Men
+                </strong>
+              </div>
+              <strong className="text-red">
+                {results.stats[1].kill} Kills |{results.stats[1].armor_defense_count} Armor Blocked |
+                {results.stats[1].block_count} Shield Blocked |{results.stats[1].dodge_count} Dodged
+              </strong>
+            </div>
+          </div>
+          <p className="mt-16">{results.events.join()}</p>
+        </div>
+      )}
     </div>
   );
 };
