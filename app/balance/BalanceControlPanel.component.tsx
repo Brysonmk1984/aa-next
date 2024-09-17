@@ -166,7 +166,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
             <div>
               <h3>East Stats:</h3>
               <div>
-                <strong>
+                <strong className="underline mb-4 block">
                   {results.army_compositions[0].full_army.reduce((acc, cur) => {
                     return acc + cur.count;
                   }, 0)}{' '}
@@ -181,7 +181,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
             <div className="text-right">
               <h3>West Stats:</h3>
               <div>
-                <strong>
+                <strong className="underline mb-4 block">
                   {results.army_compositions[1].full_army.reduce((acc, cur) => {
                     return acc + cur.count;
                   }, 0)}{' '}
