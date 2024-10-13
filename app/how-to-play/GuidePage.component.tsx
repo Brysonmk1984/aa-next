@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { UpkeepKeys, UpkeepValues } from '@/constants/upkeep';
 import { useUserContext } from '@/contexts';
 import { useGameContext } from '@/contexts/game/Game.context';
@@ -10,11 +11,13 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { AoeSpreadTable } from './AoeSpreadTable/AoeSpreadTable.component';
 import { WeaponArmorTable } from './WeaponArmorTable/WeaponArmorTable.component';
+import classNames from 'classnames';
 
 export const GuidePage = () => {
   const { weapon_armor_values, aoe_spread_values, income } = useGameContext();
   const { income_base, upkeep_calc_minutes, income_per_level } = income;
   const { user } = useUserContext();
+  const [showBattlefield, setShowBattlefield] = useState(false);
 
   return (
     <>
@@ -26,8 +29,18 @@ export const GuidePage = () => {
       <p className="ml-6">
         Your army will face off against the opposing army on a battlefield 300 meters in length. It can be convenient to
         think of the battlefield as a number line where the eastern army begins at -150m and the western army starts at
-        150m.
+        150m.{' '}
+        <button onClick={() => setShowBattlefield(true)} className="btn link-style">
+          See example.
+        </button>
       </p>
+      <div>
+        {showBattlefield && (
+          <div className={'flex justify-center'}>
+            <Image src="/images/number_line_example.gif" alt="example battlefield" width="1000" height="292" />
+          </div>
+        )}
+      </div>
       <h4 className="ml-3">Turns</h4>
       <p className="ml-6">
         The battle is automated and turn-based, with the eastern army taking action first, followed by the western army.
