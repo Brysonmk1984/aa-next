@@ -31,7 +31,14 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
 
   const handleChange = (direction: StartingDirection, armyId: number, operator: string) => {
     const existingValue = +getValues(`${direction}-${armyId}`);
-    const newValue = operator === '+' ? existingValue + 100 : existingValue <= 0 ? 0 : existingValue - 100;
+    const newValue =
+      operator === '+'
+        ? existingValue + 100
+        : existingValue <= 0
+          ? 0
+          : existingValue - 100 < 0
+            ? 0
+            : existingValue - 100;
     setValue(`${direction}-${armyId}`, newValue.toString());
   };
 
@@ -128,6 +135,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
                     type="number"
                     className="w-20 h-10 m-0 border-2 border-red text-right"
                     defaultValue={0}
+                    min={0}
                     {...register(`${StartingDirection.WEST}-${army.id}`)}
                   />
                   <button
