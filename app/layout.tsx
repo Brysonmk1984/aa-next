@@ -31,7 +31,7 @@ const getUserGameData = async (session: Auth0Session): Promise<ResolvedSessionIn
   }
 
   const decodedToken = decode(session.accessToken);
-  if (typeof decodedToken === 'string' || typeof decodedToken === undefined || decodedToken === null) {
+  if (typeof decodedToken === 'string' || decodedToken === null) {
     return initialProviderValues;
   } else if (Date.now() >= (decodedToken?.exp ?? 0) * 1000) {
     console.log(
