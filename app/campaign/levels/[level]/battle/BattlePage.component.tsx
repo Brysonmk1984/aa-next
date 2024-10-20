@@ -16,8 +16,6 @@ export const BattlePage = ({ level: totalLevel, enemyDetails }: BattlePageProps)
   const router = useRouter();
   const { getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
   const { nation } = useNation();
-  const [details, setDetails] = useState<BattleDetails>();
-  const [eventGroups, setEventGroups] = useState<string[][]>([]);
   const [groupsDisplayed, setGroupsDisplayed] = useState<string[][]>([]);
   const [displayComplete, setDisplayComplete] = useState(false);
 

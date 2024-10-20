@@ -1,10 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export const CampaignDescription = () => {
-  const router = useRouter();
   return (
     <>
       <p className="ml-6">

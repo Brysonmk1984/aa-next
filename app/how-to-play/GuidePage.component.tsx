@@ -4,14 +4,11 @@ import Image from 'next/image';
 import { UpkeepKeys, UpkeepValues } from '@/constants/upkeep';
 import { useUserContext } from '@/contexts';
 import { useGameContext } from '@/contexts/game/Game.context';
-import { getArmies } from '@/services';
-import { Army } from '@/types';
 import { determineAmountPerHour } from '@/utils';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AoeSpreadTable } from './AoeSpreadTable/AoeSpreadTable.component';
 import { WeaponArmorTable } from './WeaponArmorTable/WeaponArmorTable.component';
-import classNames from 'classnames';
 
 export const GuidePage = () => {
   const { weapon_armor_values, aoe_spread_values, income } = useGameContext();

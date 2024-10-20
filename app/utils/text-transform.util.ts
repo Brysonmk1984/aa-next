@@ -14,7 +14,7 @@ export const kebabCaseToTitleCase = (phrase: string) => {
 export const pascalCaseToTitleCase = (phrase: string) => {
   return phrase
     .split('')
-    .map((letter, index) => {
+    .map((letter) => {
       if (/[A-Z]/.test(letter)) {
         return ` ${letter}`;
       }

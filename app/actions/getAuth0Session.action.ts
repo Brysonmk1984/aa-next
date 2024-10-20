@@ -1,7 +1,5 @@
 'use server';
-import { User } from '@/types';
 import { Claims, getSession } from '@auth0/nextjs-auth0';
-import { NextRequest } from 'next/server';
 export interface ExpectedClaims extends Claims {
   email: string;
   email_verified: boolean;

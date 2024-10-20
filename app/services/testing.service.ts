@@ -1,6 +1,5 @@
-import { fetchWithAuth } from '@/actions/fetchWithAuth.action';
 import { API_ENDPOINT } from '@/configs/environment.config';
-import { BattleDetails, StartingDirection } from '@/types/battle.type';
+import { BattleDetails } from '@/types/battle.type';
 import { ArmyName } from '@/types/campaign.type';
 import { fetchPassthrough } from '@/utils/fetch.util';
 

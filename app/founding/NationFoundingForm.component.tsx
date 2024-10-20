@@ -4,7 +4,7 @@ import { useNationContext, useUserContext } from '@/contexts';
 import { useSessionStorage } from '@/hooks';
 import { patchNation } from '@/services';
 import { Nation } from '@/types';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 
 interface FormElements extends HTMLFormControlsCollection {

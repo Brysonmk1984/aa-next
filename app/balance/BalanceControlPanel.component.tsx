@@ -15,14 +15,7 @@ interface BalanceControlPanel {}
 
 export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
   const { armies } = useGameContext();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit, setValue, getValues } = useForm<Inputs>();
 
   const router = useRouter();
   const isProd = ENVIRONMENT === 'prod';
@@ -92,7 +85,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
                   <button
                     type="button"
                     className="btn btn-red h-10 hover:bg-off-black cursor-pointer"
-                    onClick={(e) => {
+                    onClick={() => {
                       handleChange(StartingDirection.EAST, army.id, '-');
                     }}
                   >
@@ -107,7 +100,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
                   <button
                     type="button"
                     className="btn btn-red h-10 hover:bg-off-black cursor-pointer"
-                    onClick={(e) => {
+                    onClick={() => {
                       handleChange(StartingDirection.EAST, army.id, '+');
                     }}
                   >
@@ -125,7 +118,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
                   <button
                     type="button"
                     className="btn btn-red h-10 hover:bg-off-black cursor-pointer"
-                    onClick={(e) => {
+                    onClick={() => {
                       handleChange(StartingDirection.WEST, army.id, '+');
                     }}
                   >
@@ -141,7 +134,7 @@ export const BalanceControlPanel: ComponentType<BalanceControlPanel> = () => {
                   <button
                     type="button"
                     className="btn btn-red h-10 hover:bg-off-black cursor-pointer"
-                    onClick={(e) => {
+                    onClick={() => {
                       handleChange(StartingDirection.WEST, army.id, '-');
                     }}
                   >

@@ -1,8 +1,7 @@
 import { PageTemplate } from '@/components/PageTemplate.component';
 
-import { assertsStringIsArmyName, kebabCaseToTitleCase, sentenceCaseToKebabCase } from '@/utils';
+import { assertsStringIsArmyName } from '@/utils';
 import { WarriorPage } from './WarriorPage.component';
-import { ArmyName } from '@/types/campaign.type';
 import { mapWarriorUriParamToName } from '@/utils/army-image-map.util';
 
 type PageProps = {

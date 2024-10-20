@@ -12,7 +12,7 @@ import { fetchPassthrough } from '@/utils/fetch.util';
  */
 export const initializeNation = async (userId: number) => {
   const route = `${API_ENDPOINT}/kingdom/${userId}`;
-  const [nation, _armies]: [Nation, NationArmy] = await fetchWithAuth(route, { method: 'POST' });
+  const [nation]: [Nation, NationArmy] = await fetchWithAuth(route, { method: 'POST' });
 
   return nation;
 };

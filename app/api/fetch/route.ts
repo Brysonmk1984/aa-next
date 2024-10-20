@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { User } from '@/types';
 import { errorType } from '@/utils';
 import { fetchWrapper } from '@/utils/fetch.util';
 import { getSession } from '@auth0/nextjs-auth0';
-import { NextApiRequest } from 'next';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {

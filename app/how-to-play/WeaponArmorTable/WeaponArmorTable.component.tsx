@@ -1,5 +1,4 @@
 import { WeaponArmorValues } from '@/types/game-data.type';
-import { capitalize } from '@/utils';
 import { ComponentType } from 'react';
 
 interface WeaponArmorTableProps {

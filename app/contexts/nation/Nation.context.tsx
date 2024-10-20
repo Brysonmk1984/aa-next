@@ -1,8 +1,7 @@
 'use client';
 
-import { Nation, NationArmy } from '@/types';
 import { createContext } from '@/utils/context-abstraction.util';
-import { PropsWithChildren, useReducer, useState } from 'react';
+import { PropsWithChildren, useReducer } from 'react';
 import { NationReducer } from './Nation.reducer';
 import { NationContextValue, NationState } from './Nation.type';
 import { useRouter } from 'next/navigation';

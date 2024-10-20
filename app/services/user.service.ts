@@ -1,4 +1,4 @@
-import { API_ENDPOINT, AUTH_AUD, CLEAR_BATTLE_ON_POSTBATTLE, ENVIRONMENT } from '@/configs/environment.config';
+import { API_ENDPOINT } from '@/configs/environment.config';
 import { ResolvedUser, User } from '@/types';
 import { initializeNation } from './kingdom.service';
 import { fetchWrapper } from '@/utils/fetch.util';

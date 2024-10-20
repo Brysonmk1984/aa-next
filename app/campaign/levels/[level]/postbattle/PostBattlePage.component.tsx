@@ -44,13 +44,11 @@ export const PostBattlePage: ComponentType<PostBattlePage> = ({ enemyDetails }) 
   }
 
   const {
-    army_compositions,
     battle_result,
-    events,
     reward,
     stats: [player, opponent],
   } = data;
-  const { winner, loser, win_type, eastern_battalions, western_battalions } = battle_result;
+  const { winner, win_type, eastern_battalions, western_battalions } = battle_result;
   const playerIsWinner = winner === DirectionOfArmy.EasternArmy;
   const winnerName = playerIsWinner ? playerNationName : enemyDetails.nation_details.name;
   const loserName = playerIsWinner ? enemyDetails.nation_details.name : playerNationName;

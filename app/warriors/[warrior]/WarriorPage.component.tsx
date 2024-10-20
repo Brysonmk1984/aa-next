@@ -1,11 +1,11 @@
 'use client';
 import { API_ENDPOINT } from '@/configs/environment.config';
 import { useGameContext, useNationContext, useUserContext } from '@/contexts';
-import { Army, NationArmy } from '@/types';
+import { NationArmy } from '@/types';
 import { assertHasNationDetails, assertHasUserDetails, lowercaseToTitleCase, snakeCaseToSentenceCase } from '@/utils';
 import { mapWarriorNameToImageKey } from '@/utils/army-image-map.util';
 import { fetchPassthrough } from '@/utils/fetch.util';
-import { ComponentType, useRef } from 'react';
+import { ComponentType } from 'react';
 import Image from 'next/image';
 import { ArmyName } from '@/types/campaign.type';
 

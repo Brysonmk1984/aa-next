@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import { getCookie } from './getCookie';
 import { ContextualError } from './error.util';
 export const fetchCache = 'force-no-store';

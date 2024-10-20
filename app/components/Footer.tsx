@@ -1,6 +1,5 @@
 'use client';
 
-import { ProfileClient } from './ProfileClient';
 import Image from 'next/image';
 
 export default function Footer() {

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ProfileClient } from './ProfileClient';
 import { useNationContext, useUserContext } from '@/contexts';
 import { usePathname } from 'next/navigation';
 import classNames from 'classnames';

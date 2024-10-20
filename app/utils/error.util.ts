@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * NonErrorException class is a utility class that's used to convert non-errors being thrown into errors for clear messaging in Sentry
  */

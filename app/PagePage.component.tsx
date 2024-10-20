@@ -1,7 +1,6 @@
 'use client';
 import * as amplitude from '@amplitude/analytics-browser';
 import Link from 'next/link';
-import { PageTemplate } from './components/PageTemplate.component';
 import { useUserContext } from './contexts';
 import { useEffect } from 'react';
 

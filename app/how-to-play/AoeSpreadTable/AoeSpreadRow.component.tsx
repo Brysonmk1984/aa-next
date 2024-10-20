@@ -1,4 +1,3 @@
-import { AoeSpreadValues, Spread } from '@/types/game-data.type';
 import { ComponentType } from 'react';
 
 interface AoeSpreadRowProps {

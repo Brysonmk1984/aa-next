@@ -9,7 +9,7 @@ import { ComponentType } from 'react';
 
 interface WarriorsPageProps {}
 
-export const WarriorsPage: ComponentType<WarriorsPageProps> = ({}) => {
+export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
   const { armies } = useGameContext();
 
   return (

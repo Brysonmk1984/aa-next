@@ -1,5 +1,4 @@
 import { Army } from './army.type';
-import { ArmyName } from './campaign.type';
 
 export interface WeaponArmorValues {
   'piercing-unarmored': number;

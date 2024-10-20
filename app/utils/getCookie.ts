@@ -3,7 +3,7 @@ export const getCookie = (name: string, cookieString?: string) => {
     throw new Error('no cookie string provided and used on the server');
   }
 
-  let value = `; ${cookieString ?? document.cookie}`;
+  const value = `; ${cookieString ?? document.cookie}`;
 
   const parts = value.split(`; ${name}=`);
 

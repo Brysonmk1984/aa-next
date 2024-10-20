@@ -2,7 +2,7 @@
 
 import { GameData } from '@/types/game-data.type';
 import { createContext } from '@/utils/context-abstraction.util';
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren } from 'react';
 
 type GameState = GameData;
 
