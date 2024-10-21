@@ -120,7 +120,7 @@ export const GuidePage = () => {
         forward.{' '}
         <em>
           eg: The fictitious "Marsh Walkers" nation just defeated the Level 10 campaign nation in battle. They will now
-          collect income at a rate of {income_base + 10 * income_per_level} ({income_base} + (10 * {income_per_level})).
+          collect income at a rate of <strong>{income_base + 10 * income_per_level}</strong> per hour. .
         </em>
       </p>
       <p className="ml-6">

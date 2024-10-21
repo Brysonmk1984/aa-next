@@ -1,10 +1,10 @@
-export const determineAmountPerHour = (amount: number, frequencyInMinutes: number) => {
-  const calculationsPerHour = amount / 60;
-  const amountPerHour = Math.floor(amount * calculationsPerHour);
+export const determineAmountPerHour = (amountPerIteration: number, frequencyInMinutes: number) => {
+  const calcsPerHour = 60 / frequencyInMinutes;
+  const amountPerHour = calcsPerHour * amountPerIteration;
 
   return {
     amountPerHour,
-    amount,
+    amount: amountPerIteration,
     frequencyInMinutes,
   };
 };

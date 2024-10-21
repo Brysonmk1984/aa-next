@@ -10,6 +10,7 @@ export const getDefaultGameData = async (): Promise<GameData> => {
   const armies: Army[] = result.armies.map((item) => {
     return { ...item.army, cost: item.meta.cost };
   });
+  // console.log(result.income);
 
   return { ...result, armies };
 };

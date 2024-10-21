@@ -49,6 +49,7 @@ const getUserGameData = async (session: Auth0Session): Promise<ResolvedSessionIn
 
   const highestLevelCompleted = await getHighestLevelCompleted(nation.id);
   nation.income = determineIncome(highestLevelCompleted);
+
   const campaign: NationCampaignDetails = {
     highestLevelCompleted,
   };
