@@ -15,7 +15,7 @@ export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
   return (
     <div className="flex flex-wrap items-center justify-around">
       {armies
-        .sort((a, b) => (a.name < b.name ? -1 : 1))
+        .sort((a, b) => (a.unlock_level < b.unlock_level ? -1 : 1))
         .map((armies) => {
           const { id, name } = armies;
 

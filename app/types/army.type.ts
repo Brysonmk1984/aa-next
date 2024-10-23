@@ -20,4 +20,5 @@ export interface Army {
   attack_speed: number;
   lore: string;
   cost: number;
+  unlock_level: number;
 }

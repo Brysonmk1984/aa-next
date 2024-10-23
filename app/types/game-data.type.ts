@@ -49,6 +49,7 @@ interface ArmyDefaultsRequestResult {
   army: Army;
   meta: {
     cost: number;
+    unlock_level: number;
   };
 }
 export interface GameDataRequestResult {

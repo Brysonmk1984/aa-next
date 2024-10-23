@@ -15,7 +15,7 @@ interface WarriorPage {
 
 export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   const { user } = useUserContext();
-  const { nation, dispatch } = useNationContext();
+  const { nation, campaign, dispatch } = useNationContext();
   const { armies } = useGameContext();
 
   const warrior = armies.find((a) => a.name === armyName);
@@ -70,7 +70,11 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
             />
           </div>
           {user && nation && (
-            <button className="btn btn-transparent mt-8" onClick={() => handleBuyArmy(warrior.id)}>
+            <button
+              className="btn btn-transparent mt-8"
+              onClick={() => handleBuyArmy(warrior.id)}
+              disabled={campaign?.highestLevelCompleted ? warrior.unlock_level > campaign?.highestLevelCompleted : true}
+            >
               Enlist
             </button>
           )}
