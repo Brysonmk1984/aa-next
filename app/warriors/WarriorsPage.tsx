@@ -1,15 +1,17 @@
 'use client';
 
-import { useGameContext } from '@/contexts';
+import { useGameContext, useNationContext } from '@/contexts';
 import { sentenceCaseToKebabCase } from '@/utils';
 import { mapWarriorNameToImageKey } from '@/utils/army-image-map.util';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ComponentType } from 'react';
+import classNames from 'classnames';
 
 interface WarriorsPageProps {}
 
 export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
+  const { campaign } = useNationContext();
   const { armies } = useGameContext();
 
   return (
@@ -17,10 +19,10 @@ export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
       {armies
         .sort((a, b) => (a.unlock_level < b.unlock_level ? -1 : 1))
         .map((armies) => {
-          const { id, name } = armies;
-
+          const { id, name, unlock_level } = armies;
+          const isDisabled = campaign?.highestLevelCompleted ? unlock_level > campaign?.highestLevelCompleted : true;
           return (
-            <div key={id} className="w-[300px]">
+            <div key={id} className={classNames('w-[300px]', { 'opacity-60': isDisabled })}>
               <div className="relative w-[300px] h-[350px]">
                 <Link href={`/warriors/${encodeURIComponent(sentenceCaseToKebabCase(name))}`}>
                   <Image
@@ -32,7 +34,13 @@ export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
                 </Link>
               </div>
               <div className="text-center">
-                <h3 className=" text-2xl">{name}</h3>
+                <h3
+                  className={classNames('text-2xl', {
+                    'text-off-black': isDisabled,
+                  })}
+                >
+                  {name}
+                </h3>
               </div>
             </div>
           );

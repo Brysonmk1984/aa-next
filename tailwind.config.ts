@@ -19,6 +19,7 @@ const config: Config = {
       yellow: '#ffc82c',
       'gray-dark': '#273444',
       gray: '#8492a6',
+      'gray-disabled': '#606060',
       'gray-light': '#d3dce6',
       'off-black': '#1B1111',
       gold: '#d4af37',

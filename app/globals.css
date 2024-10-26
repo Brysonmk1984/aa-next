@@ -145,6 +145,14 @@ textarea {
   font-family: 'Germania One', system-ui;
   font-size: x-large;
 }
+
+.btn[disabled],
+.btn[disabled]:hover {
+  @apply text-gray-disabled;
+  border-color: #606060 !important;
+  cursor: url('/images/glove_open.png'), auto !important;
+}
+
 .btn-transparent:before,
 .btn-transparent:after,
 a.btn-style:before,
@@ -152,10 +160,10 @@ a.btn-style:after {
   content: ' --- ';
 }
 
-.btn-transparent:hover {
-  color: #303436;
-  border: solid 3px #303436;
-  opacity: 0.9;
+.btn-transparent:hover,
+.btn-transparent[disabled] {
+  color: #606060 !important;
+  border-color: #606060 !important;
 }
 
 a.btn-style {

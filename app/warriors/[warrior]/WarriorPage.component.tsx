@@ -39,6 +39,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   };
 
   const attributeBlacklist = ['id', 'name', 'cost', 'lore', 'count'];
+  const isDisabled = campaign?.highestLevelCompleted ? warrior.unlock_level > campaign?.highestLevelCompleted : true;
 
   return (
     <>
@@ -70,13 +71,23 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
             />
           </div>
           {user && nation && (
-            <button
-              className="btn btn-transparent mt-8"
-              onClick={() => handleBuyArmy(warrior.id)}
-              disabled={campaign?.highestLevelCompleted ? warrior.unlock_level > campaign?.highestLevelCompleted : true}
-            >
-              Enlist
-            </button>
+            <div className="flex flex-col">
+              <div>
+                <button
+                  className="btn btn-transparent mt-8"
+                  onClick={() => handleBuyArmy(warrior.id)}
+                  disabled={isDisabled}
+                >
+                  Enlist
+                </button>
+              </div>
+
+              {isDisabled && (
+                <div className="mt-3">
+                  <span className="font-bold font-sans">Unlock level {warrior.unlock_level}</span>
+                </div>
+              )}
+            </div>
           )}
         </div>
         <div>
