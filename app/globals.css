@@ -134,6 +134,9 @@ textarea {
 .btn-red:hover {
   @apply bg-red text-light-ivory;
 }
+.btn-red[disabled] {
+  background-color: rgb(39 52 68 / var(--tw-text-opacity)) !important;
+}
 .btn-transparent {
   @apply text-gray-dark;
   background-color: transparent;

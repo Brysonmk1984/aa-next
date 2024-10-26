@@ -11,7 +11,8 @@ interface Action {
     | 'addNationGoldByAmount'
     | 'updateHighestLevelCompleted'
     | 'setUpkeepLevel'
-    | 'setIncomeAmount';
+    | 'setIncomeAmount'
+    | 'setNationGold';
 }
 
 interface NationUpdate extends Action {
@@ -49,6 +50,11 @@ interface SetIncomeAmount extends Action {
   type: 'setIncomeAmount';
 }
 
+interface SetNationGold extends Action {
+  payload: number;
+  type: 'setNationGold';
+}
+
 export type NationReducerAction =
   | NationUpdate
   | NationArmiesReplaceAll
@@ -56,7 +62,8 @@ export type NationReducerAction =
   | AddNationGoldByAmount
   | UpdateHighestLevelCompleted
   | SetUpkeepLevel
-  | SetIncomeAmount;
+  | SetIncomeAmount
+  | SetNationGold;
 
 export interface NationState {
   nation: Nation | null;

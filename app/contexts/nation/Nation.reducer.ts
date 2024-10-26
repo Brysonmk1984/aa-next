@@ -56,6 +56,14 @@ export const NationReducer = (state: NationState, action: NationReducerAction): 
         armies: existingArmies,
       };
     }
+    case 'setNationGold': {
+      const nation = state.nation;
+      if (!nation) {
+        throw new Error('Action only applicable when user is logged in and a nation is not null');
+      }
+      nation.gold = action.payload;
+      return { ...state, nation };
+    }
     case 'addNationGoldByAmount': {
       if (!state.nation) {
         throw new Error('No nation to add gold to');
