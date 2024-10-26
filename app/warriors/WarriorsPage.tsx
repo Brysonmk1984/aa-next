@@ -11,7 +11,7 @@ import classNames from 'classnames';
 interface WarriorsPageProps {}
 
 export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
-  const { campaign } = useNationContext();
+  const { campaign, nation } = useNationContext();
   const { armies } = useGameContext();
 
   return (
@@ -20,7 +20,8 @@ export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
         .sort((a, b) => (a.unlock_level < b.unlock_level ? -1 : 1))
         .map((armies) => {
           const { id, name, unlock_level } = armies;
-          const isDisabled = campaign?.highestLevelCompleted ? unlock_level > campaign?.highestLevelCompleted : true;
+
+          const isDisabled = !!nation && unlock_level > campaign.highestLevelCompleted;
           return (
             <div key={id} className={classNames('w-[300px]', { 'opacity-60': isDisabled })}>
               <div className="relative w-[300px] h-[350px]">
