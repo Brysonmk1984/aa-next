@@ -23,6 +23,7 @@ const config: Config = {
       'gray-light': '#d3dce6',
       'off-black': '#1B1111',
       gold: '#d4af37',
+      transparent: 'rgba(0,0,0,0)',
     },
     fontFamily: {
       sans: ['Germania One', 'helvetica', 'arial'],

@@ -295,3 +295,12 @@ td {
   padding: 10px 16px;
   border: solid 1px #1b1111;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}

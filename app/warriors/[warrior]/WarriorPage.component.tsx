@@ -5,7 +5,7 @@ import { NationArmy } from '@/types';
 import { assertHasNationDetails, assertHasUserDetails, lowercaseToTitleCase, snakeCaseToSentenceCase } from '@/utils';
 import { mapWarriorNameToImageKey } from '@/utils/army-image-map.util';
 import { fetchPassthrough } from '@/utils/fetch.util';
-import { ComponentType, useState } from 'react';
+import { ComponentType, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ArmyName } from '@/types/campaign.type';
 import { debounce } from 'lodash';
@@ -20,6 +20,8 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   const { nation, campaign, dispatch } = useNationContext();
   const { armies } = useGameContext();
   const [units, setUnits] = useState(0);
+  const [previewGoldLeft, setPreviewGoldLeft] = useState(nation?.gold || 0);
+
   const warrior = armies.find((a) => a.name === armyName);
 
   if (!warrior) {
@@ -29,6 +31,14 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   const determineMaxCanAfford = () => {
     const units = Math.floor(nation!.gold / warrior.cost);
     return units;
+  };
+
+  const determineGoldRemaining = () => {
+    if (!nation) {
+      throw new Error('Not callable without a nation');
+    }
+    const totalCost = units * warrior.cost;
+    return nation.gold - totalCost;
   };
 
   const handleCountInputChange = (value: string) => {
@@ -58,6 +68,10 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   const attributeBlacklist = ['id', 'name', 'cost', 'lore', 'count'];
   const badInput = units <= 0 || units >= determineMaxCanAfford();
   const isDisabled = campaign?.highestLevelCompleted ? warrior.unlock_level > campaign?.highestLevelCompleted : true;
+
+  useEffect(() => {
+    setPreviewGoldLeft(determineGoldRemaining());
+  }, [determineGoldRemaining, units]);
 
   return (
     <>
@@ -90,7 +104,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
                     </button>
                     <input
                       type="number"
-                      className="w-20 h-10 m-0 border-2 border-red"
+                      className="w-20 h-10 m-0 text-2xl font-bold font-sans border-2 border-red bg-transparent text-center"
                       value={units}
                       min={0}
                       max={determineMaxCanAfford()}
@@ -134,6 +148,9 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
                 >
                   Enlist
                 </button>
+                <div className="mt-4">
+                  <strong className=" font-sans ">{numberFormat(previewGoldLeft)} Gold Remaining</strong>
+                </div>
               </div>
 
               {isDisabled && (
