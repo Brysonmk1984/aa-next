@@ -33,19 +33,11 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
     return units;
   };
 
-  const determineGoldRemaining = () => {
-    if (!nation) {
-      throw new Error('Not callable without a nation');
-    }
-    const totalCost = units * warrior.cost;
-    return nation.gold - totalCost;
-  };
-
   const handleCountInputChange = (value: string) => {
     setUnits(+value);
   };
 
-  const handleBuyArmy = async (armyId: number) => {
+  const handleBuyArmy = async (armyId: number, quantity: number) => {
     assertHasUserDetails(user);
     assertHasNationDetails(nation);
     try {
@@ -53,11 +45,11 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
       const [updatedArmy, remainingGold] = await fetchPassthrough<[NationArmy, number]>(path, {
         method: 'POST',
         body: JSON.stringify({
-          units,
+          quantity,
         }),
       });
 
-      console.log(updatedArmy, remainingGold);
+      setUnits(0);
       dispatch({ type: 'nationArmiesUpdateAction', payload: updatedArmy });
       dispatch({ type: 'setNationGold', payload: remainingGold });
     } catch (e) {
@@ -70,8 +62,17 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   const isDisabled = campaign?.highestLevelCompleted ? warrior.unlock_level > campaign?.highestLevelCompleted : true;
 
   useEffect(() => {
+    const determineGoldRemaining = () => {
+      if (!nation) {
+        throw new Error('Not callable without a nation');
+      }
+      const totalCost = units * warrior.cost;
+      return nation.gold - totalCost;
+    };
+
     setPreviewGoldLeft(determineGoldRemaining());
-  }, [determineGoldRemaining, units]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [units]);
 
   return (
     <>
@@ -143,7 +144,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
               <div>
                 <button
                   className="btn btn-transparent mt-8"
-                  onClick={() => handleBuyArmy(warrior.id)}
+                  onClick={() => handleBuyArmy(warrior.id, units)}
                   disabled={isDisabled || badInput}
                 >
                   Enlist
