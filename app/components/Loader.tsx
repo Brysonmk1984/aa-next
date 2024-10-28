@@ -1,5 +1,3 @@
-import { ComponentType } from 'react';
-
 export const Loader = ({ text = 'One Moment...' }) => {
   return (
     <div>
