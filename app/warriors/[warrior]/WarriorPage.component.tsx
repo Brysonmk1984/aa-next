@@ -8,8 +8,8 @@ import { fetchPassthrough } from '@/utils/fetch.util';
 import { ComponentType, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ArmyName } from '@/types/campaign.type';
-import { debounce } from 'lodash';
 import { numberFormat } from '@/utils/numberFormat';
+import { Loader } from '@/components';
 
 interface WarriorPage {
   armyName: ArmyName;
@@ -21,6 +21,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   const { armies } = useGameContext();
   const [units, setUnits] = useState(0);
   const [previewGoldLeft, setPreviewGoldLeft] = useState(nation?.gold || 0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const warrior = armies.find((a) => a.name === armyName);
 
@@ -38,6 +39,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   };
 
   const handleBuyArmy = async (armyId: number, quantity: number) => {
+    setIsLoading(true);
     assertHasUserDetails(user);
     assertHasNationDetails(nation);
     try {
@@ -54,6 +56,8 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
       dispatch({ type: 'setNationGold', payload: remainingGold });
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -62,15 +66,14 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   const isDisabled = campaign?.highestLevelCompleted ? warrior.unlock_level > campaign?.highestLevelCompleted : true;
 
   useEffect(() => {
-    const determineGoldRemaining = () => {
-      if (!nation) {
-        throw new Error('Not callable without a nation');
-      }
+    const determineGoldRemaining = (gold: number) => {
       const totalCost = units * warrior.cost;
-      return nation.gold - totalCost;
+      return gold - totalCost;
     };
 
-    setPreviewGoldLeft(determineGoldRemaining());
+    if (nation) {
+      setPreviewGoldLeft(determineGoldRemaining(nation.gold));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [units]);
 
@@ -141,18 +144,22 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
                   </div>
                 </div>
               </div>
-              <div>
-                <button
-                  className="btn btn-transparent mt-8"
-                  onClick={() => handleBuyArmy(warrior.id, units)}
-                  disabled={isDisabled || badInput}
-                >
-                  Enlist
-                </button>
-                <div className="mt-4">
-                  <strong className=" font-sans ">{numberFormat(previewGoldLeft)} Gold Remaining</strong>
+              {!isLoading ? (
+                <div>
+                  <button
+                    className="btn btn-transparent mt-8"
+                    onClick={() => handleBuyArmy(warrior.id, units)}
+                    disabled={isDisabled || badInput}
+                  >
+                    Enlist
+                  </button>
+                  <div className="mt-4">
+                    <strong className=" font-sans ">{numberFormat(previewGoldLeft)} Gold Remaining</strong>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <Loader />
+              )}
 
               {isDisabled && (
                 <div className="mt-3">
