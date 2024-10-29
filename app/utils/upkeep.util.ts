@@ -20,6 +20,6 @@ export const determineUpkeep = (count: number) => {
   }
 };
 
-export const determineIncome = (highestLevelCompleted: number) => {
-  return 100 + highestLevelCompleted * 10;
+export const determineIncome = (base: number, highestLevelCompleted: number, amountPerLevel: number) => {
+  return base + highestLevelCompleted * amountPerLevel;
 };

@@ -48,7 +48,6 @@ const getUserGameData = async (session: Auth0Session): Promise<ResolvedSessionIn
   const { nation, armies } = await getNationAndArmies(user.id);
 
   const highestLevelCompleted = await getHighestLevelCompleted(nation.id);
-  nation.income = determineIncome(highestLevelCompleted);
 
   const campaign: NationCampaignDetails = {
     highestLevelCompleted,
@@ -67,6 +66,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const isLoggedIn = session.user && session.accessToken;
 
   const { user, nation, armies, campaign } = isLoggedIn ? await getUserGameData(session) : initialProviderValues;
+
+  if (nation) {
+    const { income } = gameData;
+    nation.income = determineIncome(income.income_base, campaign.highestLevelCompleted, income.income_per_level);
+  }
 
   return (
     <html lang="en">
