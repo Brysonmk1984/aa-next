@@ -13,9 +13,6 @@ export const NationPage = () => {
   const {
     income: { income_calc_minutes, upkeep_calc_minutes },
   } = useGameContext();
-
-  console.log(nation.income, income_calc_minutes);
-
   const { amountPerHour: incomePerHour } = determineAmountPerHour(nation.income, income_calc_minutes);
   const { amountPerHour: upkeepPerHour } = determineAmountPerHour(UpkeepValues[nation.upkeep], upkeep_calc_minutes);
 
