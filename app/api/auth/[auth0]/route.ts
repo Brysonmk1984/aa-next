@@ -34,4 +34,4 @@ export const GET = handleAuth({
 
 // This is the actual fix to the data-caching problem
 // https://github.com/vercel/vercel/discussions/10117#discussioncomment-6426751
-//export const revalidate = 0;
+export const revalidate = 0; // When I disabled this before, I had to re-log in frequently. Uncommenting to see if this resolves the issue.
