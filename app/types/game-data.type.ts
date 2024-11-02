@@ -1,3 +1,4 @@
+import { UpkeepKeys } from '@/constants/upkeep';
 import { Army } from './army.type';
 
 export interface WeaponArmorValues {
@@ -31,17 +32,36 @@ export interface AoeSpreadValues {
   '3': Array<[Spread, number]>;
 }
 
-interface IncomeDefaults {
-  income_per_level: number;
-  income_base: number;
-  income_calc_minutes: number;
-  upkeep_calc_minutes: number;
+export interface UpkeepRates {
+  None: number;
+  Low: number;
+  Medium: number;
+  High: number;
 }
 
-export interface GameData {
+interface IncomeDefaults {
+  per_level: number;
+  base: number;
+  calc_minutes: number;
+}
+
+export interface UpkeepDefaults {
+  tiers: Record<UpkeepKeys, number>;
+  rates: UpkeepRates;
+  calc_minutes: number;
+}
+
+interface UpkeepData {
+  tiers: [UpkeepKeys, number][];
+  rates: UpkeepRates;
+  calc_minutes: number;
+}
+
+export interface GameDefaults {
   weapon_armor_values: WeaponArmorValues;
   aoe_spread_values: AoeSpreadValues;
   income: IncomeDefaults;
+  upkeep: UpkeepDefaults;
   armies: Army[];
 }
 
@@ -56,5 +76,6 @@ export interface GameDataRequestResult {
   weapon_armor_values: WeaponArmorValues;
   aoe_spread_values: AoeSpreadValues;
   income: IncomeDefaults;
+  upkeep: UpkeepData;
   armies: ArmyDefaultsRequestResult[];
 }

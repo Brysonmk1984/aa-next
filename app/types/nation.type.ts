@@ -10,8 +10,15 @@ export interface Nation {
   lore: string | null;
   created_at: string;
   updated_at: string;
-  upkeep: UpkeepKeys;
-  income: number;
+  upkeep: {
+    level: UpkeepKeys;
+    cost: number;
+    rate: null;
+  };
+  income: {
+    amount: number;
+    rate: null;
+  };
 }
 
 export interface CampaignNation extends Nation {

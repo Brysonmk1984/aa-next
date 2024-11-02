@@ -1,18 +1,20 @@
 'use client';
 
 import Image from 'next/image';
-import { UpkeepKeys, UpkeepValues } from '@/constants/upkeep';
+import { UpkeepKeys } from '@/constants/upkeep';
 import { useUserContext } from '@/contexts';
 import { useGameContext } from '@/contexts/game/Game.context';
-import { determineAmountPerHour } from '@/utils';
+
 import Link from 'next/link';
 import { useState } from 'react';
 import { AoeSpreadTable } from './AoeSpreadTable/AoeSpreadTable.component';
 import { WeaponArmorTable } from './WeaponArmorTable/WeaponArmorTable.component';
+import { numberFormat } from '@/utils/numberFormat';
+import { determineRate } from '@/utils';
 
 export const GuidePage = () => {
-  const { weapon_armor_values, aoe_spread_values, income } = useGameContext();
-  const { income_base, upkeep_calc_minutes, income_per_level } = income;
+  const { weapon_armor_values, aoe_spread_values, income, upkeep } = useGameContext();
+  const { tiers, rates } = upkeep;
   const { user } = useUserContext();
   const [showBattlefield, setShowBattlefield] = useState(false);
 
@@ -114,13 +116,14 @@ export const GuidePage = () => {
       <p className="ml-6">
         Every Hour, your nation will gain income at a rate of{' '}
         <strong>
-          {income_base} + (max_campaign_level_completed * {income_per_level})
+          {income.base} + (max_campaign_level_completed * {income.per_level})
         </strong>
-        . This means that the more levels completed in the campaign, the more income received every hour from that point
-        forward.{' '}
+        . This means that the more levels completed in the campaign, the more income received every period from that
+        point forward.{' '}
         <em>
           eg: The fictitious "Marsh Walkers" nation just defeated the Level 10 campaign nation in battle. They will now
-          collect income at a rate of <strong>{income_base + 10 * income_per_level}</strong> per hour. .
+          collect income at a rate of <strong>{income.base + 10 * income.per_level}</strong> per{' '}
+          {determineRate(income.calc_minutes)}.
         </em>
       </p>
       <p className="ml-6">
@@ -133,30 +136,21 @@ export const GuidePage = () => {
           <tr>
             <th>Upkeep Bracket</th>
             <th>Warrior Count</th>
-            <th>Cost of Upkeep per Hour</th>
+            <th>Cost of Upkeep per {determineRate(upkeep.calc_minutes)}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>None</td>
-            <td>10k soldiers or less</td>
-            <td>{determineAmountPerHour(UpkeepValues[UpkeepKeys.None], upkeep_calc_minutes).amountPerHour} gold</td>
-          </tr>
-          <tr>
-            <td>Low</td>
-            <td>Over 10k soldiers</td>
-            <td>{determineAmountPerHour(UpkeepValues[UpkeepKeys.Low], upkeep_calc_minutes).amountPerHour} gold</td>
-          </tr>
-          <tr>
-            <td>Medium</td>
-            <td>Over 50k soldiers</td>
-            <td>{determineAmountPerHour(UpkeepValues[UpkeepKeys.Medium], upkeep_calc_minutes).amountPerHour} gold</td>
-          </tr>
-          <tr>
-            <td>High</td>
-            <td>Over 90k soldiers</td>
-            <td>{determineAmountPerHour(UpkeepValues[UpkeepKeys.High], upkeep_calc_minutes).amountPerHour} gold</td>
-          </tr>
+          {Object.entries(tiers)
+            .reverse()
+            .map(([upkeepKey, threshold]) => {
+              return (
+                <tr key={upkeepKey}>
+                  <td>{upkeepKey}</td>
+                  <td>Less than {numberFormat(threshold)} </td>
+                  <td>{rates[upkeepKey as UpkeepKeys]} gold</td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
       <h4 className="ml-3">Enlisting Armies</h4>

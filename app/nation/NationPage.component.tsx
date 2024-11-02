@@ -1,20 +1,14 @@
 'use client';
 
-import { UpkeepKeys, UpkeepValues } from '@/constants/upkeep';
-import { useGameContext } from '@/contexts/game/Game.context';
+import { UpkeepKeys } from '@/constants/upkeep';
 import { useNation } from '@/hooks/nation.hook';
-import { determineAmountPerHour, sentenceCaseToKebabCase } from '@/utils';
+import { sentenceCaseToKebabCase } from '@/utils';
 import { mapWarriorNameToImageKey } from '@/utils/army-image-map.util';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export const NationPage = () => {
   const { nation, armies } = useNation();
-  const {
-    income: { income_calc_minutes, upkeep_calc_minutes },
-  } = useGameContext();
-  const { amountPerHour: incomePerHour } = determineAmountPerHour(nation.income, income_calc_minutes);
-  const { amountPerHour: upkeepPerHour } = determineAmountPerHour(UpkeepValues[nation.upkeep], upkeep_calc_minutes);
 
   return (
     <>
@@ -52,20 +46,22 @@ export const NationPage = () => {
             <div className="flex flex-col text-right">
               <span className="text-lg font-sans opacity-90 block">Income</span>
               <span className="block text-sm">
-                <strong className="text-lg text-red">{incomePerHour.toLocaleString()}</strong> <span>Gold/hr</span>
+                <strong className="text-lg text-red">{nation.income.amount.toLocaleString()}</strong>&nbsp;
+                <span>Gold/{nation.income.rate}</span>
               </span>
             </div>
           }
 
           <div className="flex flex-col text-right ml-8 ">
-            {nation.upkeep !== UpkeepKeys.None && (
-              <span className="text-2xl font-sans opacity-90 block text-red">{nation.upkeep}</span>
+            {nation.upkeep.level !== UpkeepKeys.None && (
+              <span className="text-2xl font-sans opacity-90 block text-red">{nation.upkeep.level}</span>
             )}
             <span className="text-lg font-sans opacity-90 block">
-              {nation.upkeep == UpkeepKeys.None ? 'No Upkeep' : 'Upkeep'}
+              {nation.upkeep.level == UpkeepKeys.None ? 'No Upkeep' : 'Upkeep'}
             </span>
             <span className="block text-sm">
-              <strong className="text-lg text-red">{upkeepPerHour.toLocaleString()}</strong> Gold/hr
+              <strong className="text-lg text-red">{nation.upkeep.cost.toLocaleString()}</strong>&nbsp;
+              <span>Gold/{nation.upkeep.rate}</span>
             </span>
           </div>
         </div>

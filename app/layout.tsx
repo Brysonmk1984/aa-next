@@ -10,7 +10,7 @@ import { getHighestLevelCompleted, getNationAndArmies, handleUserUpdateCheck } f
 import UserProvider from './contexts/user/User.context';
 import { ResolvedSessionInfo, initialProviderValues } from './configs/initialValues.config';
 import { NationCampaignDetails } from './types/campaign.type';
-import { determineIncome } from './utils';
+import { calculateArmyCount, determineIncome, determineUpkeep } from './utils';
 import { getDefaultGameData } from './services/game.service';
 import { GameProvider } from './contexts/game/Game.context';
 import { Banner } from './components';
@@ -68,8 +68,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { user, nation, armies, campaign } = isLoggedIn ? await getUserGameData(session) : initialProviderValues;
 
   if (nation) {
-    const { income } = gameData;
-    nation.income = determineIncome(income.income_base, campaign.highestLevelCompleted, income.income_per_level);
+    const { income, upkeep } = gameData;
+    console.log({ income });
+
+    nation.income = determineIncome(
+      income.base,
+      campaign.highestLevelCompleted,
+      income.per_level,
+      gameData.income.calc_minutes,
+    );
+    console.log('NI', nation.income);
+
+    nation.upkeep = determineUpkeep(calculateArmyCount(armies), upkeep);
   }
 
   return (
