@@ -13,11 +13,11 @@ export interface Nation {
   upkeep: {
     level: UpkeepKeys;
     cost: number;
-    rate: number;
+    rate: string;
   };
   income: {
     amount: number;
-    rate: number;
+    rate: string;
   };
 }
 

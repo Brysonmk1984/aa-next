@@ -69,7 +69,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   if (nation) {
     const { income, upkeep } = gameData;
-    console.log({ income });
 
     nation.income = determineIncome(
       income.base,
@@ -77,7 +76,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       income.per_level,
       gameData.income.calc_minutes,
     );
-    console.log('NI', nation.income);
 
     nation.upkeep = determineUpkeep(calculateArmyCount(armies), upkeep);
   }

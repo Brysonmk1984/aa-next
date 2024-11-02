@@ -1,4 +1,3 @@
-import { UpkeepKeys } from '@/constants/upkeep';
 import { Nation, NationArmy } from '@/types';
 import { NationCampaignDetails } from '@/types/campaign.type';
 import { Dispatch } from 'react';
@@ -10,8 +9,6 @@ interface Action {
     | 'nationArmiesUpdateAction'
     | 'addNationGoldByAmount'
     | 'updateHighestLevelCompleted'
-    | 'setUpkeepLevel'
-    | 'setIncomeAmount'
     | 'setNationGold';
 }
 
@@ -40,16 +37,6 @@ interface UpdateHighestLevelCompleted extends Action {
   type: 'updateHighestLevelCompleted';
 }
 
-interface SetUpkeepLevel extends Action {
-  payload: UpkeepKeys;
-  type: 'setUpkeepLevel';
-}
-
-interface SetIncomeAmount extends Action {
-  payload: number;
-  type: 'setIncomeAmount';
-}
-
 interface SetNationGold extends Action {
   payload: number;
   type: 'setNationGold';
@@ -61,8 +48,6 @@ export type NationReducerAction =
   | NationArmyUpdate
   | AddNationGoldByAmount
   | UpdateHighestLevelCompleted
-  | SetUpkeepLevel
-  | SetIncomeAmount
   | SetNationGold;
 
 export interface NationState {
