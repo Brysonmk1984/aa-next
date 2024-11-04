@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       };
     }
 
-    const result = await fetchWrapper(url, options);
+    const result = await fetchWrapper(url, { ...options, cache: 'no-store' });
 
     return new NextResponse(JSON.stringify(result), {
       status: 200,

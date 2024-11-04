@@ -10,6 +10,7 @@ const findOrCreateUser = async ({ email, email_verified: emailVerified, sub }: U
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      cache: 'no-store',
       method: 'POST',
       body: JSON.stringify({ email, email_verified: emailVerified, auth0_sub: sub }),
     });

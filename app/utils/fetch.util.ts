@@ -4,7 +4,7 @@ export const fetchCache = 'force-no-store';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const configureFetchOptions = (options: RequestInit = {}) => {
+export const configureFetchOptions = (options: RequestInit = { cache: 'no-store' }) => {
   if (typeof window === 'undefined') {
     return options;
   }
@@ -16,7 +16,7 @@ export const configureFetchOptions = (options: RequestInit = {}) => {
   return { ...options, Authorization, cache: 'no-store' };
 };
 
-export const fetchWrapper = async <T>(url: string, options?: RequestInit): Promise<T> => {
+export const fetchWrapper = async <T>(url: string, options: RequestInit = { cache: 'no-store' }): Promise<T> => {
   const response = await fetch(url, options);
 
   if (!response.ok) {
@@ -30,7 +30,6 @@ export const fetchWrapper = async <T>(url: string, options?: RequestInit): Promi
 export const fetchPassthrough = async <T>(url: string, options?: RequestInit): Promise<T> => {
   const response = await fetch('/api/fetch', {
     method: 'POST',
-    cache: 'no-store',
     body: JSON.stringify({
       url,
       options,
