@@ -60,7 +60,8 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
     setLevelGroups(levelGroups);
   }, [levels]);
 
-  const { regionNum } = convertLevel(highestLevelCompleted);
+  // Should return The next highest available level in the highest available region
+  const { regionNum, levelInRegionNum } = convertLevel(highestLevelCompleted);
 
   return (
     <>
@@ -68,7 +69,6 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
       <div>
         {levelGroups.map((group, i) => {
           const regionIndex = i + 1;
-
           if (regionIndex > regionNum) {
             return null;
           }
