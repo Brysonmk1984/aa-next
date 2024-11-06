@@ -61,7 +61,7 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
   }, [levels]);
 
   // Should return The next highest available level in the highest available region
-  const { regionNum, levelInRegionNum } = convertLevel(highestLevelCompleted);
+  const { regionNum } = convertLevel(highestLevelCompleted);
 
   return (
     <>

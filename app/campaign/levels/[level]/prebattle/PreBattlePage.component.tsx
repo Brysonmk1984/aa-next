@@ -80,8 +80,8 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
             })}
           </ul>
           <div className="text-center mt-8">
-            <button className="btn btn-transparent" onClick={() => router.push('/enlist')}>
-              Hire More
+            <button className="btn btn-transparent" onClick={() => router.push('/warriors')}>
+              Hire
             </button>
           </div>
         </div>

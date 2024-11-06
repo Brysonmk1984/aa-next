@@ -63,7 +63,9 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
 
   const attributeBlacklist = ['id', 'name', 'cost', 'lore', 'count'];
   const badInput = units <= 0 || units >= determineMaxCanAfford();
-  const isDisabled = campaign?.highestLevelCompleted ? warrior.unlock_level > campaign?.highestLevelCompleted : true;
+  const isDisabled = campaign?.highestLevelCompleted
+    ? warrior.unlock_level > campaign?.highestLevelCompleted
+    : true && warrior.name !== ArmyName.MinuteMenMilitia;
 
   useEffect(() => {
     const determineGoldRemaining = (gold: number) => {

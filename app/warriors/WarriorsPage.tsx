@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ComponentType } from 'react';
 import classNames from 'classnames';
+import { ArmyName } from '@/types/campaign.type';
 
 interface WarriorsPageProps {}
 
@@ -21,7 +22,8 @@ export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
         .map((armies) => {
           const { id, name, unlock_level } = armies;
 
-          const isDisabled = !!nation && unlock_level > campaign.highestLevelCompleted;
+          const isDisabled =
+            !!nation && unlock_level > campaign.highestLevelCompleted && name !== ArmyName.MinuteMenMilitia;
           return (
             <div key={id} className={classNames('w-[300px]', { 'opacity-60': isDisabled })}>
               <div className="relative w-[300px] h-[350px]">
