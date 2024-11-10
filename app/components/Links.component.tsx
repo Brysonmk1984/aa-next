@@ -47,13 +47,13 @@ export const Links = () => {
       )}
 
       {user ? (
-        <Link href="/api/auth/logout" className={classNames({ current_page: pathname === '/' })}>
+        <Link href="/auth/logout" className={classNames({ current_page: pathname === '/' })}>
           <div className="nav_link_content">
             <span>Logout</span>
           </div>
         </Link>
       ) : (
-        <Link href="/api/auth/login" className={classNames({ current_page: pathname === '/' })}>
+        <Link href="/auth/login" className={classNames({ current_page: pathname === '/' })}>
           <div className="nav_link_content">
             <span>Login</span>
           </div>

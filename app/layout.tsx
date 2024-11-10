@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { UserProvider as AuthZeroUserProvider } from '@auth0/nextjs-auth0/client';
 import { ContentWrapper } from './components/ContentWrapper.component';
 import { Auth0Session, getAuth0Session } from './actions/getAuth0Session.action';
 import { decode } from 'jsonwebtoken';
@@ -83,18 +82,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <GameProvider {...gameData}>
-        <AuthZeroUserProvider>
-          <UserProvider user={user} isAuthenticated={!!user}>
-            <NationProvider nation={nation} armies={armies} campaign={campaign}>
-              <body className={inter.className}>
-                <AmplitudeProvider>
-                  <Banner />
-                  <ContentWrapper>{children}</ContentWrapper>
-                </AmplitudeProvider>
-              </body>
-            </NationProvider>
-          </UserProvider>
-        </AuthZeroUserProvider>
+        <UserProvider user={user} isAuthenticated={!!user}>
+          <NationProvider nation={nation} armies={armies} campaign={campaign}>
+            <body className={inter.className}>
+              <AmplitudeProvider>
+                <Banner />
+                <ContentWrapper>{children}</ContentWrapper>
+              </AmplitudeProvider>
+            </body>
+          </NationProvider>
+        </UserProvider>
       </GameProvider>
     </html>
   );
