@@ -5,11 +5,12 @@ import { PreBattlePage } from './PreBattlePage.component';
 import { redirect } from 'next/navigation';
 
 interface PageProps {
-  params: { level: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ level: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function PreBattle({ params }: PageProps) {
+export default async function PreBattle(props: PageProps) {
+  const params = await props.params;
   let opponent: CampaignNationProfile;
   const level = +params.level;
 

@@ -1,11 +1,11 @@
 'use server';
 
+import { auth0 } from '../../lib/auth0';
 import { User } from '@/types';
 import { fetchWrapper } from '@/utils/fetch.util';
-import { getSession } from '@auth0/nextjs-auth0';
 
 export async function fetchWithAuth<T>(route: string, options: RequestInit = {}): Promise<T> {
-  const { accessToken } = (await getSession()) as { user: User; accessToken?: string | undefined };
+  const { accessToken } = (await auth0.getSession()) as { user: User; accessToken?: string | undefined };
 
   if (accessToken) {
     options.headers = {

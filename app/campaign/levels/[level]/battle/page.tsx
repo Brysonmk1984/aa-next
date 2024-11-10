@@ -5,11 +5,12 @@ import { getCampaignLevelDetails } from '@/services';
 import { redirect } from 'next/navigation';
 
 interface PageProps {
-  params: { level: number };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ level: number }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function Battle({ params }: PageProps) {
+export default async function Battle(props: PageProps) {
+  const params = await props.params;
   let opponent: CampaignNationProfile;
 
   try {

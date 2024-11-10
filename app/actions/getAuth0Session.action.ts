@@ -1,6 +1,7 @@
 'use server';
-import { Claims, getSession } from '@auth0/nextjs-auth0';
-export interface ExpectedClaims extends Claims {
+import { auth0 } from '../../lib/auth0';
+
+export interface ExpectedClaims {
   email: string;
   email_verified: boolean;
   sub: string;
@@ -11,7 +12,8 @@ export interface Auth0Session {
   accessToken: string | null;
 }
 export async function getAuth0Session(): Promise<Auth0Session> {
-  const sessionResult = await getSession();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sessionResult = (await auth0.getSession()) as any;
   return {
     user: (sessionResult?.user as ExpectedClaims) ?? null,
     accessToken: sessionResult?.accessToken ?? null,
