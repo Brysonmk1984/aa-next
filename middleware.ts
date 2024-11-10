@@ -1,15 +1,18 @@
-import { withMiddlewareAuthRequired } from '@auth0/nextjs-auth0/edge';
+import { auth0 } from './lib/auth0';
+import type { NextRequest } from 'next/server';
 
-export default withMiddlewareAuthRequired();
+export async function middleware(request: NextRequest) {
+  return await auth0.middleware(request);
+}
 
-// Maybe I need to do something like this?
-// const anotherMiddleware = () => {
-//   const res = new NextResponse();
-//   const { user } = await getSession(req, res);
-//   return NextResponse.redirect(new URL('/bar', request.url), res);
-// };
-
-// Primary matcher for all middleware
-export const config: { matcher: Array<string> } = {
-  matcher: ['/campaign/:path*', '/nation/:path*', '/balance'],
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+  ],
 };

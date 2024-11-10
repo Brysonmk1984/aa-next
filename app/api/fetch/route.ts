@@ -2,7 +2,8 @@
 import { User } from '@/types';
 import { errorType } from '@/utils';
 import { fetchWrapper } from '@/utils/fetch.util';
-import { getSession } from '@auth0/nextjs-auth0';
+import { auth0 } from '../../../lib/auth0';
+
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
@@ -20,7 +21,7 @@ export async function POST(req: Request) {
     }
 
     // Unclear why I can't just pass the original Next response. When I do, the getSession function call fails
-    const asd = (await getSession(req as any, new NextResponse() as any)) as {
+    const asd = (await auth0.getSession(req as any)) as {
       user: User;
       accessToken?: string | undefined;
     };

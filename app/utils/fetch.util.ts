@@ -1,8 +1,8 @@
 import { getCookie } from './getCookie';
 import { ContextualError } from './error.util';
-export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// export const fetchCache = 'force-no-store';
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
 
 export const configureFetchOptions = (options: RequestInit = { cache: 'no-store' }) => {
   if (typeof window === 'undefined') {
