@@ -2,6 +2,7 @@ import { auth0 } from '../../lib/auth0';
 
 export default async function Home() {
   try {
+    console.log(111);
     const session = await auth0.getSession();
     console.log({ session });
 
