@@ -4,7 +4,9 @@ import type { NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   console.log('in middle');
 
-  return await auth0.middleware(request);
+  const res = await auth0.middleware(request);
+  console.log(res);
+  return res;
 }
 
 export const config = {
