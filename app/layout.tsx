@@ -41,13 +41,14 @@ const getUserGameData = async (session: Auth0Session): Promise<ResolvedSessionIn
     );
     return initialProviderValues;
   }
+  console.log(1);
 
   const user = await handleUserUpdateCheck(session.user);
-
+  console.log(2, user.id);
   const { nation, armies } = await getNationAndArmies(user.id);
-
+  console.log(3);
   const highestLevelCompleted = await getHighestLevelCompleted(nation.id);
-
+  console.log(4);
   const campaign: NationCampaignDetails = {
     highestLevelCompleted,
   };
@@ -63,8 +64,10 @@ const getUserGameData = async (session: Auth0Session): Promise<ResolvedSessionIn
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [gameData, session] = await Promise.all([getDefaultGameData(), getAuth0Session()]);
   const isLoggedIn = session.user && session.accessToken;
+  console.log('session.user', session.user, session.accessToken);
 
   const { user, nation, armies, campaign } = isLoggedIn ? await getUserGameData(session) : initialProviderValues;
+  console.log({ user });
 
   if (nation) {
     const { income, upkeep } = gameData;

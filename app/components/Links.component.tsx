@@ -53,7 +53,7 @@ export const Links = () => {
           </div>
         </Link>
       ) : (
-        <Link href="/auth/login" className={classNames({ current_page: pathname === '/' })}>
+        <Link href={`/auth/login?returnTo=${pathname}`} className={classNames({ current_page: pathname === '/' })}>
           <div className="nav_link_content">
             <span>Login</span>
           </div>

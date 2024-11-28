@@ -1,18 +1,21 @@
 'use server';
 
 import { auth0 } from '../../lib/auth0';
-import { User } from '@/types';
+import { ContextualError } from '@/utils';
 import { fetchWrapper } from '@/utils/fetch.util';
 
 export async function fetchWithAuth<T>(route: string, options: RequestInit = {}): Promise<T> {
-  const { accessToken } = (await auth0.getSession()) as { user: User; accessToken?: string | undefined };
+  const sessionData = await auth0.getSession();
+  const accessToken = sessionData?.tokenSet.accessToken;
 
-  if (accessToken) {
-    options.headers = {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    };
+  if (!accessToken) {
+    throw new ContextualError('No Access Token Present for user', { route, options });
   }
+
+  options.headers = {
+    Authorization: `Bearer ${accessToken}`,
+    'Content-Type': 'application/json',
+  };
 
   const result = await fetchWrapper<T>(route, options);
   return result;
