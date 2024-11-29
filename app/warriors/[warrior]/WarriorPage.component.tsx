@@ -85,7 +85,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
         <h1 className="block my-0">{warrior.name}</h1>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center">
+      <div className="flex flex-col gap-8 lg:flex-row ">
         <div className="text-center">
           <div className="relative w-[550px] h-[650px]">
             <Image
@@ -97,7 +97,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
           </div>
           {user && nation && (
             <div className="flex flex-col">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between">
                 <div>
                   <div className="flex items-center justify-center">
                     <button
@@ -171,20 +171,21 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
             </div>
           )}
         </div>
-        <div>
-          <dl>
-            {Object.entries(warrior)
-              .filter(([k]) => !attributeBlacklist.includes(k))
-              .sort((a, b) => (a[0] < b[0] ? -1 : 1))
-              .map(([k, v], i) => {
-                return (
-                  <div key={i} className="flex justify-between mb-1">
+        <div className="flex flex-col justify-start">
+          {Object.entries(warrior)
+            .filter(([k]) => !attributeBlacklist.includes(k))
+            .sort((a, b) => (a[0] < b[0] ? -1 : 1))
+            .map(([k, v], i) => {
+              return (
+                <div key={i}>
+                  <dl className="flex justify-between">
                     <dt className=" font-bold">{lowercaseToTitleCase(snakeCaseToSentenceCase(k))}:</dt>
                     <dt className=" max-w-[250px] text-lg">{lowercaseToTitleCase(v.toString())}</dt>
-                  </div>
-                );
-              })}
-          </dl>
+                  </dl>
+                </div>
+              );
+            })}
+
           <p className="w-[450px] mt-12 text-lg">{warrior.lore}</p>
         </div>
       </div>

@@ -8,8 +8,7 @@
     "build:no-lint": "DISABLE_ESLINT_PLUGIN=true NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js",
     "ts:check": "tsc --noEmit",
-    "lint": "next lint && tsc --noEmit",
-    "postinstall": "patch-package"
+    "lint": "next lint && tsc --noEmit"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.11.1",
@@ -22,10 +21,8 @@
     "lodash": "^4.17.21",
     "next": "^14.2.5",
     "npm": "^10.8.3",
-    "patch-package": "^8.0.0",
     "prettier": "^3.3.3",
     "react": "^18",
-    "react-accessible-accordion": "^5.0.0",
     "react-burger-menu": "^3.0.9",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",

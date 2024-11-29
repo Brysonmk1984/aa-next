@@ -16,7 +16,7 @@ export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
   const { armies } = useGameContext();
 
   return (
-    <div className="flex flex-wrap items-center justify-around">
+    <div className="flex flex-wrap items-top justify-around">
       {armies
         .sort((a, b) => (a.unlock_level < b.unlock_level ? -1 : 1))
         .map((armies) => {
@@ -25,7 +25,7 @@ export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
           const isDisabled =
             !!nation && unlock_level > campaign.highestLevelCompleted && name !== ArmyName.MinuteMenMilitia;
           return (
-            <div key={id} className={classNames('w-[300px]', { 'opacity-60': isDisabled })}>
+            <div key={id} className={classNames('w-[300px]', { 'opacity-50': isDisabled })}>
               <div className="relative w-[300px] h-[350px]">
                 <Link href={`/warriors/${encodeURIComponent(sentenceCaseToKebabCase(name))}`}>
                   <Image
@@ -36,15 +36,17 @@ export const WarriorsPage: ComponentType<WarriorsPageProps> = () => {
                   />
                 </Link>
               </div>
-              <div className="text-center">
-                <h3
-                  className={classNames('text-2xl', {
-                    'text-off-black': isDisabled,
-                  })}
-                >
-                  {name}
-                </h3>
-              </div>
+              {!isDisabled && (
+                <div className="text-center">
+                  <h3
+                    className={classNames('text-2xl', {
+                      'text-off-black': isDisabled,
+                    })}
+                  >
+                    {name}
+                  </h3>
+                </div>
+              )}
             </div>
           );
         })}

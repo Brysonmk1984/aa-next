@@ -9,7 +9,7 @@ export const getDefaultGameData = async (): Promise<GameDefaults> => {
   const result = await fetchWrapper<GameDataRequestResult>(route);
 
   const armies: Army[] = result.armies.map((item) => {
-    return { ...item.army, cost: item.meta.cost, unlock_level: item.meta.unlock_level };
+    return { ...item.army, cost: item.meta.cost, unlock_level: item.meta.unlock_level, lore: item.meta.lore };
   });
 
   const tiers = result.upkeep.tiers.reduce<Record<UpkeepKeys, number>>(
