@@ -1,7 +1,10 @@
 import { ExpectedClaims } from '@/actions/getAuth0Session.action';
 import { Nation, ResolvedUser } from '@/types';
 import { NationCampaignDetails } from '@/types/campaign.type';
-import { Claims } from '@auth0/nextjs-auth0';
+
+export interface Claims {
+  [key: string]: any;
+}
 
 export function assertHasExpectedClaims(user: Claims): asserts user is ExpectedClaims {
   if (!(user.email && user.email_verified && user.sub)) {
