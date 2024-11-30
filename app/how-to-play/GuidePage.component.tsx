@@ -13,7 +13,7 @@ import { numberFormat } from '@/utils/numberFormat';
 import { determineRate } from '@/utils';
 
 export const GuidePage = () => {
-  const { weapon_armor_values, aoe_spread_values, income, upkeep } = useGameContext();
+  const { weapon_armor_values, aoe_spread_values, income, upkeep, constants } = useGameContext();
   const { tiers, rates } = upkeep;
   const { user } = useUserContext();
   const [showBattlefield, setShowBattlefield] = useState(false);
@@ -59,7 +59,10 @@ export const GuidePage = () => {
           <li>
             <strong>Dodge -</strong> The defender dodged the attack. The probability to dodge an attack is based on the
             defender&apos;s&nbsp;
-            <strong>agility</strong> rating calculated against the attackers <strong>accuracy</strong> rating.
+            <strong>agility</strong> rating calculated against the attackers <strong>accuracy</strong> rating. If the
+            defender is attacked while they are <strong>marching</strong>, they have an additional{' '}
+            {constants.IS_MARCHING_AGILITY_MOD} added to their <strong>agility</strong>, increasing their chance to
+            dodge.
           </li>
           <li>
             <strong>Hit -</strong>If the defender fails to dodge and fails to block, then the aggressor&apos;s strike
@@ -101,7 +104,8 @@ export const GuidePage = () => {
         limits of melee range. Some skirmishers have a slightly longer range, giving them an advantage since most
         warrirors will still need to march forward to get within their own attacking range. Then there&apos;s the truly
         ranged warriors who fight with bow and arrow and can fire their missles with a range of up to 150m. Finally,
-        some warriors are flying units, and can only be reached by enemies who have a range of at least 15m.
+        some warriors are flying units, and can only be reached by enemies who have a range of at least{' '}
+        {constants.MIN_RANGE_ATTACK_AIR}.
       </p>
       <div className="ml-6">
         Some Warriors have an <strong>area of effect</strong> (AoE) value. This allows them to potentially hit multiple

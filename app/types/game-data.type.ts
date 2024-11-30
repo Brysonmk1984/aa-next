@@ -63,6 +63,7 @@ export interface GameDefaults {
   income: IncomeDefaults;
   upkeep: UpkeepDefaults;
   armies: Army[];
+  constants: GameConstants;
 }
 
 interface ArmyDefaultsRequestResult {
@@ -73,10 +74,17 @@ interface ArmyDefaultsRequestResult {
     lore: string;
   };
 }
+
+interface GameConstants {
+  MIN_RANGE_ATTACK_AIR: number;
+  IS_MARCHING_AGILITY_MOD: number;
+}
+
 export interface GameDataRequestResult {
   weapon_armor_values: WeaponArmorValues;
   aoe_spread_values: AoeSpreadValues;
   income: IncomeDefaults;
   upkeep: UpkeepData;
   armies: ArmyDefaultsRequestResult[];
+  constants: GameConstants;
 }

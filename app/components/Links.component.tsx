@@ -30,7 +30,7 @@ export const Links = () => {
       </Link>
       {user && (
         <Link
-          href={(campaign?.highestLevelCompleted ?? 0) > 1 ? '/campaign/levels' : '/campaign'}
+          href={(campaign?.highestLevelCompleted ?? 0) > 0 ? '/campaign/levels' : '/campaign'}
           className={classNames({ current_page: isCurrentRoute('campaign', pathname) })}
         >
           <div className="nav_link_content">
