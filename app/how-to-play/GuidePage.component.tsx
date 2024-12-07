@@ -194,7 +194,7 @@ export const GuidePage = () => {
 
       <div className="my-16">
         <h2>Warriors of The Great Realm:</h2>
-        <Link href="/warriors">Learn more about the combatants</Link>
+        <Link href="/warriors">Learn more about the warriors</Link>
       </div>
 
       {!user && (

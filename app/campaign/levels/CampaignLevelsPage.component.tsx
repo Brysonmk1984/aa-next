@@ -1,16 +1,14 @@
 'use client';
 
+import { Loader } from '@/components';
 import { ALLOW_PREVIOUS_LEVEL_BATTLES } from '@/configs/environment.config';
+import { useGameContext } from '@/contexts';
 import { useNation } from '@/hooks/nation.hook';
-import { CampaignLevelWithReward } from '@/types/campaign.type';
+import { CampaignLevel } from '@/types/campaign.type';
 import { convertLevel } from '@/utils';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { ComponentType, useEffect, useState } from 'react';
-
-interface CampaignLevelsPageProps {
-  levels: CampaignLevelWithReward[];
-}
 
 enum RegionNames {
   GrassLand = 'The Expansive Country-Side',
@@ -30,40 +28,46 @@ const regions = [
   RegionNames.MarshLand,
 ];
 
-export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
+export const CampaignLevelsPage = () => {
+  const { campaignDefaults: levels } = useGameContext();
+
   const {
     campaign: { highestLevelCompleted },
   } = useNation();
-  const [levelGroups, setLevelGroups] = useState<CampaignLevelWithReward[][]>([]);
+  const [levelGroups, setLevelGroups] = useState<CampaignLevel[][]>([]);
 
   useEffect(() => {
-    const levelGroups = levels.reduce((acc: CampaignLevelWithReward[][], level: CampaignLevelWithReward) => {
-      // acc should look like [[{..cl},{..cl},{..cl},{..cl},{..cl}],[..],[..],[..],[..],[..]]
+    if (levels) {
+      const levelGroups = levels.reduce((acc: CampaignLevel[][], level: CampaignLevel) => {
+        // acc should look like [[{..cl},{..cl},{..cl},{..cl},{..cl}],[..],[..],[..],[..],[..]]
 
-      // Initial level
-      if (!acc.length) {
-        return [[level]];
-      }
-      const levelGroupCount = acc.length;
-      const lastGroupArrayIndex = levelGroupCount - 1;
-      // If the latest group array is less than five, push the new level in there
-      if (acc[lastGroupArrayIndex].length < 5) {
-        acc[lastGroupArrayIndex].push(level);
-        return acc;
-      } else {
-        // Otherwise, the latest group array is free so push a new group array with the current level
-        acc.push([level]);
-        return acc;
-      }
-    }, []);
+        // Initial level
+        if (!acc.length) {
+          return [[level]];
+        }
+        const levelGroupCount = acc.length;
+        const lastGroupArrayIndex = levelGroupCount - 1;
+        // If the latest group array is less than five, push the new level in there
+        if (acc[lastGroupArrayIndex].length < 5) {
+          acc[lastGroupArrayIndex].push(level);
+          return acc;
+        } else {
+          // Otherwise, the latest group array is free so push a new group array with the current level
+          acc.push([level]);
+          return acc;
+        }
+      }, []);
 
-    setLevelGroups(levelGroups);
+      setLevelGroups(levelGroups);
+    }
   }, [levels]);
 
   // Should return The next highest available level in the highest available region
   const { regionNum } = convertLevel(highestLevelCompleted);
 
-  return (
+  return !levels ? (
+    <Loader />
+  ) : (
     <>
       <h1>Levels</h1>
       <div>
@@ -134,7 +138,7 @@ export const CampaignLevelsPage = ({ levels }: CampaignLevelsPageProps) => {
 
 interface LevelPanelContentProps {
   isPreviousLevel: boolean;
-  level: CampaignLevelWithReward;
+  level: CampaignLevel;
   regionNum: number;
   levelWithinGroupNum: number;
 }

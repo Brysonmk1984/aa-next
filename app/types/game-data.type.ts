@@ -1,5 +1,6 @@
 import { UpkeepKeys } from '@/constants/upkeep';
 import { Army } from './army.type';
+import { CampaignLevel } from './campaign.type';
 
 export interface WeaponArmorValues {
   'piercing-unarmored': number;
@@ -64,6 +65,7 @@ export interface GameDefaults {
   upkeep: UpkeepDefaults;
   armies: Army[];
   constants: GameConstants;
+  campaignDefaults: CampaignLevel[] | null;
 }
 
 interface ArmyDefaultsRequestResult {

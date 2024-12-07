@@ -24,5 +24,5 @@ export const getDefaultGameData = async (): Promise<GameDefaults> => {
     ...result.upkeep,
     tiers,
   };
-  return { ...result, armies, upkeep };
+  return { ...result, armies, upkeep, campaignDefaults: null };
 };

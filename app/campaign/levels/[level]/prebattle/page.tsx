@@ -12,13 +12,14 @@ interface PageProps {
 export default async function PreBattle({ params }: PageProps) {
   let opponent: CampaignNationProfile;
   const level = +params.level;
+
   try {
-    opponent = await getCampaignLevelDetails(level);
+    const opponentResult = await getCampaignLevelDetails(level);
+    opponent = opponentResult;
   } catch (e) {
-    console.log('Error', e);
-    redirect('/campaign/levels');
-    return;
+    return redirect('/campaign/levels');
   }
+
   return (
     <PageTemplate>
       <PreBattlePage enemyDetails={opponent} level={level} />
