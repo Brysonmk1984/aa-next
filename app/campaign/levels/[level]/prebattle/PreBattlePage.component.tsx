@@ -1,13 +1,17 @@
 'use client';
+import { useGameContext } from '@/contexts';
 import { useSessionStorage } from '@/hooks';
 import { useNation } from '@/hooks/nation.hook';
 import { useUser } from '@/hooks/user.hook';
 import { getNationArmies, runCampaignBattle } from '@/services';
 import { CampaignNationProfile } from '@/types';
 import { BattleDetails, DirectionOfArmy } from '@/types/battle.type';
+import { CampaignLevelReward } from '@/types/campaign.type';
 import { calculateArmyCount, convertLevel } from '@/utils';
+import { numberFormat } from '@/utils/numberFormat';
 import classNames from 'classnames';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface PreBattlePageProps {
   enemyDetails: CampaignNationProfile;
@@ -18,7 +22,9 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
   const router = useRouter();
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
   const { user } = useUser();
+  const { campaignDefaults } = useGameContext();
   const { nation, armies, dispatch } = useNation();
+  const [reward, setReward] = useState<CampaignLevelReward | null>(null);
   const hasStandingArmy = !!calculateArmyCount(armies);
 
   const {
@@ -60,6 +66,38 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
       console.error(e);
     }
   };
+
+  const formatReward = (reward: CampaignLevelReward) => {
+    const [count, unit] = reward;
+    if (typeof unit === 'string') {
+      return (
+        <>
+          <span className="font-bold text-gray-dark text-lg w-[50px] text-right">{numberFormat(count)}</span>{' '}
+          <span>{unit}</span>
+        </>
+      );
+    } else {
+      if (!unit) {
+        throw new Error('No unit on the reward');
+      }
+      return (
+        <>
+          <span className="font-bold text-gray-dark text-lg w-[50px] text-right mr-2">{numberFormat(count)}</span>
+          {unit.Enlist}
+        </>
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (campaignDefaults) {
+      const matchingLevel = campaignDefaults.find((l) => l.level === totalLevel);
+      if (!matchingLevel) {
+        throw new Error('No matching Level to retrieve reward from');
+      }
+      setReward(matchingLevel.reward);
+    }
+  }, [campaignDefaults, totalLevel]);
 
   return (
     <>
@@ -105,6 +143,12 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
               );
             })}
           </ul>
+          {!!reward && (
+            <>
+              <h3 className="mt-10">Reward</h3>
+              <span className=" text-gray-dark">{formatReward(reward)}</span>
+            </>
+          )}
         </div>
       </div>
       <div className="text-center mt-8 border-t border-dashed">

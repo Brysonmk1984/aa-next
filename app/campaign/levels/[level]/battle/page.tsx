@@ -11,14 +11,11 @@ interface PageProps {
 
 export default async function Battle({ params }: PageProps) {
   let opponent: CampaignNationProfile;
-  console.log(params.level);
 
   try {
     opponent = await getCampaignLevelDetails(params.level);
   } catch (e) {
-    console.log('Error', e);
-    redirect('/campaign/levels');
-    return;
+    return redirect('/campaign/levels');
   }
 
   return (

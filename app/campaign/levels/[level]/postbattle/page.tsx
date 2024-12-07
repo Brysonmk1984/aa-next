@@ -15,9 +15,7 @@ export default async function PostBattle({ params }: PageProps) {
   try {
     opponent = await getCampaignLevelDetails(params.level);
   } catch (e) {
-    console.log('Error', e);
-    redirect('/campaign/levels');
-    return;
+    return redirect('/campaign/levels');
   }
   return (
     <PageTemplate>
