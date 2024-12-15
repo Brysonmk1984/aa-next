@@ -1,7 +1,7 @@
 'use client';
 
 import { getCampaignLevels } from '@/actions/getCampaignLevels.action';
-import { CampaignLevel } from '@/types/campaign.type';
+import { ArmyName, CampaignLevel } from '@/types/campaign.type';
 import { GameDefaults } from '@/types/game-data.type';
 import { createContext } from '@/utils/context-abstraction.util';
 import { usePathname } from 'next/navigation';
@@ -28,6 +28,14 @@ export const GameProvider = (props: PropsWithChildren<GameDataProviderProps>) =>
   const pathname = usePathname();
   const { weapon_armor_values, aoe_spread_values, income, armies, upkeep, constants } = props;
 
+  const armyUnlockMap = armies.reduce<Record<number, ArmyName>>(
+    (acc, army) => {
+      acc[army.unlock_level] = army.name;
+      return acc;
+    },
+    {} as Record<number, ArmyName>,
+  );
+
   useEffect(() => {
     const getCampaignDefaultInfo = async () => {
       const [campaignLevels, rewards] = await getCampaignLevels();
@@ -53,7 +61,16 @@ export const GameProvider = (props: PropsWithChildren<GameDataProviderProps>) =>
 
   return (
     <GameContext.Provider
-      value={{ weapon_armor_values, aoe_spread_values, income, armies, upkeep, constants, campaignDefaults }}
+      value={{
+        weapon_armor_values,
+        aoe_spread_values,
+        income,
+        armies,
+        upkeep,
+        constants,
+        campaignDefaults,
+        armyUnlockMap,
+      }}
     >
       {props.children}
     </GameContext.Provider>

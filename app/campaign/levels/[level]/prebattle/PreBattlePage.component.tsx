@@ -22,7 +22,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
   const router = useRouter();
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
   const { user } = useUser();
-  const { campaignDefaults } = useGameContext();
+  const { campaignDefaults, armyUnlockMap } = useGameContext();
   const { nation, armies, dispatch } = useNation();
   const [reward, setReward] = useState<CampaignLevelReward | null>(null);
   const hasStandingArmy = !!calculateArmyCount(armies);
@@ -101,29 +101,8 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
 
   return (
     <>
-      <div className="flex flex-wrap-reverse md:flex-nowrap">
-        <div className="min-w-[300px] p-8">
-          <h2>{nation.name}</h2>
-          <h3>Warriors</h3>
-          <ul>
-            {armies.map((army) => {
-              return (
-                <li key={army.id} className="flex gap-2 items-center">
-                  <span className="font-bold text-gray-dark text-lg w-[50px] text-right">
-                    {army.count.toLocaleString()}
-                  </span>
-                  <span className=" text-gray-dark">{army.army_name}</span>
-                </li>
-              );
-            })}
-          </ul>
-          <div className="text-center mt-8">
-            <button className="btn btn-transparent" onClick={() => router.push('/warriors')}>
-              Hire
-            </button>
-          </div>
-        </div>
-        <div className="flex-grow md:border-l p-8">
+      <div className="flex flex-wrap md:flex-nowrap">
+        <div className="">
           <h1 className="block">{enemyName}</h1>
 
           <h2>
@@ -132,27 +111,85 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
 
           <p>{enemyLore}</p>
           <br />
-          <h3>Warriors</h3>
-          <ul className="flex w-1/2">
-            {enemyArmies.map((army) => {
-              return (
-                <li key={army.id} className="flex gap-2 items-center">
-                  <span className="font-bold text-gray-dark text-lg text-right">{army.count.toLocaleString()}</span>
-                  <span className=" text-gray-dark">{army.army_name}</span>
-                </li>
-              );
-            })}
-          </ul>
+        </div>
+        <div className=" shrink-0 w-1/4 md:border-l md:pl-4 pb-8">
           {!!reward && (
             <>
-              <h3 className="mt-10">Reward</h3>
-              <span className=" text-gray-dark">{formatReward(reward)}</span>
+              <>
+                <h3 className="mt-10">Reward</h3>
+                <span className=" text-gray-dark">{formatReward(reward)}</span>
+              </>
+            </>
+          )}
+
+          {armyUnlockMap[totalLevel] && (
+            <>
+              <h3 className="mt-10">Unlock</h3>
+              <span className=" text-gray-dark">{armyUnlockMap[totalLevel]}</span>
             </>
           )}
         </div>
       </div>
-      <div className="text-center mt-8 border-t border-dashed">
-        <div className="mt-4">
+
+      <div className="pt-8 border-t border-dashed">
+        <h3 className="text-center">Warriors</h3>
+
+        <div className="flex items-center">
+          <div className="flex flex-grow justify-end  items-end text-right">
+            <ul className="">
+              {armies.map((army) => {
+                return (
+                  <li key={army.id} className="flex gap-2 items-end justify-end text-right w-full  leading-8 ">
+                    <div className=" text-gray-dark leading-8">{army.army_name}</div>
+                    <div className="font-bold text-gray-dark text-lg w-[50px] leading-8">
+                      {army.count.toLocaleString()}
+                    </div>
+                  </li>
+                );
+              })}
+              <li className="font-bold text-red text-lg  leading-8">
+                <span className="border-t-2">
+                  {numberFormat(
+                    armies.reduce((acc, cur) => {
+                      acc += cur.count;
+                      return acc;
+                    }, 0),
+                  )}
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className=" flex-shrink text-4xl font-bold font-sans mx-8">VS</div>
+          <div className="flex flex-grow">
+            <ul>
+              {enemyArmies.map((army) => {
+                return (
+                  <li key={army.id} className="flex gap-2 items-end justify-start text-left w-full leading-8">
+                    <span className="font-bold text-gray-dark text-lg text-right leading-8">
+                      {army.count.toLocaleString()}
+                    </span>
+                    <span className=" text-gray-dark leading-8">{army.army_name}</span>
+                  </li>
+                );
+              })}
+              <li className=" leading-8">&nbsp;</li>
+              <li className="font-bold text-red text-lg">
+                <span className="border-t-2">
+                  {' '}
+                  {numberFormat(
+                    enemyArmies.reduce((acc, cur) => {
+                      acc += cur.count;
+                      return acc;
+                    }, 0),
+                  )}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="text-center ">
+        <div className="pt-12">
           <button
             className={classNames('btn btn-transparent', {
               'disabled:bg-gray-dark disabled:text-gray disabled:border-gray-dark disabled:shadow-none':
