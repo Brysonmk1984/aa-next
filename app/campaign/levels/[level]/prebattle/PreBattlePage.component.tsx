@@ -26,6 +26,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
   const { nation, armies, dispatch } = useNation();
   const [reward, setReward] = useState<CampaignLevelReward | null>(null);
   const hasStandingArmy = !!calculateArmyCount(armies);
+  const [armyTypeDifference, setArmyTypeDifference] = useState(0);
 
   const {
     nation_details: { name: enemyName, lore: enemyLore, id: enemyNationId },
@@ -99,20 +100,31 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
     }
   }, [campaignDefaults, totalLevel]);
 
+  useEffect(() => {
+    setArmyTypeDifference(armies.length - enemyArmies.length);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
-      <div className="flex flex-wrap md:flex-nowrap">
-        <div className="">
+      <div className="flex flex-wrap lg:flex-nowrap">
+        <div className="pr-4 shrink-0 w-[600px] lg:w-[830px]">
           <h1 className="block">{enemyName}</h1>
 
           <h2>
             Region {regionNum}, Nation {levelInRegionNum}
           </h2>
-
-          <p>{enemyLore}</p>
+          <div
+            id="campaignMap"
+            className={classNames(`btn btn-transparent hidden sm:block`, { [`campaign-level-${totalLevel}`]: true })}
+          >
+            <div id="marker" className=" top-[50%] left-[50%]"></div>
+          </div>
+          <p className="mt-8">{enemyLore}</p>
           <br />
         </div>
-        <div className=" shrink-0 w-1/4 md:border-l md:pl-4 pb-8">
+        <div className=" shrink-0 lg:w-1/4 lg:border-l lg:border-dashed lg:pl-4 pb-8">
           {!!reward && (
             <>
               <>
@@ -131,15 +143,19 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
         </div>
       </div>
 
+      {/* 
+  Bottom Section
+*/}
+
       <div className="pt-8 border-t border-dashed">
         <h3 className="text-center">Warriors</h3>
 
         <div className="flex items-center">
           <div className="flex flex-grow justify-end  items-end text-right">
-            <ul className="">
+            <ul>
               {armies.map((army) => {
                 return (
-                  <li key={army.id} className="flex gap-2 items-end justify-end text-right w-full  leading-8 ">
+                  <li key={army.id} className="flex gap-2 items-end justify-end text-right w-full leading-8 ">
                     <div className=" text-gray-dark leading-8">{army.army_name}</div>
                     <div className="font-bold text-gray-dark text-lg w-[50px] leading-8">
                       {army.count.toLocaleString()}
@@ -147,8 +163,16 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
                   </li>
                 );
               })}
-              <li className="font-bold text-red text-lg  leading-8">
-                <span className="border-t-2">
+              {armyTypeDifference < 0 &&
+                [...Array(Math.abs(armyTypeDifference)).keys()].map((index) => {
+                  return (
+                    <li key={index} className=" leading-8">
+                      &nbsp;
+                    </li>
+                  );
+                })}
+              <li className="font-bold text-red text-lg leading-8 items-end justify-end text-right ">
+                <span className="border-t-2 ">
                   {numberFormat(
                     armies.reduce((acc, cur) => {
                       acc += cur.count;
@@ -172,7 +196,14 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
                   </li>
                 );
               })}
-              <li className=" leading-8">&nbsp;</li>
+              {armyTypeDifference > 0 &&
+                [...Array(Math.abs(armyTypeDifference)).keys()].map((index) => {
+                  return (
+                    <li key={index} className=" leading-8">
+                      &nbsp;
+                    </li>
+                  );
+                })}
               <li className="font-bold text-red text-lg">
                 <span className="border-t-2">
                   {' '}

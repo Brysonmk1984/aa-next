@@ -189,6 +189,12 @@ a.btn-style:hover {
   opacity: 0.9;
 }
 
+.drawn-underline {
+  border-bottom: solid 2px #121415;
+  border-radius: 255px 15px 225px 1px/15px 225px 15px 255px;
+  padding: 0px;
+}
+
 .btn.link-style {
   @apply text-red;
   font-weight: bold;
@@ -303,4 +309,69 @@ input::-webkit-inner-spin-button {
 }
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+/**
+
+Campaign Map
+
+**/
+
+#campaignMap {
+  position: relative;
+  background-image: url('/images/maps/avalore_text.jpg');
+  background-size: 2000px;
+  background-repeat: no-repeat;
+  height: 400px;
+
+  /* Expecting background-position to be done via tailwind */
+}
+#campaignMap:hover {
+  cursor: url('/images/glove_open.png'), auto !important;
+  border: solid 3px #121415 !important;
+}
+
+#campaignMap #marker {
+  position: absolute;
+  border-radius: 50% 50% 50% 0;
+  border: 6px solid #fff;
+  width: 30px;
+  height: 30px;
+  transform: rotate(-45deg);
+}
+
+.campaign-level-1 {
+  background-position: top -560px left -900px;
+  & #marker {
+    top: 200px;
+    left: 400px;
+  }
+}
+.campaign-level-2 {
+  background-position: top -450px left -920px;
+  & #marker {
+    top: 200px;
+    left: 400px;
+  }
+}
+.campaign-level-3 {
+  background-position: top -350px left -600px;
+  & #marker {
+    top: 200px;
+    left: 400px;
+  }
+}
+.campaign-level-4 {
+  background-position: top -550px left -600px;
+  & #marker {
+    top: 200px;
+    left: 400px;
+  }
+}
+.campaign-level-5 {
+  background-position: top -670px left -950px;
+  & #marker {
+    top: 200px;
+    left: 400px;
+  }
 }
