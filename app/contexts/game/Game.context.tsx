@@ -1,7 +1,7 @@
 'use client';
 
 import { getCampaignLevels } from '@/actions/getCampaignLevels.action';
-import { ArmyName, CampaignLevel } from '@/types/campaign.type';
+import { CampaignLevel } from '@/types/campaign.type';
 import { GameDefaults } from '@/types/game-data.type';
 import { createContext } from '@/utils/context-abstraction.util';
 import { usePathname } from 'next/navigation';
@@ -26,15 +26,7 @@ interface GameDataProviderProps extends GameState {}
 export const GameProvider = (props: PropsWithChildren<GameDataProviderProps>) => {
   const [campaignDefaults, setCampaignDefaults] = useState<CampaignLevel[] | null>(null);
   const pathname = usePathname();
-  const { weapon_armor_values, aoe_spread_values, income, armies, upkeep, constants } = props;
-
-  const armyUnlockMap = armies.reduce<Record<number, ArmyName>>(
-    (acc, army) => {
-      acc[army.unlock_level] = army.name;
-      return acc;
-    },
-    {} as Record<number, ArmyName>,
-  );
+  const { weapon_armor_values, aoe_spread_values, income, armies, upkeep, constants, armyUnlockMap } = props;
 
   useEffect(() => {
     const getCampaignDefaultInfo = async () => {
