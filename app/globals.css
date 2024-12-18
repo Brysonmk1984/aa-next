@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Gelasio:wght@400,700');
 @import url('https://fonts.googleapis.com/css2?family=Germania+One&display=swap');
 @import './burger-menu.css';
+@import './campaign-level-classes.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -338,40 +339,4 @@ Campaign Map
   width: 30px;
   height: 30px;
   transform: rotate(-45deg);
-}
-
-.campaign-level-1 {
-  background-position: top -560px left -900px;
-  & #marker {
-    top: 200px;
-    left: 400px;
-  }
-}
-.campaign-level-2 {
-  background-position: top -450px left -920px;
-  & #marker {
-    top: 200px;
-    left: 400px;
-  }
-}
-.campaign-level-3 {
-  background-position: top -350px left -600px;
-  & #marker {
-    top: 200px;
-    left: 400px;
-  }
-}
-.campaign-level-4 {
-  background-position: top -550px left -600px;
-  & #marker {
-    top: 200px;
-    left: 400px;
-  }
-}
-.campaign-level-5 {
-  background-position: top -670px left -950px;
-  & #marker {
-    top: 200px;
-    left: 400px;
-  }
 }
