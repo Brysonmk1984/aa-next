@@ -18,7 +18,7 @@ interface PreBattlePageProps {
   level: number;
 }
 
-export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePageProps) => {
+export const PreBattlePage = ({ enemyDetails, level: activeLevel }: PreBattlePageProps) => {
   const router = useRouter();
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
   const { user } = useUser();
@@ -32,7 +32,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
     nation_details: { name: enemyName, lore: enemyLore, id: enemyNationId },
     all_armies: enemyArmies,
   } = enemyDetails;
-  const { levelInRegionNum, regionNum } = convertLevel(totalLevel);
+  const { levelInRegionNum, regionNum } = convertLevel(activeLevel);
 
   const handleBattleClick = async () => {
     try {
@@ -41,7 +41,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
       }
 
       const result = await runCampaignBattle({
-        level: totalLevel,
+        level: activeLevel,
         contenders: [nation.id, enemyNationId],
       });
 
@@ -55,14 +55,14 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
           dispatch({ type: 'addNationGoldByAmount', payload: result.reward[0] });
         }
 
-        dispatch({ type: 'updateHighestLevelCompleted', payload: totalLevel });
+        dispatch({ type: 'updateHighestLevelCompleted', payload: activeLevel });
       }
 
       if (!getItem()) {
         storeItem(result);
       }
 
-      router.push(`/campaign/levels/${totalLevel}/battle`);
+      router.push(`/campaign/levels/${activeLevel}/battle`);
     } catch (e) {
       console.error(e);
     }
@@ -92,13 +92,13 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
 
   useEffect(() => {
     if (campaignDefaults) {
-      const matchingLevel = campaignDefaults.find((l) => l.level === totalLevel);
+      const matchingLevel = campaignDefaults.find((l) => l.level === activeLevel);
       if (!matchingLevel) {
         throw new Error('No matching Level to retrieve reward from');
       }
       setReward(matchingLevel.reward);
     }
-  }, [campaignDefaults, totalLevel]);
+  }, [campaignDefaults, activeLevel]);
 
   useEffect(() => {
     setArmyTypeDifference(armies.length - enemyArmies.length);
@@ -117,7 +117,7 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
           </h2>
           <div
             id="campaignMap"
-            className={classNames(`btn btn-transparent hidden sm:block`, { [`campaign-level-${totalLevel}`]: true })}
+            className={classNames(`btn btn-transparent hidden sm:block`, { [`campaign-level-${activeLevel}`]: true })}
           >
             <div id="marker" className=" top-[50%] left-[50%]"></div>
           </div>
@@ -134,10 +134,10 @@ export const PreBattlePage = ({ enemyDetails, level: totalLevel }: PreBattlePage
             </>
           )}
 
-          {armyUnlockMap[totalLevel] && (
+          {armyUnlockMap[activeLevel] && (
             <>
               <h3 className="mt-10">Unlock</h3>
-              <span className=" text-gray-dark">{armyUnlockMap[totalLevel]}</span>
+              <span className=" text-gray-dark">{armyUnlockMap[activeLevel]}</span>
             </>
           )}
         </div>
