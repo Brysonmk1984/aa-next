@@ -118,7 +118,7 @@ export const PreBattlePage = ({ enemyDetails, level: activeLevel }: PreBattlePag
           <div
             id="campaignMap"
             className={classNames(`btn btn-transparent hidden sm:block`, { [`campaign-level-${activeLevel}`]: true })}
-            onClick={() => window.location.assign('/images/maps/avalore_text.jpg')}
+            onClick={() => window.location.assign('/images/maps/avalore_text_and_banner.jpg')}
           >
             <div id="marker" className=" top-[50%] left-[50%]"></div>
           </div>
