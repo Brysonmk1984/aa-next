@@ -73,6 +73,7 @@ export const CampaignLevelsPage = () => {
       <div>
         {levelGroups.map((group, i) => {
           const regionIndex = i + 1;
+
           if (regionIndex > regionNum) {
             return null;
           }
