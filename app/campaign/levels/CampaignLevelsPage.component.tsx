@@ -8,6 +8,7 @@ import { CampaignLevel } from '@/types/campaign.type';
 import { convertLevel } from '@/utils';
 import classNames from 'classnames';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ComponentType, useEffect, useState } from 'react';
 
 enum RegionNames {
@@ -29,12 +30,18 @@ const regions = [
 ];
 
 export const CampaignLevelsPage = () => {
+  const router = useRouter();
   const { campaignDefaults: levels } = useGameContext();
 
   const {
     campaign: { highestLevelCompleted },
   } = useNation();
   const [levelGroups, setLevelGroups] = useState<CampaignLevel[][]>([]);
+
+  const handleLevelClick = (id: number) => {
+    const route = `/campaign/levels/${id}/prebattle`;
+    router.push(route);
+  };
 
   useEffect(() => {
     if (levels) {
@@ -63,7 +70,8 @@ export const CampaignLevelsPage = () => {
   }, [levels]);
 
   // Should return The next highest available level in the highest available region
-  const { regionNum } = convertLevel(highestLevelCompleted);
+  const currentActiveLevel = highestLevelCompleted + 1;
+  const { regionNum: currentRegionNum } = convertLevel(currentActiveLevel);
 
   return !levels ? (
     <Loader />
@@ -71,65 +79,55 @@ export const CampaignLevelsPage = () => {
     <>
       <h1>Levels</h1>
       <div>
-        {levelGroups.map((group, i) => {
-          const regionIndex = i + 1;
+        {levelGroups.map((group, regionIndex) => {
+          const regionNumber = regionIndex + 1;
 
-          if (regionIndex > regionNum) {
+          if (regionNumber > currentRegionNum) {
             return null;
           }
 
           return (
-            <>
-              <h2>{regions[i] ?? `Region ${regionNum}`}</h2>
+            <div key={regionIndex}>
+              <h2>{regions[regionIndex] ?? `Region ${currentRegionNum}`}</h2>
               <div className="flex flex-wrap justify-center">
-                {group.map((level, j) => {
+                {group.map(({ level, nation_name, id }) => {
                   // Later levels
-                  if (highestLevelCompleted + 1 < level.level) {
+                  if (currentActiveLevel < level) {
                     return null;
                   }
 
-                  // Current or previous levels
-                  const levelWithinGroupNum = j + 1;
+                  const { regionNum, levelInRegionNum } = convertLevel(level);
 
-                  const isPreviousLevel = highestLevelCompleted >= level.level;
+                  // Previous levels
+                  const isPreviousLevel = highestLevelCompleted >= level;
+                  const isActiveLevel = currentActiveLevel === level;
 
                   return (
-                    <>
-                      {isPreviousLevel && !ALLOW_PREVIOUS_LEVEL_BATTLES ? (
-                        <div
-                          key={level.level}
-                          className={classNames('relative  m-4 w-[300px] h-[300px] text-center no-underline')}
-                        >
-                          <div className="w-full h-full border rounded-sm p-4">
-                            <LevelPanelContent
-                              isPreviousLevel={isPreviousLevel}
-                              level={level}
-                              regionNum={regionNum}
-                              levelWithinGroupNum={levelWithinGroupNum}
-                            />
-                          </div>
-                        </div>
-                      ) : (
-                        <Link
-                          href={`/campaign/levels/${level.id}/prebattle`}
-                          key={level.level}
-                          className={classNames(
-                            'relative border border-dashed rounded-sm  p-4 m-4 w-[300px] h-[300px] text-center no-underline',
-                          )}
-                        >
+                    <div key={level}>
+                      <div
+                        className={classNames('relative text-center no-underline m-4 w-[300px] h-[300px]', {
+                          'cursor-pointer-glove': isActiveLevel,
+                        })}
+                        onClick={() =>
+                          (isPreviousLevel && ALLOW_PREVIOUS_LEVEL_BATTLES) || isActiveLevel
+                            ? handleLevelClick(id)
+                            : undefined
+                        }
+                      >
+                        <div className="w-full h-full border border-dashed rounded-sm p-4 font-sans">
                           <LevelPanelContent
                             isPreviousLevel={isPreviousLevel}
-                            level={level}
+                            nation_name={nation_name}
                             regionNum={regionNum}
-                            levelWithinGroupNum={levelWithinGroupNum}
+                            levelWithinGroupNum={levelInRegionNum}
                           />
-                        </Link>
-                      )}
-                    </>
+                        </div>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
-            </>
+            </div>
           );
         })}
       </div>
@@ -139,24 +137,24 @@ export const CampaignLevelsPage = () => {
 
 interface LevelPanelContentProps {
   isPreviousLevel: boolean;
-  level: CampaignLevel;
+  nation_name: string;
   regionNum: number;
   levelWithinGroupNum: number;
 }
 
 const LevelPanelContent: ComponentType<LevelPanelContentProps> = ({
   isPreviousLevel,
-  level,
+  nation_name,
   regionNum,
   levelWithinGroupNum,
 }) => {
   return (
     <>
-      <h3 className={classNames({ ' line-through': isPreviousLevel })}>{level.nation_name}</h3>
+      <h3 className={classNames({ ' line-through': isPreviousLevel })}>{nation_name}</h3>
       {isPreviousLevel && <div className="text-8xl mt-8 text-red"> &#10003;</div>}
       <div className="absolute bottom-1 right-2 font-thin text-gray-dark">
         Region <strong className="font-bold text-lg">{regionNum}</strong>, Nation
-        <strong className=" font-bold text-lg">{levelWithinGroupNum}</strong>
+        <strong className=" font-bold text-lg"> {levelWithinGroupNum}</strong>
       </div>
     </>
   );

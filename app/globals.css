@@ -340,3 +340,10 @@ Campaign Map
   height: 30px;
   transform: rotate(-45deg);
 }
+
+.cursor-pointer-open {
+  cursor: url('/images/glove_open.png'), auto !important;
+}
+.cursor-pointer-glove {
+  cursor: url('/images/glove_point.png'), auto !important;
+}
