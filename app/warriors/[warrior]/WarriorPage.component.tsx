@@ -62,7 +62,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
   };
 
   const attributeBlacklist = ['id', 'name', 'cost', 'lore', 'count'];
-  const badInput = units <= 0 || units >= determineMaxCanAfford();
+  const badInput = units <= 0 || units > determineMaxCanAfford();
   const isDisabled = campaign?.highestLevelCompleted
     ? warrior.unlock_level > campaign?.highestLevelCompleted
     : true && warrior.name !== ArmyName.MinuteMenMilitia;
@@ -119,7 +119,7 @@ export const WarriorPage: ComponentType<WarriorPage> = ({ armyName }) => {
                     <button
                       type="button"
                       className="btn btn-red h-10 hover:bg-off-black cursor-pointer"
-                      disabled={units >= determineMaxCanAfford()}
+                      disabled={units > determineMaxCanAfford()}
                       onClick={() => setUnits((u) => ++u)}
                     >
                       +
