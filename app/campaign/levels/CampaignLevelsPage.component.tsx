@@ -7,7 +7,6 @@ import { useNation } from '@/hooks/nation.hook';
 import { CampaignLevel } from '@/types/campaign.type';
 import { convertLevel } from '@/utils';
 import classNames from 'classnames';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ComponentType, useEffect, useState } from 'react';
 
