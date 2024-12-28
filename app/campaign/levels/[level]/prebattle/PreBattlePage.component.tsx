@@ -7,7 +7,7 @@ import { getNationArmies, runCampaignBattle } from '@/services';
 import { CampaignNationProfile } from '@/types';
 import { BattleDetails, DirectionOfArmy } from '@/types/battle.type';
 import { CampaignLevelReward } from '@/types/campaign.type';
-import { calculateArmyCount, convertLevel } from '@/utils';
+import { calculateArmyCount, convertLevel, determineRate } from '@/utils';
 import { numberFormat } from '@/utils/numberFormat';
 import classNames from 'classnames';
 import { useRouter } from 'next/navigation';
@@ -22,7 +22,11 @@ export const PreBattlePage = ({ enemyDetails, level: activeLevel }: PreBattlePag
   const router = useRouter();
   const { storeItem, getItem } = useSessionStorage<BattleDetails>('aa-latest-battle-results');
   const { user } = useUser();
-  const { campaignDefaults, armyUnlockMap } = useGameContext();
+  const {
+    campaignDefaults,
+    armyUnlockMap,
+    income: { per_level: incomePerLevel, calc_minutes },
+  } = useGameContext();
   const { nation, armies, dispatch } = useNation();
   const [reward, setReward] = useState<CampaignLevelReward | null>(null);
   const hasStandingArmy = !!calculateArmyCount(armies);
@@ -126,7 +130,12 @@ export const PreBattlePage = ({ enemyDetails, level: activeLevel }: PreBattlePag
           <br />
         </div>
         <div className=" shrink-0 lg:w-1/4 lg:border-l lg:border-dashed lg:pl-4 pb-8">
-          {!!reward && (
+          <>
+            <h3 className="mt-10">Income</h3>
+            <span className="text-gray-dark text-lg font-bold">{numberFormat(incomePerLevel)}</span>
+            <span> gold per {determineRate(calc_minutes)}</span>
+          </>
+          {!!reward && !!reward[1] && (
             <>
               <>
                 <h3 className="mt-10">Reward</h3>
