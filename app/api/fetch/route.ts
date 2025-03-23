@@ -3,17 +3,16 @@ import { ContextualError, errorType } from '@/utils';
 import { fetchWrapper } from '@/utils/fetch.util';
 import { auth0 } from '../../../lib/auth0';
 
-import { NextResponse } from 'next/server';
-import { NextApiRequest } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
   try {
     const body = await (req as unknown as Request).json();
 
     if (!body.url) {
       return new NextResponse(
         JSON.stringify({
-          error: 'Missing Request URL - This doesnt get read in the client since we are not reading bodies ',
+          error: 'Missing Request URL - This does not get read in the client since we are not reading bodies ',
         }),
         {
           status: 415,
