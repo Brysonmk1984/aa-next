@@ -1,0 +1,163 @@
+version: 2.1
+
+jobs:
+  setup_workspace:
+    docker:
+      - image: maven:3.8.5-openjdk-11 # Use Maven with OpenJDK 11
+    steps:
+      - checkout # Check out the source code
+      - run:
+          name: Setup Workspace
+          command: |
+            echo "Setting up workspace..."
+            mkdir -p /home/circleci/project
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - .
+
+  build_test:
+    docker:
+      - image: maven:3.8.5-openjdk-11 # Use Maven with OpenJDK 11
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Build and Test Maven Application
+          command: |
+            mvn clean install  # Build and test the Maven application
+
+  lint_code:
+    docker:
+      - image: maven:3.8.5-openjdk-11 # Use Maven with OpenJDK 11
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Run Code Linting
+          command: |
+            echo "Running linting checks..."
+            mvn com.coveo:fmt-maven-plugin:format  # Example for code formatting; adjust as needed
+
+  snyk_scan:
+    docker:
+      - image: maven:3.8.5-openjdk-11 # Use Maven with OpenJDK 11
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Authenticate with Snyk
+          command: |
+            echo $SNYK_TOKEN | snyk auth --token  # Authenticate with Snyk
+      - run:
+          name: Run Snyk to Check for Vulnerabilities
+          command: |
+            snyk test  # Check for vulnerabilities in Maven dependencies
+
+  scan_docker_image:
+    docker:
+      - image: aquasec/trivy:latest # Use Trivy Docker image for scanning
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Scan Docker Image for Vulnerabilities
+          command: |
+            trivy image --no-progress anshumaan10/nodejswebapp1:latest  # Scan Docker image and report vulnerabilities
+
+  build_docker_image:
+    docker:
+      - image: maven:3.8.5-openjdk-11 # Use Maven with OpenJDK 11
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - setup_remote_docker:
+          docker_layer_caching: true # Enable Docker layer caching
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t nodejswebapp1 -t anshumaan10/nodejswebapp1:latest .  # Build Docker image
+            echo $DOCKER_PASSWORD | docker login -u anshumaan10 --password-stdin  # Log in to Docker Hub
+            docker push anshumaan10/nodejswebapp1:latest  # Push Docker image to Docker Hub
+
+  clamav_scan:
+    docker:
+      - image: mkodockx/docker-clamav:latest # Use ClamAV Docker image for file scanning
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Scan Files with ClamAV
+          command: |
+            clamdscan --fdpass .  # Scan the files in the current directory
+
+  kubernetes_deploy:
+    docker:
+      - image: maven:3.8.5-openjdk-11 # Use Maven with OpenJDK 11
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Deploy to Kubernetes
+          command: |
+            echo "Deploying to Kubernetes..."
+            kubectl apply -f k8s/deployment.yaml  # Apply Kubernetes deployment configuration
+
+  dast:
+    docker:
+      - image: maven:3.8.5-openjdk-11 # Use Maven with OpenJDK 11
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Perform DAST
+          command: |
+            echo "Performing DAST on application..."
+            # Assuming OWASP ZAP is used for DAST; adjust as needed
+            zap-cli quick-scan http://your-app-url  # Quick scan using OWASP ZAP
+
+  kube_scan:
+    docker:
+      - image: bitnami/kubectl:latest # Use Kubernetes CLI Docker image
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Kubernetes Security Scan
+          command: |
+            echo "Running kubeaudit and KubeHunter..."
+            kubeaudit scan  # Run kubeaudit to check for Kubernetes security issues
+            kubectl run kubehunter --image=aquasec/kubectl:latest -- /kube-hunter  # Run KubeHunter
+
+  slack_notification:
+    docker:
+      - image: maven:3.8.5-openjdk-11 # Use Maven with OpenJDK 11
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - run:
+          name: Send Slack Notification
+          command: |
+            echo "Sending Slack notification..."
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"Build completed successfully!"}' $SLACK_WEBHOOK_URL
+
+workflows:
+  version: 2
+  ci_cd_pipeline:
+    jobs:
+      - setup_workspace
+      - build_test:
+          requires:
+            - setup_workspace
+      - lint_code:
+          requires:
+            - build_test
+      - snyk_scan:
+          requires:
+            - lint_code
+      - build_docker_image:
+          requires:
+            - snyk_scan
+      - scan_docker_image:
+          requires:
+            - build_docker_image
