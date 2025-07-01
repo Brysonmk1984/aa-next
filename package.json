@@ -32,7 +32,7 @@
     "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
+    "@babel/core": "^7.27.7",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
     "@types/amplitude-js": "^8.16.5",
