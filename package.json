@@ -34,7 +34,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
-    "@babel/preset-typescript": "^7.26.0",
+    "@babel/preset-typescript": "^7.27.1",
     "@types/amplitude-js": "^8.16.5",
     "@types/jest": "^29.5.13",
     "@types/jsonwebtoken": "^9.0.6",
